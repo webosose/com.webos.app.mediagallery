@@ -1,0 +1,31 @@
+# @@@LICENSE
+#
+# Copyright (c) 2014 LG Electronics, Inc.
+#
+# Confidential computer software. Valid license from LG required for
+# possession, use or copying. Consistent with FAR 12.211 and 12.212,
+# Commercial Computer Software, Computer Software Documentation, and
+# Technical Data for Commercial Items are licensed to the U.S. Government
+# under vendor's standard commercial license.
+#
+# LICENSE@@@
+
+
+# http://qt-project.org/doc/qt-5/qdoc-guide-conf.html
+
+#include(compat.qdocconf)
+
+project = EosControls
+description = Eos.Controls Reference Documentation
+
+sourcedirs = ..
+exampledirs = ../../../../examples
+imagedirs = ./images
+
+sources.fileextensions = "*.cpp *.qdoc *.mm *.qml"
+headers.fileextensions = "*.h *.ch *.h++ *.hh *.hpp *.hxx"
+examples.fileextensions = "*.cpp *.h *.js *.xq *.svg *.xml *.ui *.qhp *.qhcp *.qml"
+examples.imageextensions = "*.png *.jpeg *.jpg *.gif *.mng"
+
+outputdir  =    ./html
+outputformats = HTML

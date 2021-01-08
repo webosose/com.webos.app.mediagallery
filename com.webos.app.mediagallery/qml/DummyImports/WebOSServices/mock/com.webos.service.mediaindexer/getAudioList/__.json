@@ -1,0 +1,153 @@
+{
+    "errorCode": 0,
+    "returnValue": true,
+    "errorText": "No Error",
+    "audioList": {
+        "results": [
+            {
+                "last_modified_date": "Sun Sep 27 10:08:10 2020 GMT",
+                "duration": 132,
+                "dirty": false,
+                "file_path": "file:///home/valfiros/Downloads/file_example_MP3_5MG.mp3",
+                "album": "YouTube Audio Library",
+                "genre": "Cinematic",
+                "artist": "Kevin MacLeod",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/file_example_MP3_5MG.mp3",
+                "title": "Impact Moderato2",
+                "file_size": 5289384,
+                "thumbnail": 0
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/Bloch_Prayer.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/Bloch_Prayer.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/Beethoven_12_Variation.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/Beethoven_12_Variation.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/Boccherini_Concerto_478-1.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/Boccherini_Concerto_478-1.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/Tchaikovsky_Nocturne__orch.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/Tchaikovsky_Nocturne__orch.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/Haydn_Cello_Concerto_D-1.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/Haydn_Cello_Concerto_D-1.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/Tchaikovsky_Rococo_Var_orch.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/Tchaikovsky_Rococo_Var_orch.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/Vivaldi_Sonata_eminor_.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/Vivaldi_Sonata_eminor_.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            },
+            {
+                "last_modified_date": "Sun Sep 27 10:16:32 2020 GMT",
+                "duration": 228,
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/20) AR_Another Day Of Sun (From `La La Land` Soun..-201612.mp3",
+                "album": "La La LandÂ (ìí `ëŒëŒ ëë` OST)",
+                "genre": "",
+                "artist": "La La Land Cast",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/20) AR_Another Day Of Sun (From `La La Land` Soun..-201612.mp3",
+                "title": "Another Day Of SunÂ (From `La La Land` Soundtrack)",
+                "file_size": 9187652,
+                "thumbnail": "/media/.thumbnail/4DB0-6A3E/1445919085505448.png"
+            },
+            {
+                "last_modified_date": "Sun Sep 27 10:16:30 2020 GMT",
+                "duration": 192,
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/18.??? ? ??_? ????_L.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/18.??? ? ??_? ????_L.mp3",
+                "title": "18.ë¥ì€íž í¬ ëžë©_ë ìŽìììŽ_L",
+                "file_size": 9241031,
+                "thumbnail": "/media/.thumbnail/4DB0-6A3E/1449929654159720.png"
+            },
+            {
+                "last_modified_date": "",
+                "duration": "",
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sdg/sdg1/[MR] ?????_1. ? ???? ?? ???.mp3",
+                "album": "",
+                "genre": "",
+                "artist": "",
+                "uri": "msc://4DB0-6A3E/tmp/usb/sdg/sdg1/[MR] ?????_1. ? ???? ?? ???.mp3",
+                "title": "",
+                "file_size": "",
+                "thumbnail": ""
+            }
+        ],
+        "count": 11
+    }
+}

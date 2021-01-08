@@ -1,0 +1,4 @@
+module Eos.Items
+
+RoundedRectangle 0.1 RoundedRectangle.qml
+SmoothClipItem 0.1 SmoothClipItem.qml

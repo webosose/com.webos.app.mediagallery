@@ -1,0 +1,22 @@
+{
+    "id": "com.webos.app.mediagallery",
+    "version": "1.0.0",
+    "vendor": "LG Electronics",
+    "type": "qml",
+    "main": "qml/App/appMain.qml",
+    "title": "Media Gallery app",
+    "icon": "icon.png",
+    "iconColor": "#ffffff",
+    "largeIcon": "icon.png",
+    "handlesRelaunch": true,
+    "visible": false,
+    "defaultWindowType": "card",
+    "trustLevel": "trusted",
+    "resolution": "1920x720",
+    "locationHint":"west",
+    "noSplashOnLaunch":true,
+    "spinnerOnLaunch": false,
+    "transparent":false,
+    "uiRevision":2,
+    "requiredPermissions": ["settings","system","signals.register","mediaindexer.operation","broadcastradio.operation"]
+}
