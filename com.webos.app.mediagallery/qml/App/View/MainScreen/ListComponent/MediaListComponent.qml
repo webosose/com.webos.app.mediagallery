@@ -19,7 +19,7 @@ Item {
 
     Component.onCompleted: {
         updateListModel();
-        console.log("MediaListComponent completed");
+        appLog.debug("MediaListComponent completed");
     }
 
     Component {
@@ -42,33 +42,42 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     width: appStyle.relativeXBasedOnFHD(150)
                     height: appStyle.relativeYBasedOnFHD(150)
-                    source: thumbnail
+                    source: file_path
 
                     NoImage {
                         width: appStyle.relativeXBasedOnFHD(150)
                         height: appStyle.relativeYBasedOnFHD(150)
+                        smallMode: true
+                        src: title
                         visible: parent.status != Image.Ready
                     }
                 }
 
-                Text{
-                    width: appStyle.relativeXBasedOnFHD(100)
+                Text {
+                    width: appStyle.relativeXBasedOnFHD(150)
                     height: appStyle.relativeXBasedOnFHD(20)
 
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    text: number
+                    text: title
                     color: "white"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font: appStyle.engFont.getFont(32)
+                    font: appStyle.engFont.getFont(20)
+                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
                 }
             }
             IconButton {
                 anchors.fill:parent
                 onClicked: {
-                    console.log("Click n = " + number)
+                    var folderFile = getFolderFileFromPath(file_path);
+                    appLog.debug("path = \n" + file_path +
+                                "\n folder = " + folderFile[0] +
+                                "\n file = " + folderFile[1]);
+                    service.webOSService.singleCallService.callSimpleToast("folder = " + folderFile[0] +
+                                                                           " / file = " + folderFile[1]);
                 }
             }
         }
@@ -78,12 +87,25 @@ Item {
         id: mediaListModel
     }
 
-    function updateListModel(){
-        console.log("updateListModel")
-        for (var i = 0; i < 1000; i++) {
-            var imgUrl = imageDir + "audio_default_300.png"
-            mediaListModel.append({number:i, thumbnail: imgUrl});
+    function getFolderFileFromPath(path) {
+        var splitArray = path.replace('file:///','').split('/');
+        var pathArray = [splitArray[splitArray.length - 2], splitArray[splitArray.length-1]];
+
+        return pathArray;
+    }
+
+    function updateListModel(list){
+        appLog.debug("updateListModel :: " + list.length);
+        //TODO: based on filepath seperate list
+
+        var temp = JSON.parse(JSON.stringify(list));
+
+        mediaListModel.clear();
+        for (var i = 0 ; i < list.length; i++) {
+            appLog.debug("path = " + list[i].file_path);
+            mediaListModel.append(list[i]);
         }
+
     }
 
     GridView {

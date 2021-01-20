@@ -1,0 +1,34 @@
+{
+    "errorCode": 0,
+    "returnValue": true,
+    "videoList": {
+        "results": [
+            {
+                "last_modified_date": "Thu Jan  1 00:00:00 1970 GMT",
+                "duration": 5,
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sda/sda2/ostree/deploy/webos/deploy/98a6531f9040e90bdae1c6eb5e8b273980319f607931e07a4374ec7920487774.0/usr/palm/applicam.webos.app.mediaviewer/media/webOS_OSE_Intro_1.mp4",
+                "thumbnail": "/media/.thumbnail/3187c54b-7c7b-41ab-b5cb-fafcd88a6704/154508383834614.jpg",
+                "height": 1080,
+                "file_size": 1020786,
+                "title": "webOS_OSE_Intro_1",
+                "uri": "msc://3187c54b-7c7b-41ab-b5cb-fafcd88a6704/tmp/usb/sda/sda2/ostree/deploy/webos/deploy/98a6531f9040e90bdae1c6eb5e8b273980319f607931e07a4374ec74.0/usr/palm/applications/com.webos.app.mediaviewer/media/webOS_OSE_Intro_1.mp4",
+                "width": 1920
+            },
+            {
+                "last_modified_date": "Thu Jan  1 00:00:00 1970 GMT",
+                "duration": 22,
+                "dirty": false,
+                "file_path": "file:///tmp/usb/sda/sda2/ostree/deploy/webos/deploy/98a6531f9040e90bdae1c6eb5e8b273980319f607931e07a4374ec7920487774.0/usr/palm/applicam.webos.app.mediaviewer/media/webOS_OSE_Intro_3.mp4",
+                "thumbnail": "/media/.thumbnail/3187c54b-7c7b-41ab-b5cb-fafcd88a6704/141962296335787.jpg",
+                "height": 1080,
+                "file_size": 11880096,
+                "title": "webOS_OSE_Intro_3",
+                "uri": "msc://3187c54b-7c7b-41ab-b5cb-fafcd88a6704/tmp/usb/sda/sda2/ostree/deploy/webos/deploy/98a6531f9040e90bdae1c6eb5e8b273980319f607931e07a4374ec74.0/usr/palm/applications/com.webos.app.mediaviewer/media/webOS_OSE_Intro_3.mp4",
+                "width": 1920
+            }
+        ],
+        "count": 2
+    },
+    "errorText": "No Error"
+}

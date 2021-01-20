@@ -44,14 +44,14 @@ Item {
 
     Connections {
         target: mediaIndexer
-        onPlaylistUpdated: {
+//        onPlaylistUpdated: {
 
-        }
-        onCurrentMusicIndexChanged: {
-        }
-        onShuffleModeChanged: {
-        }
-        onLoopModeChanged: {
-        }
+//        }
+//        onCurrentMusicIndexChanged: {
+//        }
+//        onShuffleModeChanged: {
+//        }
+//        onLoopModeChanged: {
+//        }
     }
 }

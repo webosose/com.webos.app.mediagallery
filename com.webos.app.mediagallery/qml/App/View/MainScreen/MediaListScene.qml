@@ -29,6 +29,19 @@ Item {
 // TODO: maybe we need current file location
 //    property int currentPlaylistIndex: 0
 
+    property var deviceMediaList: []
+
+    Connections {
+        target: service.mediaIndexer
+        onListUpdated: {
+            appLog.debug("MediaListScene connection with media indexer :: onListUpdated");
+            //TODO: seperate folder with file
+//            var temp_devicename = "aaa";
+
+            folderList.updateListModel(list);
+        }
+    }
+
     MediaListComponent {
         id: folderList
         width: root.width; height: root.height

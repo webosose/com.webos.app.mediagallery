@@ -19,9 +19,12 @@ Item {
     id: root
     objectName: "mediaIndexerService"
 
-    signal listUpdated();
-    signal playlistUpdated(int updatedIndex);
-    signal playlistRefreshed();
+    //TODO: connect currentMode with ModeView
+    property int currentMode: 0 // 0:photo, 1: video, 2: music
+    property var listType: "imageList"
+    signal listUpdated(var list);
+//    signal playlistUpdated(int updatedIndex);
+//    signal playlistRefreshed();
 
     property bool isOnUpdating: false
 
@@ -29,46 +32,16 @@ Item {
         id: updatingTimer
         interval: 8000
         onTriggered: {
+            appLog.debug("mediaIndexer updatingTimer ends");
             isOnUpdating = false;
         }
     }
 
-    onPlayListChanged: {
-        // Playlist refreshed, so UI need to redraw all
-        appLog.info("Playlist refreshed.");
-        playlistRefreshed();
-    }
+    readonly property alias mediaList: mediaIndexerService.mediaList
 
-    readonly property alias audioList: mediaIndexerService.audioList
-
-    property var playList: []
-    property var defaultPlayList: []
-    property var shuffledPlayList: []
-    property int currentMusicIndex: -1
-    property bool shuffleMode: false
-    property bool loopMode: false
-
-    Component.onCompleted: {
-        playList = defaultPlayList;
-    }
-
-    function addPlayList(index) {
-        // Deep copy
-        console.warn(defaultPlayList);
-        console.warn(defaultPlayList.length);
-        if (defaultPlayList.length == 0) {
-            defaultPlayList.push(JSON.parse(JSON.stringify(audioList[index])));
-            shuffledPlayList.push(JSON.parse(JSON.stringify(audioList[index])));
-
-            currentMusicIndex = 0;
-
-        } else {
-            defaultPlayList.splice(currentMusicIndex + 1, 0, JSON.parse(JSON.stringify(audioList[index])));
-            shuffledPlayList.splice(currentMusicIndex + 1, 0, JSON.parse(JSON.stringify(audioList[index])));
-            currentMusicIndex = currentMusicIndex + 1;
-        }
-        playlistUpdated(currentMusicIndex);
-    }
+//    Component.onCompleted: {
+//        playList = defaultPlayList;
+//    }
 
     ServiceStateNotifier {
         appId: stringSheet.appIdForLSService
@@ -83,10 +56,10 @@ Item {
 
         property int updateMediaToken: -1
         property int updateDeviceToken: -1
-        property var audioList: []
+        property var mediaList: []
 
         onConnected: {
-
+            appLog.debug("MediaInexer connect");
             updateDeviceList();
 
             if (isDesktopMode)
@@ -94,70 +67,80 @@ Item {
         }
 
         function updateMediaList() {
-            updateMediaToken = call("luna://" + serviceName, "/getAudioList", JSON.stringify({}));
+            switch(currentMode) {
+            case 0:
+                listType = "imageList";
+                break;
+            case 1:
+                listType = "videoList";
+                break;
+            case 2:
+                listType = "audioList";
+                break;
+            }
+
+            var command = "get" + listType.charAt(0).toUpperCase() + listType.slice(1);
+            updateMediaToken = call("luna://" + serviceName, "/" + command, JSON.stringify({}));
+            appLog.debug("updateMediaList call " + currentMode + " updateMediaToken = " + updateMediaToken)
         }
 
         function updateDeviceList() {
             updateDeviceToken = call("luna://" + serviceName, "/getDeviceList", JSON.stringify({"subscribe":true}));
+            appLog.debug("call device list updateMediaToken = " + updateDeviceToken)
         }
 
-        onAudioListChanged: {
-//            var i;
-//            for (i = 0 ; i < audioList.length; i++) {
-//                // Input metadatas if not exists
-//                if (audioList[i].title === "") {
-//                    var tempTitleList = audioList[i].file_path.split("\/");
-//                    if (tempTitleList.length == 0)
-//                        audioList[i].title = stringSheet.audioList.noTitle;
-//                    else
-//                        audioList[i].title = tempTitleList[tempTitleList.length - 1];
-//                    audioList[i].title = audioList[i].title.replace(".mp3", "");
-//                    audioList[i].title = audioList[i].title.replace(".wav", "");
-//                }
-//                if (audioList[i].album === "") {
-//                    audioList[i].album = stringSheet.audioList.noAlbum;
-//                }
-//                if (audioList[i].genre === "") {
-//                    audioList[i].genre = stringSheet.audioList.noGenre;
-//                }
-//                if (audioList[i].artist === "") {
-//                    audioList[i].artist = stringSheet.audioList.noArtist;
-//                }
-//                if (audioList[i].thumbnail === 0) {
-//                    audioList[i].thumbnail = "";
-//                }
-//                appLog.info("[" + i + "]", "t:",audioList[i].title,"a:",audioList[i].artist,"g:",audioList[i].genre);
-//            }
+        onMediaListChanged: {
+            appLog.info("mediaIndexer medialistChanged");
+            root.listUpdated(mediaList);
 
-//            root.listUpdated();
         }
 
         property Timer reservateListUpdate: Timer {
             interval: 4000
             onTriggered: {
+                appLog.debug("mediaIndexer reservateListUpdate ends");
                 mediaIndexerService.updateMediaList();
             }
         }
 
+        function listProperty(item)
+        {
+            for (var p in item)
+                appLog.debug(p + ": " + item[p]);
+        }
+
         onResponse: {
-//            var response = JSON.parse(payload);
-//            var i;
+            var response = JSON.parse(payload)
 
-//            switch(token) {
-//            case updateDeviceToken:
-//                isOnUpdating = true;
-//                updatingTimer.restart();
-//                reservateListUpdate.restart();
-//                break;
-//            case updateMediaToken:
-//                if (response.audioList === undefined)
-//                    break;
-//                if (response.audioList.count === undefined)
-//                    break;
-
-//                audioList = response.audioList.results;
-//                break;
-//            }
+            switch(token) {
+            case updateDeviceToken:
+                isOnUpdating = true;
+                updatingTimer.restart();
+                reservateListUpdate.restart();
+                break;
+            case updateMediaToken:
+                appLog.debug("mediaIndexer updateMediaToken = " + currentMode);
+                appLog.debug("mediaIndexer mediaList response :: " + JSON.stringify(payload));
+                listProperty(response);
+                var responseMediaList = response.imageList;
+                if(currentMode == 1) {
+                    responseMediaList = response.videoList;
+                }
+                else if(currentMode == 2) {
+                    responseMediaList = response.audioList;
+                }
+                if (responseMediaList == undefined) {
+                    break;
+                }
+                if (responseMediaList.count == undefined) {
+                    break;
+                }
+                mediaList = responseMediaList.results;
+                appLog.debug("Get MediaList = " + mediaList);
+                break;
+            default:
+                appLog.debug("Received unknown token = " + token);
+            }
         }
     }
 }

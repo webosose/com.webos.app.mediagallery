@@ -16,6 +16,7 @@ Item {
     id: root
 
     property bool smallMode: width < appStyle.relativeXBasedOnFHD(20)
+    property var src : ""
 
     Rectangle {
         anchors.fill: parent
@@ -23,13 +24,20 @@ Item {
     }
 
     Text {
-        font: smallMode ? appStyle.engFont.getFont(parent.width * 0.7 / appStyle.scale)
-                        : appStyle.engFont.getFont(parent.width / 4 / appStyle.scale)
-        text: smallMode ? stringSheet.common.noImageSmall : stringSheet.common.noImage
+        font: src == ""
+                  ? (smallMode ? appStyle.engFont.getFont(parent.width * 0.7 / appStyle.scale)
+                               : appStyle.engFont.getFont(parent.width / 4 / appStyle.scale))
+                  : appStyle.engFont.getFont(15)
+//        font: smallMode ? appStyle.engFont.getFont(parent.width * 0.7 / appStyle.scale)
+//                        : appStyle.engFont.getFont(parent.width / 4 / appStyle.scale)
+//        text: smallMode ? stringSheet.common.noImageSmall : stringSheet.common.noImage
+        text: src == ""
+                  ? (smallMode ? stringSheet.common.noImageSmall : stringSheet.common.noImage)
+                  : src
         anchors.fill: parent
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         color: "white"
-        wrapMode: Text.WordWrap
+        wrapMode: src == "" ? Text.WordWrap : Text.WrapAnywhere
     }
 }
