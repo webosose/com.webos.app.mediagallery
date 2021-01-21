@@ -23,9 +23,9 @@ AppStringSheet {
 
     property QtObject modeView: QtObject {
         property var mode: [
-            qsTr("Photo") + es,
+            qsTr("Image") + es,
             qsTr("Video") + es,
-            qsTr("Music") + es
+            qsTr("Audio") + es
         ]
     }
 

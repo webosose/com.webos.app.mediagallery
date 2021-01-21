@@ -19,7 +19,6 @@ Item {
 
     property var viewMain: _viewMain
 
-
     Image {
         id: bgImg
         source: imageDir + "bg_pattern2.png"

@@ -18,6 +18,15 @@ import QmlAppComponents 0.1
 Item {
     id: root
 
+    Connections {
+        target: modeView
+        onNotifyModeClicked : {
+            appLog.debug("Mode Changed to " + stringSheet.modeView.mode[index]);
+            appRoot.appMode = stringSheet.modeView.mode[index];
+        }
+    }
+
+
     property var sceneController: {
         "goNowPlaying": function() {root.state = "NowPlaying"},
         "goMusicList": function() {root.state = "MusicList"}
@@ -56,10 +65,6 @@ Item {
         id: modeView
         x: appStyle.relativeXBasedOnFHD(180)
         y: appStyle.relativeYBasedOnFHD(100)
-
-        onPageChanged: {
-            mainScreenView.modePage = index;
-        }
     }
 
     Rectangle {

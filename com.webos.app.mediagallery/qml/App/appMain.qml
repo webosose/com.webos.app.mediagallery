@@ -17,7 +17,7 @@ import "./services"
 import QmlAppComponents 0.1
 
 AppMain {
-    id: root
+    id: appRoot
 
     // global variables.
     property Style appStyle: Style {}
@@ -26,7 +26,7 @@ AppMain {
     // It also has appLog, imageDir
     isDesktopMode: false
     debugMode: false// || isDesktopMode
-    property var appRoot: root
+//    property var appRoot: root
 
     // window settings
     width: appStyle.width
@@ -38,6 +38,8 @@ AppMain {
     // application settings
     title: stringSheet.appTitle
     appId: stringSheet.appId
+
+    property var appMode: stringSheet.modeView.mode[0]
 
     // Service
     property ServiceRoot service: _service

@@ -21,13 +21,11 @@ import "../commonComponents"
 Item {
     id: root
 
-    objectName: "modeView"
-
     width: appStyle.relativeXBasedOnFHD(380)
     height: appStyle.relativeYBasedOnFHD(510)
     clip: true
     
-    signal pageChanged(int index)
+    signal notifyModeClicked(int index)
 
     DebugBackground {}
 
@@ -36,7 +34,7 @@ Item {
         menuElements: stringSheet.modeView.mode
 
         onCurrentIndexChanged: {
-            pageChanged(currentIndex);
+            root.notifyModeClicked(currentIndex);
         }
     }
 }

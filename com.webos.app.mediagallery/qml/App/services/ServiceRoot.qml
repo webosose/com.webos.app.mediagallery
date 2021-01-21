@@ -26,6 +26,7 @@ Item {
     property MediaIndexerService mediaIndexer: _mediaIndexer
     MediaIndexerService {
         id: _mediaIndexer
+        currentMode: appRoot.appMode
     }
     property SettingsServiceWrapper mediaGalleryControllerService: _musicControllerService
     SettingsServiceWrapper {
