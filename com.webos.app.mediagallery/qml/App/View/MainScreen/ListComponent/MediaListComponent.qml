@@ -42,13 +42,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     width: appStyle.relativeXBasedOnFHD(150)
                     height: appStyle.relativeYBasedOnFHD(150)
-                    source: file_path
+                    source: thumbnail
+                    sourceSize.width: 150
 
                     NoImage {
                         width: appStyle.relativeXBasedOnFHD(150)
                         height: appStyle.relativeYBasedOnFHD(150)
-                        smallMode: true
-                        src: title
+                        src: title == "" ? "No title" : title
                         visible: parent.status != Image.Ready
                     }
                 }
@@ -102,8 +102,30 @@ Item {
 
         mediaListModel.clear();
         for (var i = 0 ; i < list.length; i++) {
-            appLog.debug("path = " + list[i].file_path);
+            if(list[i].file_path == undefined) {
+                appLog.warn(i + "th data doesn't have file path : " + listProperty(list[i]))
+                continue;
+            }
+
+            if(list[i].thumbnail == undefined) {
+                //TODO: check file is image file
+                if(appRoot.appMode == "Image")
+                    list[i].thumbnail = list[i].file_path;
+                else
+                    list[i].thumbnail = "DefaultImage";
+            }
             mediaListModel.append(list[i]);
+        }
+
+    }
+
+    function listProperty(item)
+    {
+        for (var p in item) {
+            appLog.debug(p + ": " + item[p] + " " + typeof(item[p]));
+            for(var q in item[p]) {
+                    appLog.debug(q + ": " + item[p][q] + " " + typeof(item[p][q]));
+            }
         }
 
     }

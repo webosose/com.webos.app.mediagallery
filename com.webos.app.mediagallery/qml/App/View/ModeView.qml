@@ -24,7 +24,7 @@ Item {
     width: appStyle.relativeXBasedOnFHD(380)
     height: appStyle.relativeYBasedOnFHD(510)
     clip: true
-    
+
     signal notifyModeClicked(int index)
 
     DebugBackground {}
