@@ -42,7 +42,7 @@ Item {
         }
     }
 
-    MediaListComponent {
+    DelayRequestListcomponent {
         id: folderList
         width: root.width; height: root.height
 //        target: "genre" //TODO: Folder or file

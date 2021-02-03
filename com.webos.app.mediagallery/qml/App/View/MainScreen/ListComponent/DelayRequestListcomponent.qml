@@ -22,52 +22,61 @@ Item {
         appLog.debug("MediaListComponent completed");
     }
 
+    property var isScrolling: false
+
     Component {
-        id: medidaListDelegate
+        id: listDelegate
 
         Item {
             id: base
-//            width: appStyle.relativeYBasedOnFHD(120);
-//            height: appStyle.relativeYBasedOnFHD(120);
             width: mediaListView.cellWidth
             height: mediaListView.cellHeight
+
+            Component.onCompleted: {
+                appLog.debug("onCompleted :: " + index);
+            }
+
+            Component.onDestruction:  {
+                appLog.debug("onDestruction :: " + index);
+            }
 
             Item {
                 id: contentBase
                 anchors.fill: parent
-                Image {
-                    id: fileImage
-                    x: appStyle.relativeXBasedOnFHD(30)
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: appStyle.relativeXBasedOnFHD(150)
-                    height: appStyle.relativeYBasedOnFHD(150)
-                    source: thumbnail
-                    sourceSize.width: 150
-                    asynchronous: true
-
-                    NoImage {
-                        width: appStyle.relativeXBasedOnFHD(150)
-                        height: appStyle.relativeYBasedOnFHD(150)
-                        src: title == "" ? "No title" : title
-                        visible: parent.status != Image.Ready
+                Component.onCompleted: {
+                    if (isScrolling == false)
+                        loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+                    else {
+                        loader.setSource("ThumbnailImage.qml");
                     }
                 }
 
-                Text {
-                    width: appStyle.relativeXBasedOnFHD(150)
-                    height: appStyle.relativeXBasedOnFHD(20)
+                property bool thumbnailLoaded: false
 
-                    anchors.bottom: parent.bottom
+                Connections {
+                    target: root
+                    onIsScrollingChanged: {
+                        if(isScrolling == false && contentBase.thumbnailLoaded == false) {
+                            appLog.debug("Scrolling stopped / "  + index + "call thumbnail");
+                            loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+                            contentBase.thumbnailLoaded = true
+                        }
+                    }
+                }
+
+                Loader {
+                    id: loader
                     anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    asynchronous: true
+                }
 
-                    text: title
-                    color: "white"
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font: appStyle.engFont.getFont(20)
-                    wrapMode: Text.WordWrap
-                    elide: Text.ElideRight
+                Rectangle {
+                    id: borderLine
+                    anchors.fill: parent
+                    border.color: "black"
+                    border.width: appStyle.relativeXBasedOnFHD(2)
+                    color: "transparent"
                 }
             }
             IconButton {
@@ -79,6 +88,8 @@ Item {
                                 "\n file = " + folderFile[1]);
                     service.webOSService.singleCallService.callSimpleToast("folder = " + folderFile[0] +
                                                                            " / file = " + folderFile[1]);
+
+                    console.log("HYEIN  item clicked :" +index);
                 }
             }
         }
@@ -104,8 +115,13 @@ Item {
         mediaListModel.clear();
         for (var i = 0 ; i < list.length; i++) {
             if(list[i].file_path == undefined) {
-                appLog.warn(i + "th data doesn't have file path : " + listProperty(list[i]))
+                appLog.warn(i + "th data doesn't have file path : " + Utils.listProperty(list[i]))
                 continue;
+            }
+
+            if(list[i].title == undefined || list[i].title == "") {
+                var folderFile = getFolderFileFromPath(list[i].file_path);
+                list[i].title = folderFile[1];
             }
 
             if(list[i].thumbnail == undefined) {
@@ -120,27 +136,40 @@ Item {
 
     }
 
-    function listProperty(item)
-    {
-        for (var p in item) {
-            appLog.debug(p + ": " + item[p] + " " + typeof(item[p]));
-            for(var q in item[p]) {
-                    appLog.debug(q + ": " + item[p][q] + " " + typeof(item[p][q]));
-            }
+    Timer {
+        id: loadImageTimer
+        interval: 600
+        onTriggered: {
+            appLog.debug("loadTimer ends");
+            isScrolling = false;
         }
-
     }
+
 
     GridView {
         id: mediaListView
         anchors.fill: parent
         model: mediaListModel
 
-        cellWidth: appStyle.relativeYBasedOnFHD(250)
-        cellHeight: appStyle.relativeYBasedOnFHD(250)
-        delegate: medidaListDelegate
+        cellWidth: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+        cellHeight: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+        delegate: listDelegate
         focus: true
 
-//        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+        property real prevV: 0.0
+        onVerticalVelocityChanged: {
+            if(!isScrolling) isScrolling = true;
+            prevV = Math.abs(prevV);
+            var currV = Math.abs(verticalVelocity);
+            if(prevV >= currV) {
+                var diff = prevV - currV;
+                if(diff < 20){
+                    loadImageTimer.restart();
+                    appLog.debug("loadTimer starts");
+                }
+            }
+            prevV = verticalVelocity;
+
+        }
     }
 }

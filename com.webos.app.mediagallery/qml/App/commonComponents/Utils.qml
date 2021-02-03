@@ -11,16 +11,16 @@
  * LICENSE@@@ */
 
 import QtQuick 2.4
-import QmlAppComponents 0.1
 
-AppStyle {
-    id: root
+QtObject {
+    function listProperty(item)
+    {
+        for (var p in item) {
+            appLog.debug(p + ": " + item[p] + " " + typeof(item[p]));
+            for(var q in item[p]) {
+                    appLog.debug(q + ": " + item[p][q] + " " + typeof(item[p][q]));
+            }
+        }
 
-    // Not sure but I hope this readonly may better than just binding formula.
-    baseWidth: 1920
-    baseHeight: 720
-    width: baseWidth * 1.5
-    height: baseHeight * 1.5
-
-    property int gridViewSize: 200
+    }
 }
