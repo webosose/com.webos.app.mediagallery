@@ -22,13 +22,13 @@ Item {
     property string currentMode: appRoot.appMode // 0:image, 1: video, 2: audio
     property var listType: "imageList"
     signal listUpdated(var list);
-//    signal playlistUpdated(int updatedIndex);
-//    signal playlistRefreshed();
 
     property bool isOnUpdating: false
+    property bool isModeChanged: false
 
     onCurrentModeChanged: {
         appLog.debug("AppModeChanged to :: " + appMode + " :: get new list");
+        isModeChanged = true
         mediaIndexerService.updateMediaList();
     }
 
@@ -41,11 +41,9 @@ Item {
         }
     }
 
-    readonly property alias mediaList: mediaIndexerService.mediaList
-
-//    Component.onCompleted: {
-//        playList = defaultPlayList;
-//    }
+    property var getFileListOfFolder: function(folderName) {
+        return mediaListController.getFileListOfFolder(folderName);
+    }
 
     ServiceStateNotifier {
         appId: stringSheet.appIdForLSService
@@ -60,7 +58,8 @@ Item {
 
         property int updateMediaToken: -1
         property int updateDeviceToken: -1
-        property var mediaList: []
+
+        signal mediaListChanged(bool isModeChange, var mediaList);
 
         onConnected: {
             appLog.debug("MediaInexer connect");
@@ -71,20 +70,6 @@ Item {
         }
 
         function updateMediaList() {
-//            switch(currentMode) {
-//            case 0:
-//                listType = "imageList";
-//                break;
-//            case 1:
-//                listType = "videoList";
-//                break;
-//            case 2:
-//                listType = "audioList";
-//                break;
-//            }
-
-//            var command = "get" + listType.charAt(0).toUpperCase() + listType.slice(1);
-//            updateMediaToken = call("luna://" + serviceName, "/" + command, JSON.stringify({}));
             var command = "get" + currentMode + "List"
             updateMediaToken = call("luna://" + serviceName, "/" + command, JSON.stringify({}));
             appLog.debug("updateMediaList call " + currentMode + " updateMediaToken = " + updateMediaToken)
@@ -95,29 +80,12 @@ Item {
             appLog.debug("call device list updateMediaToken = " + updateDeviceToken)
         }
 
-        onMediaListChanged: {
-            appLog.info("mediaIndexer medialistChanged");
-            root.listUpdated(mediaList);
-
-        }
-
         property Timer reservateListUpdate: Timer {
             interval: 4000
             onTriggered: {
-                appLog.debug("mediaIndexer reservateListUpdate ends");
+                appLog.debug( "mediaIndexer reservateListUpdate ends");
                 mediaIndexerService.updateMediaList();
             }
-        }
-
-        function listProperty(item)
-        {
-            for (var p in item) {
-                appLog.debug(p + ": " + item[p] + " " + typeof(item[p]));
-                for(var q in item[p]) {
-                        appLog.debug(q + ": " + item[p][q] + " " + typeof(item[p][q]));
-                }
-            }
-
         }
 
         onResponse: {
@@ -131,8 +99,6 @@ Item {
                 break;
             case updateMediaToken:
                 appLog.debug("mediaIndexer updateMediaToken = " + currentMode);
-//                appLog.debug("mediaIndexer mediaList response :: " + JSON.stringify(payload));
-//                listProperty(response);
 
                 var responseMediaList;
                 if(currentMode == "Video") {
@@ -149,13 +115,21 @@ Item {
                 if (responseMediaList.count == undefined) {
                     break;
                 }
-                mediaList = responseMediaList.results;
-                appLog.debug("Get MediaList = " + mediaList.length);
-//                listProperty(mediaList);
+//                mediaList = responseMediaList.results;
+                appLog.debug("Get MediaList = " + responseMediaList.results.length);
+                mediaIndexerService.mediaListChanged(isModeChanged, responseMediaList.results);
+                if(isModeChanged) isModeChanged = false
                 break;
             default:
                 appLog.debug("Received unknown token = " + token);
             }
+        }
+    }
+
+    MediaListController {
+        id: mediaListController
+        onFileTreeUpdated: {
+            root.listUpdated(list);
         }
     }
 }

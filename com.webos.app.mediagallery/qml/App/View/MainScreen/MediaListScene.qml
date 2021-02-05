@@ -29,59 +29,54 @@ Item {
 // TODO: maybe we need current file location
 //    property int currentPlaylistIndex: 0
 
-    property var deviceMediaList: []
+    property var currentFolder: mainScreenView.currentFolder
 
-    Connections {
-        target: service.mediaIndexer
-        onListUpdated: {
-            appLog.debug("MediaListScene connection with media indexer :: onListUpdated");
-            //TODO: seperate folder with file
-//            var temp_devicename = "aaa";
-
-            folderList.updateListModel(list);
-        }
+    onCurrentFolderChanged: {
+//        if(currentFolder !== "") {
+            var list = service.mediaIndexer.getFileListOfFolder(currentFolder);
+            fileList.updateListModel(list);
+//        }
     }
 
     DelayRequestListcomponent {
-        id: folderList
+        id: fileList
         width: root.width; height: root.height
-//        target: "genre" //TODO: Folder or file
     }
 
-    Rectangle {
-        id: loadingScrim
-        color: "#90101010"
-        visible: service.mediaIndexer.isOnUpdating
-        width: parent.width - appStyle.relativeXBasedOnFHD(70);
-        height: parent.height
+//    Rectangle {
+//        id: loadingScrim
+//        color: "#90101010"
+//        visible: service.mediaIndexer.isOnUpdating
+//        width: parent.width - appStyle.relativeXBasedOnFHD(70);
+//        height: parent.height
 
-        Text {
-            anchors.fill: parent
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            color: appStyle.colors.mainTextColor
-            font: appStyle.engFont.mainFont42
-            text: stringSheet.mediaList.onLoading + dot
+//        Text {
+//            anchors.fill: parent
+//            verticalAlignment: Text.AlignVCenter
+//            horizontalAlignment: Text.AlignHCenter
+//            color: appStyle.colors.mainTextColor
+//            font: appStyle.engFont.mainFont42
+//            text: stringSheet.mediaList.onLoading + dot
 
-            property string dot: "."
-            Timer {
-                repeat: true
-                running: loadingScrim.visible
-                interval: 1000
-                onTriggered: {
-                    parent.dot = parent.dot + ".";
-                    if (parent.dot.length > 3)
-                        parent.dot = "."
-                }
-            }
-        }
+//            property string dot: "."
+//            Timer {
+//                repeat: true
+//                running: loadingScrim.visible
+//                interval: 1000
+//                onTriggered: {
+//                    parent.dot = parent.dot + ".";
+//                    if (parent.dot.length > 3)
+//                        parent.dot = "."
+//                }
+//            }
+//        }
 
-        MouseArea {
-            id: consumer
-            anchors.fill: parent
-            onClicked: {}
-            onPressed: {}
-            onReleased: {}
-        }
-    }
+//        MouseArea {
+//            id: consumer
+//            anchors.fill: parent
+//            onClicked: {}
+//            onPressed: {}
+//            onReleased: {}
+//        }
+//    }
 }

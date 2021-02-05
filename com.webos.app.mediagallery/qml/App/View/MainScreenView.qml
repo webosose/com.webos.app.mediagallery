@@ -28,40 +28,100 @@ Item {
     objectName: "mainScreenView"
 
     width: appStyle.relativeXBasedOnFHD(1250)
-    height: appStyle.relativeYBasedOnFHD(510 + 80)
+    height: appStyle.relativeYBasedOnFHD(440 + 150)
     clip: true
-    
-    property int modePage: 0
 
-    states: [
-        State {
-            name: "Folders"
-        },
-        State {
-            name: "Files"
-        }
-    ]
+    //TODO : maybe we will show and hide folder view
+//    states: [
+//        State {
+//            name: "Folders"
+//        },
+//        State {
+//            name: "Files"
+//        }
+//    ]
 
-    state: "Folders"
+//    state: "Folders"
 
-    onStateChanged: {
-    }
+//    onStateChanged: {
+//    }
 
     DebugBackground {}
+
+    property var currentFolder: "";
+
+    onCurrentFolderChanged: {
+        appLog.debug("MainScreenView currentFolder " + currentFolder);
+    }
+
+    Connections {
+        target: folderListScene
+
+        onNotifyFolderClicked: {
+            appLog.debug("NotifyFolderClick in MainScreenView :" +folderName);
+            currentFolder = folderName;
+        }
+
+    }
+
+    FolderScene {
+        id: folderListScene
+        objectName: "folderListScene"
+        height: appStyle.relativeYBasedOnFHD(150)
+        anchors.top:parent
+        anchors.bottom:mediaListScene.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+    }
 
     MediaListScene {
         id: mediaListScene
 
         objectName: "mediaListScene"
-        anchors.fill: parent
 
-        anchors.right: parent.right
+        height: appStyle.relativeYBasedOnFHD(440)
+
+        anchors.top:folderListScene.bottom
         anchors.left: parent.left
-//        height: appStyle.relativeYBasedOnFHD(510)
-//        height: parent.hight
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
 
         DebugBackground {}
     }
+    Rectangle {
+        id: loadingScrim
+        color: "#90101010"
+        visible: service.mediaIndexer.isOnUpdating
+        width: parent.width - appStyle.relativeXBasedOnFHD(70);
+        height: parent.height
 
+        Text {
+            anchors.fill: parent
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            color: appStyle.colors.mainTextColor
+            font: appStyle.engFont.mainFont42
+            text: stringSheet.mediaList.onLoading + dot
+
+            property string dot: "."
+            Timer {
+                repeat: true
+                running: loadingScrim.visible
+                interval: 1000
+                onTriggered: {
+                    parent.dot = parent.dot + ".";
+                    if (parent.dot.length > 3)
+                        parent.dot = "."
+                }
+            }
+        }
+
+        MouseArea {
+            id: consumer
+            anchors.fill: parent
+            onClicked: {}
+            onPressed: {}
+            onReleased: {}
+        }
+    }
 }

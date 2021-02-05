@@ -29,15 +29,15 @@ Item {
 
         Item {
             id: base
-            width: mediaListView.cellWidth
-            height: mediaListView.cellHeight
+            width: thumbnailGridView.cellWidth
+            height: thumbnailGridView.cellHeight
 
             Component.onCompleted: {
-                appLog.debug("onCompleted :: " + index);
+//                appLog.debug("onCompleted :: " + index);
             }
 
             Component.onDestruction:  {
-                appLog.debug("onDestruction :: " + index);
+//                appLog.debug("onDestruction :: " + index);
             }
 
             Item {
@@ -107,30 +107,30 @@ Item {
     }
 
     function updateListModel(list){
-        appLog.debug("updateListModel :: " + list.length);
+        appLog.debug("DelayRequestListComponent:: updateListModel :: " + list.length);
         //TODO: based on filepath seperate list
 
-        var temp = JSON.parse(JSON.stringify(list));
+//        var temp = JSON.parse(JSON.stringify(list));
 
         mediaListModel.clear();
         for (var i = 0 ; i < list.length; i++) {
-            if(list[i].file_path == undefined) {
-                appLog.warn(i + "th data doesn't have file path : " + Utils.listProperty(list[i]))
-                continue;
-            }
+//            if(list[i].file_path == undefined) {
+//                appLog.warn(i + "th data doesn't have file path : " + Utils.listProperty(list[i]))
+//                continue;
+//            }
 
-            if(list[i].title == undefined || list[i].title == "") {
-                var folderFile = getFolderFileFromPath(list[i].file_path);
-                list[i].title = folderFile[1];
-            }
+//            if(list[i].title == undefined || list[i].title == "") {
+//                var folderFile = getFolderFileFromPath(list[i].file_path);
+//                list[i].title = folderFile[1];
+//            }
 
-            if(list[i].thumbnail == undefined) {
-                //TODO: check file is image file
-                if(appRoot.appMode == "Image")
-                    list[i].thumbnail = list[i].file_path;
-                else
-                    list[i].thumbnail = "DefaultImage";
-            }
+//            if(list[i].thumbnail == undefined) {
+//                //TODO: check file is image file
+//                if(appRoot.appMode == "Image")
+//                    list[i].thumbnail = list[i].file_path;
+//                else
+//                    list[i].thumbnail = "DefaultImage";
+//            }
             mediaListModel.append(list[i]);
         }
 
@@ -147,7 +147,7 @@ Item {
 
 
     GridView {
-        id: mediaListView
+        id: thumbnailGridView
         anchors.fill: parent
         model: mediaListModel
 

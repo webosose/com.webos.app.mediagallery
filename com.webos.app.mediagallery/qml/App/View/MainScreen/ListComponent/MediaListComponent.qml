@@ -88,12 +88,12 @@ Item {
         id: mediaListModel
     }
 
-    function getFolderFileFromPath(path) {
-        var splitArray = path.replace('file:///','').split('/');
-        var pathArray = [splitArray[splitArray.length - 2], splitArray[splitArray.length-1]];
+//    function getFolderFileFromPath(path) {
+//        var splitArray = path.replace('file:///','').split('/');
+//        var pathArray = [splitArray[splitArray.length - 2], splitArray[splitArray.length-1]];
 
-        return pathArray;
-    }
+//        return pathArray;
+//    }
 
     function updateListModel(list){
         appLog.debug("updateListModel :: " + list.length);

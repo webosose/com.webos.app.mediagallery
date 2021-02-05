@@ -18,14 +18,24 @@ import QmlAppComponents 0.1
 Item {
     id: root
 
+    property bool isOnModeChanging: false;
+    property string currentMode: appRoot.appMode
+
     Connections {
         target: modeView
         onNotifyModeClicked : {
             appLog.debug("Mode Changed to " + stringSheet.modeView.mode[index]);
             appRoot.appMode = stringSheet.modeView.mode[index];
+
+            //TODO : Search different way to notice mode changing to set currentfolder
+            isOnModeChanging = true;
         }
     }
 
+    onCurrentModeChanged: {
+        appLog.debug("Detect Mode Change. set the current folder as empty");
+        mainScreenView.currentFolder = "";
+    }
 
     property var sceneController: {
         "goNowPlaying": function() {root.state = "NowPlaying"},

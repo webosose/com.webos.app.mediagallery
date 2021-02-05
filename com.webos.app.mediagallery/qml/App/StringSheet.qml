@@ -21,11 +21,17 @@ AppStringSheet {
     //appIdForLSService exists.
     displayId: "-1"
 
+    property QtObject category: QtObject {
+        property string image: "Image"
+        property string video: "Video"
+        property string audio: "Audio"
+    }
+
     property QtObject modeView: QtObject {
         property var mode: [
-            qsTr("Image") + es,
-            qsTr("Video") + es,
-            qsTr("Audio") + es
+            qsTr(category.image) + es,
+            qsTr(category.video) + es,
+            qsTr(category.audio) + es
         ]
     }
 
