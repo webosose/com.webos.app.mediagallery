@@ -40,43 +40,12 @@ Item {
 
     DelayRequestListcomponent {
         id: fileList
-        width: root.width; height: root.height
+        width: root.width
+        height: root.height
+        gridViewWidth: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+        gridViewHeight: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+        delayLoadingTime: 600
+        componentLayout: "ThumbnailImage.qml"
+        componentParam: {"thumbnailUrl":"thumbnail"}
     }
-
-//    Rectangle {
-//        id: loadingScrim
-//        color: "#90101010"
-//        visible: service.mediaIndexer.isOnUpdating
-//        width: parent.width - appStyle.relativeXBasedOnFHD(70);
-//        height: parent.height
-
-//        Text {
-//            anchors.fill: parent
-//            verticalAlignment: Text.AlignVCenter
-//            horizontalAlignment: Text.AlignHCenter
-//            color: appStyle.colors.mainTextColor
-//            font: appStyle.engFont.mainFont42
-//            text: stringSheet.mediaList.onLoading + dot
-
-//            property string dot: "."
-//            Timer {
-//                repeat: true
-//                running: loadingScrim.visible
-//                interval: 1000
-//                onTriggered: {
-//                    parent.dot = parent.dot + ".";
-//                    if (parent.dot.length > 3)
-//                        parent.dot = "."
-//                }
-//            }
-//        }
-
-//        MouseArea {
-//            id: consumer
-//            anchors.fill: parent
-//            onClicked: {}
-//            onPressed: {}
-//            onReleased: {}
-//        }
-//    }
 }

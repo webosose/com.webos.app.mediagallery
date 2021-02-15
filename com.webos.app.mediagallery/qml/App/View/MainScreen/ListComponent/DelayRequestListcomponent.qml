@@ -19,10 +19,19 @@ Item {
 
     Component.onCompleted: {
         updateListModel();
-        appLog.debug("MediaListComponent completed");
     }
 
+    property var clickAction: function(index) {}
+
+    property var componentLayout: "" // qml file name: ex) ThumbnailImage.qml
+    property var componentParam: ({}) //{ [asynchronous param name in layout]: [key name in data list], ... }
+
     property var isScrolling: false
+
+    property var gridViewWidth: 200
+    property var gridViewHeight: 200
+
+    property var delayLoadingTime: 300
 
     Component {
         id: listDelegate
@@ -44,10 +53,19 @@ Item {
                 id: contentBase
                 anchors.fill: parent
                 Component.onCompleted: {
-                    if (isScrolling == false)
-                        loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+                    if (isScrolling == false) {
+
+                        var param = {};
+                        appLog.debug( "param keys :: " + Object.keys(componentParam));
+                        Object.keys(componentParam).forEach(function(keyName){
+                            appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
+                            param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
+                        })
+                        loader.setSource(componentLayout,param);
+//                        loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+                }
                     else {
-                        loader.setSource("ThumbnailImage.qml");
+                        loader.setSource(componentLayout);
                     }
                 }
 
@@ -57,8 +75,18 @@ Item {
                     target: root
                     onIsScrollingChanged: {
                         if(isScrolling == false && contentBase.thumbnailLoaded == false) {
-                            appLog.debug("Scrolling stopped / "  + index + "call thumbnail");
-                            loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+                            appLog.debug("Scrolling stopped / "  + index + " call thumbnail");
+
+                            //TODO : remove repetation
+                            var param = {};
+                            appLog.debug( "param keys :: " + Object.keys(componentParam));
+                            Object.keys(componentParam).forEach(function(keyName){
+                                appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
+                                param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
+                            })
+                            loader.setSource(componentLayout,param);
+//                            loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+
                             contentBase.thumbnailLoaded = true
                         }
                     }
@@ -82,63 +110,27 @@ Item {
             IconButton {
                 anchors.fill:parent
                 onClicked: {
-                    var folderFile = getFolderFileFromPath(file_path);
-                    appLog.debug("path = \n" + file_path +
-                                "\n folder = " + folderFile[0] +
-                                "\n file = " + folderFile[1]);
-                    service.webOSService.singleCallService.callSimpleToast("folder = " + folderFile[0] +
-                                                                           " / file = " + folderFile[1]);
-
-                    console.log("HYEIN  item clicked :" +index);
+                    clickAction();
                 }
             }
         }
     }
 
     ListModel {
-        id: mediaListModel
-    }
-
-    function getFolderFileFromPath(path) {
-        var splitArray = path.replace('file:///','').split('/');
-        var pathArray = [splitArray[splitArray.length - 2], splitArray[splitArray.length-1]];
-
-        return pathArray;
+        id: gridViewListModel
     }
 
     function updateListModel(list){
         appLog.debug("DelayRequestListComponent:: updateListModel :: " + list.length);
-        //TODO: based on filepath seperate list
-
-//        var temp = JSON.parse(JSON.stringify(list));
-
-        mediaListModel.clear();
+        gridViewListModel.clear();
         for (var i = 0 ; i < list.length; i++) {
-//            if(list[i].file_path == undefined) {
-//                appLog.warn(i + "th data doesn't have file path : " + Utils.listProperty(list[i]))
-//                continue;
-//            }
-
-//            if(list[i].title == undefined || list[i].title == "") {
-//                var folderFile = getFolderFileFromPath(list[i].file_path);
-//                list[i].title = folderFile[1];
-//            }
-
-//            if(list[i].thumbnail == undefined) {
-//                //TODO: check file is image file
-//                if(appRoot.appMode == "Image")
-//                    list[i].thumbnail = list[i].file_path;
-//                else
-//                    list[i].thumbnail = "DefaultImage";
-//            }
-            mediaListModel.append(list[i]);
+            gridViewListModel.append(list[i]);
         }
-
     }
 
     Timer {
         id: loadImageTimer
-        interval: 600
+        interval: root.delayLoadingTime
         onTriggered: {
             appLog.debug("loadTimer ends");
             isScrolling = false;
@@ -149,10 +141,10 @@ Item {
     GridView {
         id: thumbnailGridView
         anchors.fill: parent
-        model: mediaListModel
+        model: gridViewListModel
 
-        cellWidth: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
-        cellHeight: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+        cellWidth: root.gridViewWidth
+        cellHeight: root.gridViewHeight
         delegate: listDelegate
         focus: true
 
@@ -165,7 +157,7 @@ Item {
                 var diff = prevV - currV;
                 if(diff < 20){
                     loadImageTimer.restart();
-                    appLog.debug("loadTimer starts");
+                    appLog.debug("loadTimer starts : waits " + root.delayLoadingTime + "ms");
                 }
             }
             prevV = verticalVelocity;
