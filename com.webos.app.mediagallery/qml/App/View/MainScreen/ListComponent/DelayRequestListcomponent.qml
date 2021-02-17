@@ -110,7 +110,8 @@ Item {
             IconButton {
                 anchors.fill:parent
                 onClicked: {
-                    clickAction();
+                    thumbnailGridView.currentIndex = index;
+                    clickAction(index);
                 }
             }
         }

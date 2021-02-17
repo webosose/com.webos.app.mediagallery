@@ -35,6 +35,9 @@ Item {
         onListUpdated: {
             appLog.debug("FolderScene :: connection with media indexer :: onListUpdated");
             folderList = list;
+
+            //Set default currentFolder value if mode is changed
+            if(isModeChanged && folderList.length > 0) currentFolder = folderList[0];
             folderListComponent.updateListModel(list);
         }
     }

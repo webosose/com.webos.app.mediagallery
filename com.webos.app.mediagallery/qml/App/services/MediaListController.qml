@@ -70,11 +70,9 @@ Item {
                 }
 
                 var {folder,file} = getFolderFileFromPath(mediaList[i].file_path);
-    //            fileTreeDictionary[folderListfilePath.folder]
-//                appLog.debug("HYEIN :: " + folder + " // " + file);
                 var fileList = [];
+
                 if(folder in fileTreeDictionary) {
-//                    appLog.debug("******** " + folder + " before = " + fileTreeDictionary[folder].length);
                     fileList = fileTreeDictionary[folder];
 
                     //TODO: Need to check how to deal when same file data is received
@@ -87,7 +85,6 @@ Item {
                     }
                     if(exist == -1) fileList.push(mediaList[i]); // push new item
                     else fileList[exist] = mediaList[i]; // modify
-//                    appLog.debug("******** " + folder + " after = " + fileTreeDictionary[folder].length);
                 } else {
                     fileList.push(mediaList[i]);
                     fileTreeDictionary[folder] = fileList;
@@ -96,9 +93,6 @@ Item {
                 var allList = fileTreeDictionary["all"];
                 allList.push(mediaList[i]);
             }
-
-//            root.fileTreeUpdated(allList);
-//            root.fileTreeUpdated(fileTreeDictionary["190929"]);
 
             var folders = (Object.keys(fileTreeDictionary)).filter(value => value !== "all")
             root.fileTreeUpdated(folders);

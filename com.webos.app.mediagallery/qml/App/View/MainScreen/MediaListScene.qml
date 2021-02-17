@@ -30,11 +30,13 @@ Item {
 //    property int currentPlaylistIndex: 0
 
     property var currentFolder: mainScreenView.currentFolder
+    property var fileListForCurrentFolder: []
 
     onCurrentFolderChanged: {
 //        if(currentFolder !== "") {
             var list = service.mediaIndexer.getFileListOfFolder(currentFolder);
-            fileList.updateListModel(list);
+            fileListForCurrentFolder = list;
+            fileList.updateListModel(fileListForCurrentFolder);
 //        }
     }
 

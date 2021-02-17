@@ -21,7 +21,7 @@ Item {
 
     property string currentMode: appRoot.appMode // 0:image, 1: video, 2: audio
     property var listType: "imageList"
-    signal listUpdated(var list);
+    signal listUpdated(var list, bool isModeChanged);
 
     property bool isOnUpdating: false
     property bool isModeChanged: false
@@ -115,10 +115,9 @@ Item {
                 if (responseMediaList.count == undefined) {
                     break;
                 }
-//                mediaList = responseMediaList.results;
                 appLog.debug("Get MediaList = " + responseMediaList.results.length);
                 mediaIndexerService.mediaListChanged(isModeChanged, responseMediaList.results);
-                if(isModeChanged) isModeChanged = false
+
                 break;
             default:
                 appLog.debug("Received unknown token = " + token);
@@ -129,7 +128,9 @@ Item {
     MediaListController {
         id: mediaListController
         onFileTreeUpdated: {
-            root.listUpdated(list);
+            root.listUpdated(list, isModeChanged);
+
+            if(isModeChanged) isModeChanged = false
         }
     }
 }

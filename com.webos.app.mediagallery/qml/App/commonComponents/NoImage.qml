@@ -17,10 +17,11 @@ Item {
 
     property bool smallMode: width < appStyle.relativeXBasedOnFHD(20)
     property var src : ""
+    property string bgColor: "#909090"
 
     Rectangle {
         anchors.fill: parent
-        color: "#909090"
+        color: bgColor
     }
 
     Text {

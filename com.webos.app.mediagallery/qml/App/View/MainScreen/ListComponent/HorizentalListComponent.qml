@@ -25,28 +25,65 @@ Item {
         Item {
             id: base
             width: appStyle.gridViewSize
-            height: appStyle.relativeYBasedOnFHD(150)
+            height: appStyle.gridViewSize
 
             Item {
                 id: contenetBase
-                anchors.fill: parent
+//                anchors.fill: parent
+                width: appStyle.gridViewSize
+                height: appStyle.relativeYBasedOnFHD(130)
+                anchors.verticalCenter: base.verticalCenter
                 NoImage {
                     anchors.fill: parent
 //                    width: appStyle.gridViewSize
 //                    height: appStyle.relativeYBasedOnFHD(150)
                     src: itemToShow
+//                    bgColor: base.ListView.isCurrentItem ? "red" : ""
                 }
+            }
+            // indent the item if it is the current item
+            states: State {
+                name: "Current"
+                when:  base.ListView.isCurrentItem
+                PropertyChanges {
+                    target: contenetBase;
+                    width: contenetBase.width + appStyle.relativeYBasedOnFHD(5)
+                    height: contenetBase.height + appStyle.relativeYBasedOnFHD(5)  }
+            }
+            transitions: Transition {
+                NumberAnimation {
+                    target: contenetBase
+                    properties: "width"; duration: 200 }
+                NumberAnimation {
+                    target: contenetBase
+                    properties: "height"; duration: 200 }
             }
 
             IconButton {
                 anchors.fill:parent
                 onClicked: {
                     appLog.debug("FolderList clicked : " + index);
+                    horizontalListView.currentIndex = index;
                     clickAcion(index);
+                    appLog.warn("currentItem = " + horizontalListView.currentItem  + " / index = " + horizontalListView.currentIndex);
                 }
             }
         }
     }
+
+//    Component {
+//        id: highlightBar
+//        Rectangle {
+//            width: 220; height: 200
+//            color: "#FFFF88"
+//            x: horizontalListView.currentItem.x;
+//            z: 2
+//            Behavior on x {
+//                NumberAnimation {
+//                    duration: 500  }
+//            }
+//        }
+//    }
 
     ListModel {
         id: listModel
@@ -56,10 +93,24 @@ Item {
         id: horizontalListView
         anchors.fill: parent
         orientation: ListView.Horizontal
-        spacing: appStyle.relativeXBasedOnFHD(10)
+        spacing: appStyle.relativeXBasedOnFHD(30)
 
         delegate: listDelegate
         model: listModel
+
+        focus: true
+
+//        highlight: highlightBar
+//        highlight: Rectangle {
+//            width: appStyle.gridViewSize
+////            anchors.centerIn: base
+//            color: "transparent"
+//            border.color: "red"
+//            border.width: 2
+//            z:2
+//        }
+
+//        highlightFollowsCurrentItem: false
     }
 
 }
