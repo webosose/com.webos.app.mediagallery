@@ -21,5 +21,11 @@ Item {
 
     property BasicLunaService singleCallService: BasicLunaService {
         appId: stringSheet.appIdForLSService
+
+        function launchAppWithParam (appId, param) {
+            call("luna://com.webos.applicationManager/",
+                 "launch",
+                 JSON.stringify({"id":appId, "params":param}));
+        }
     }
 }

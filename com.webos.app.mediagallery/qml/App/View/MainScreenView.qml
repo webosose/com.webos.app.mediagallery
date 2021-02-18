@@ -49,6 +49,7 @@ Item {
     DebugBackground {}
 
     property var currentFolder: "";
+    property var startFolder: ""
 
     onCurrentFolderChanged: {
         appLog.debug("MainScreenView currentFolder " + currentFolder);

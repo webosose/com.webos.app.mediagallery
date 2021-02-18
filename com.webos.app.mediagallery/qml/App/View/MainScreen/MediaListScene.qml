@@ -49,5 +49,26 @@ Item {
         delayLoadingTime: 600
         componentLayout: "ThumbnailImage.qml"
         componentParam: {"thumbnailUrl":"thumbnail"}
+        clickAction: function(index) {
+            appLog.debug("file index clicked : " + fileListForCurrentFolder[index].file_path);
+            var filePath = fileListForCurrentFolder[index].file_path;
+            switch(appMode) {
+            case stringSheet.category.image:
+                appLog.debug("call image viewer");
+                break;
+            case stringSheet.category.video:
+                appLog.debug("call video viewer");
+                break;
+            case stringSheet.category.audio:
+                appLog.debug("call audio player");
+                service.webOSService.singleCallService.launchAppWithParam(
+                            stringSheet.viewerApps.audio,
+                            {"appMode":stringSheet.category.audio,
+                             "folder": currentFolder,
+                             "fileIndex": index,
+                             "fileUrl":filePath})
+                break;
+            }
+        }
     }
 }

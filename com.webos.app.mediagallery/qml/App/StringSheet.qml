@@ -27,6 +27,12 @@ AppStringSheet {
         property string audio: "Audio"
     }
 
+    property QtObject viewerApps: QtObject {
+        property string image: "com.webos.app.avn.photoViewer" //TBD
+        property string video: "com.webos.app.avn.videoPlayer" //TBD
+        property string audio: "com.webos.app.avn.music"
+    }
+
     property QtObject modeView: QtObject {
         property var mode: [
             qsTr(category.image) + es,

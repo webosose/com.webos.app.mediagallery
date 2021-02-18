@@ -12,11 +12,18 @@ Item {
     property var clickAcion: function(index) {}
 
     function updateListModel(list) {
+        appLog.debug("HorizentalListComponent :: start update List");
         listModel.clear();
         for(var i = 0; i < list.length; i++) {
             var listValue = list[i];
             listModel.append({itemToShow: listValue});
         }
+        appLog.debug("HorizentalListComponent :: end update List");
+    }
+
+    function setStartIndex(index) {
+        horizontalListView.currentIndex = index;
+        appLog.debug("HorizentalListComponent :: set start index = " + index);
     }
 
     Component {
@@ -38,7 +45,7 @@ Item {
 //                    width: appStyle.gridViewSize
 //                    height: appStyle.relativeYBasedOnFHD(150)
                     src: itemToShow
-//                    bgColor: base.ListView.isCurrentItem ? "red" : ""
+                    bgColor: base.ListView.isCurrentItem ? "#404040" : "#909090"
                 }
             }
             // indent the item if it is the current item

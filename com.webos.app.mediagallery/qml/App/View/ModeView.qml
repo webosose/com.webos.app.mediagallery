@@ -29,7 +29,12 @@ Item {
 
     DebugBackground {}
 
+    function setStartPoint(modeIndex) {
+        menuList.setStartIndex(modeIndex);
+    }
+
     MenuList {
+        id: menuList
         anchors.fill: parent
         menuElements: stringSheet.modeView.mode
 

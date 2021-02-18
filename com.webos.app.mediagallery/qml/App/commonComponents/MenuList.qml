@@ -35,6 +35,10 @@ Item {
             menuListModel.append({"name": menuElements[i]})
     }
 
+    function setStartIndex(index) {
+        listView.currentIndex = index;
+    }
+
     Component {
         id: listDelegate
         Item {

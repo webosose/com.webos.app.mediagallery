@@ -29,7 +29,7 @@ Item {
     onCurrentModeChanged: {
         appLog.debug("AppModeChanged to :: " + appMode + " :: get new list");
         isModeChanged = true
-        mediaIndexerService.updateMediaList();
+        mediaIndexerService.updateDeviceList();
     }
 
     Timer {
@@ -71,7 +71,7 @@ Item {
 
         function updateMediaList() {
             var command = "get" + currentMode + "List"
-            updateMediaToken = call("luna://" + serviceName, "/" + command, JSON.stringify({}));
+            updateMediaToken = call("luna://" + serviceName, "/" + command, JSON.stringify({"subscribe":true}));
             appLog.debug("updateMediaList call " + currentMode + " updateMediaToken = " + updateMediaToken)
         }
 

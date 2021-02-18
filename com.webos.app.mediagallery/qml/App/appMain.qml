@@ -57,18 +57,27 @@ AppMain {
 //        params = {"desc":"initial"}
 //    }
 
-//    onParamRedirectorChanged: {
-//        if (paramRedirector == undefined)
-//            return;
+    onParamRedirectorChanged: {
+        if (paramRedirector == undefined)
+            return;
 //        if (paramRedirector.desc == undefined)
 //            return;
 //        if (paramRedirector.desc == "initial")
 //            return;
 
-//        appLog.log("App relaunch Param came", appRoot.appId, "["+JSON.stringify(params)+"]");
+        appLog.log("App relaunch Param came", appRoot.appId, "["+JSON.stringify(params)+"]");
 
-//        // Do parse param and what you want to do in app
+//        var parameter = JSON.parse(paramRedirector);
 
+        if (paramRedirector.appMode == undefined){
+            appLog.log("11111111111111111111111111");
+            return;
+        }
+
+        //initialize
+        appLog.log(" ### Set appMode as " + paramRedirector.appMode);
+
+        uiRoot.viewMain.setStartPoint(paramRedirector.appMode,paramRedirector.folder);
 //        params = {"desc":"initial"};
-//    }
+    }
 }

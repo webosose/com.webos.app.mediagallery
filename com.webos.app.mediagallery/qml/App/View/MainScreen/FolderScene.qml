@@ -37,9 +37,41 @@ Item {
             folderList = list;
 
             //Set default currentFolder value if mode is changed
-            if(isModeChanged && folderList.length > 0) currentFolder = folderList[0];
-            folderListComponent.updateListModel(list);
+            if(service.mediaIndexer.isOnUpdating) {
+                appLog.debug("----- Waiting media list update ends");
+//                return;
+            }
+
+            folderListComponent.updateListModel(folderList);
+
+//            if(!checkStartPointValid() &&
+//                    isModeChanged &&
+//                    folderList.length > 0) currentFolder = folderList[0];
+//                    isModeChanged &&
+            if(!checkStartPointValid() &&
+                    folderList.length > 0) currentFolder = folderList[0];
         }
+    }
+
+    function checkStartPointValid(){
+        if(startFolder == "") { return false; }
+
+        const found = folderList.findIndex(element => element == startFolder);
+
+        appLog.debug("checkStartPointValid() called :: found = " + found);
+
+        if(found == -1) {
+            appLog.debug("Start folder cannot be found : folder name = " + startFolder
+                         + "\n Set first folder as start point");
+            startFolder = "";
+            return false;
+        }
+
+        currentFolder = startFolder;
+        folderListComponent.setStartIndex(found);
+        startFolder = "";
+
+        return true;
     }
 
     HorizentalListComponent {

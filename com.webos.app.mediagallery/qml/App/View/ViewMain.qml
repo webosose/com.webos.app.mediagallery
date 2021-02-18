@@ -21,6 +21,16 @@ Item {
     property bool isOnModeChanging: false;
     property string currentMode: appRoot.appMode
 
+    function setStartPoint(mode, folder, fileIndex, fileUrl){
+        //TODO : check mode is valid
+        const found = stringSheet.modeView.mode.findIndex(element => element == mode);
+        if(found != -1) {
+            appRoot.appMode = mode;
+            modeView.setStartPoint(found);
+            mainScreenView.startFolder = folder;
+        }
+    }
+
     Connections {
         target: modeView
         onNotifyModeClicked : {
