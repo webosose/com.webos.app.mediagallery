@@ -21,8 +21,8 @@ import "../commonComponents"
 Item {
     id: root
 
-    width: appStyle.relativeXBasedOnFHD(380)
-    height: appStyle.relativeYBasedOnFHD(510)
+//    width: appStyle.relativeXBasedOnFHD(appStyle.menuWitdh)
+//    height: appStyle.relativeYBasedOnFHD(appStyle.menuHeight)
     clip: true
 
     signal notifyModeClicked(int index)
@@ -33,7 +33,7 @@ Item {
         menuList.setStartIndex(modeIndex);
     }
 
-    MenuList {
+    MenuListGradation {
         id: menuList
         anchors.fill: parent
         menuElements: stringSheet.modeView.mode

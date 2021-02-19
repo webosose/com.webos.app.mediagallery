@@ -14,6 +14,7 @@ import QtQuick 2.4
 import "./MainScreen"
 import QmlAppComponents 0.1
 
+
 /*
 -- Scene ------ Loading
 I         I
@@ -27,8 +28,9 @@ Item {
 
     objectName: "mainScreenView"
 
-    width: appStyle.relativeXBasedOnFHD(1250)
-    height: appStyle.relativeYBasedOnFHD(440 + 150)
+//    width: appStyle.relativeXBasedOnFHD(appStyle.mainScreenWidth)
+//    height: appStyle.relativeYBasedOnFHD(appStyle.viewHeight)
+
     clip: true
 
     //TODO : maybe we will show and hide folder view
@@ -68,11 +70,30 @@ Item {
     FolderScene {
         id: folderListScene
         objectName: "folderListScene"
-        height: appStyle.relativeYBasedOnFHD(150)
-        anchors.top:parent
-        anchors.bottom:mediaListScene.top
+        height: appStyle.relativeYBasedOnFHD(appStyle.folderListHeight)
+        anchors.top: parent.top
+//        anchors.bottom: spacingRect.top
         anchors.left: parent.left
         anchors.right: parent.right
+//        width:root.width
+
+
+
+        DebugBackground {}
+    }
+
+    Rectangle {
+        id: spacingRect
+
+        objectName: "spacingRect"
+
+        height: appStyle.relativeYBasedOnFHD(appStyle.paddingInMainScreen)
+        anchors.top: folderListScene.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        color: "transparent"
+        DebugBackground {}
     }
 
     MediaListScene {
@@ -80,18 +101,25 @@ Item {
 
         objectName: "mediaListScene"
 
-        height: appStyle.relativeYBasedOnFHD(440)
+        height: appStyle.relativeYBasedOnFHD(appStyle.mediaListHeight)
 
-        anchors.top:folderListScene.bottom
+        anchors.top: spacingRect.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+
+        anchors.leftMargin: appStyle.relativeXBasedOnFHD(100)
+        anchors.rightMargin: appStyle.relativeXBasedOnFHD(100)
+
+        Rectangle {
+            color: "white"
+        }
 
         DebugBackground {}
     }
     Rectangle {
         id: loadingScrim
-        color: "#90101010"
+        color: appStyle.appColor.popupBackground
         visible: service.mediaIndexer.isOnUpdating
         width: parent.width - appStyle.relativeXBasedOnFHD(70);
         height: parent.height
@@ -100,7 +128,7 @@ Item {
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            color: appStyle.colors.mainTextColor
+            color: appStyle.appColor.mainTextColor
             font: appStyle.engFont.mainFont42
             text: stringSheet.mediaList.onLoading + dot
 

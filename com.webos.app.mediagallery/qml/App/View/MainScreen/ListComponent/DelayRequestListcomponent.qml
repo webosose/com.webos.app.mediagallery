@@ -25,6 +25,7 @@ Item {
 
     property var componentLayout: "" // qml file name: ex) ThumbnailImage.qml
     property var componentParam: ({}) //{ [asynchronous param name in layout]: [key name in data list], ... }
+    property var componentSize: ({})
 
     property var isScrolling: false
 
@@ -54,18 +55,44 @@ Item {
                 anchors.fill: parent
                 Component.onCompleted: {
                     if (isScrolling == false) {
-
+                        //TODO : remove repetation
                         var param = {};
                         appLog.debug( "param keys :: " + Object.keys(componentParam));
                         Object.keys(componentParam).forEach(function(keyName){
-                            appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
+//                            appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
                             param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
                         })
+
+                        if(componentSize.width == undefined) {
+                            param["width"] = gridViewWidth;
+                        } else {
+                            param["width"] = componentSize.width;
+                        }
+
+                        if(componentSize.height == undefined) {
+                            param["height"] = gridViewHeight;
+                        } else {
+                            param["height"] = componentSize.height;
+                        }
+
                         loader.setSource(componentLayout,param);
 //                        loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
                 }
                     else {
-                        loader.setSource(componentLayout);
+                        var param = {};
+                        if(componentSize.width == undefined) {
+                            param["width"] = gridViewWidth;
+                        } else {
+                            param["width"] = componentSize.width;
+                        }
+
+                        if(componentSize.height == undefined) {
+                            param["height"] = gridViewHeight;
+                        } else {
+                            param["height"] = componentSize.height;
+                        }
+
+                        loader.setSource(componentLayout,param);
                     }
                 }
 
@@ -81,9 +108,22 @@ Item {
                             var param = {};
                             appLog.debug( "param keys :: " + Object.keys(componentParam));
                             Object.keys(componentParam).forEach(function(keyName){
-                                appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
+//                                appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
                                 param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
                             })
+
+                            if(componentSize.width == undefined) {
+                                param["width"] = gridViewWidth;
+                            } else {
+                                param["width"] = componentSize.width;
+                            }
+
+                            if(componentSize.height == undefined) {
+                                param["height"] = gridViewHeight;
+                            } else {
+                                param["height"] = componentSize.height;
+                            }
+
                             loader.setSource(componentLayout,param);
 //                            loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
 
@@ -102,8 +142,8 @@ Item {
                 Rectangle {
                     id: borderLine
                     anchors.fill: parent
-                    border.color: "black"
-                    border.width: appStyle.relativeXBasedOnFHD(2)
+                    border.color: "#4C4C4C"
+                    border.width: appStyle.relativeXBasedOnFHD(3)
                     color: "transparent"
                 }
             }

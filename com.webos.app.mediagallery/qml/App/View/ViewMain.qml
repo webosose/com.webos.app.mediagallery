@@ -83,8 +83,13 @@ Item {
 
     ModeView {
         id: modeView
-        x: appStyle.relativeXBasedOnFHD(180)
-        y: appStyle.relativeYBasedOnFHD(100)
+//        x: appStyle.relativeXBasedOnFHD(180)
+//        y: appStyle.relativeYBasedOnFHD(100)
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: appStyle.relativeXBasedOnFHD(appStyle.menuWitdh)
+//        height: appStyle.relativeYBasedOnFHD(appStyle.menuHeight)
     }
 
     Rectangle {
@@ -92,19 +97,28 @@ Item {
 
         anchors.left: modeView.right
         anchors.leftMargin: appStyle.relativeXBasedOnFHD(39)
-        anchors.bottom: mainScreenView.bottom
+        anchors.top: modeView.top
 
-        height: appStyle.relativeYBasedOnFHD(510)
+        height: appStyle.relativeYBasedOnFHD(appStyle.viewHeight * 0.9)
         width: appStyle.relativeXBasedOnFHD(2)
-        color: appStyle.colors.borderlineColor
+        color: appStyle.appColor.borderlineColor
         opacity: 0.25
     }
 
 
     MainScreenView {
         id: mainScreenView
-        x: appStyle.relativeXBasedOnFHD(640)
-        y: appStyle.relativeYBasedOnFHD(100)
+//        x: appStyle.relativeXBasedOnFHD(640)
+        anchors.left: borderline.right
+        anchors.leftMargin: appStyle.relativeXBasedOnFHD(39)
+
+        anchors.right: parent.right
+        anchors.rightMargin: appStyle.relativeXBasedOnFHD(10)
+
+        anchors.top: modeView.top
+        anchors.bottom: parent.bottom
+
+//        y: appStyle.relativeYBasedOnFHD(100)
     }
 
     state: "NowPlaying"

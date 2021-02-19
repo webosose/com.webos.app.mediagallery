@@ -4,21 +4,20 @@ import "../../../commonComponents"
 Item {
     id: thumbnailImage
     property var thumbnailUrl: "thumbnailUrl"
+    width: appStyle.relativeXBasedOnFHD(appStyle.gridViewSize)
+    height: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+
     Image {
         id: fileImage
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        width: appStyle.relativeXBasedOnFHD(appStyle.gridViewSize)
-        height: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+        anchors.fill: parent
         source: thumbnailUrl
-        sourceSize.width: appStyle.gridViewSize
+        sourceSize.width: width
         asynchronous: true
+    }
 
-        NoImage {
-            width: appStyle.relativeXBasedOnFHD(appStyle.gridViewSize)
-            height: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
-            src: title == "" ? "No title" : title
-            visible: parent.status != Image.Ready
-        }
+    NoImage {
+        anchors.fill: parent
+        src: title == "" ? "No title" : title
+        visible: fileImage.status != Image.Ready
     }
 }

@@ -13,7 +13,6 @@
 import QtQuick 2.4
 import QmlAppComponents 0.1
 import "./ListComponent/"
-
 /*
 -- Scene ----- MediaList --- GridView
 I                          I
@@ -40,15 +39,20 @@ Item {
 //        }
     }
 
+
     DelayRequestListcomponent {
         id: fileList
-        width: root.width
-        height: root.height
-        gridViewWidth: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
-        gridViewHeight: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+        anchors.fill: parent
+//        width: root.width
+//        height: root.height
+
+        gridViewWidth: width / 4
+        gridViewHeight: width / 4
         delayLoadingTime: 600
         componentLayout: "ThumbnailImage.qml"
         componentParam: {"thumbnailUrl":"thumbnail"}
+        componentSize: {"width": gridViewWidth, "height": gridViewHeight}
+
         clickAction: function(index) {
             appLog.debug("file index clicked : " + fileListForCurrentFolder[index].file_path);
             var filePath = fileListForCurrentFolder[index].file_path;
@@ -71,4 +75,5 @@ Item {
             }
         }
     }
+
 }

@@ -21,8 +21,13 @@ Rectangle {
     property real scaler: 0.5
     readonly property url desktopImageUrl: ""
 
+//  AVN
+//    width: 2880 * scaler
+//    height: 1080 * scaler
+
+//  RSE
     width: 2880 * scaler
-    height: 1080 * scaler
+    height: 1620 * scaler
     color: "black"
 
     // application

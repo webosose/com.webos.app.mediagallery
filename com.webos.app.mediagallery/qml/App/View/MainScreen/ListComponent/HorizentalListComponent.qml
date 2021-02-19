@@ -5,11 +5,10 @@ import "../../../commonComponents"
 Item {
     id: root
 
-//    property var getData: function(list) {
-//        updateListModel(list);
-//    }
-
     property var clickAcion: function(index) {}
+    property int elementWidth: 200
+    property int elementHeight: 200
+    property var spacing: 30
 
     function updateListModel(list) {
         appLog.debug("HorizentalListComponent :: start update List");
@@ -31,21 +30,19 @@ Item {
 
         Item {
             id: base
-            width: appStyle.gridViewSize
-            height: appStyle.gridViewSize
+            width: root.elementWidth
+            height: root.elementHeight
 
             Item {
                 id: contenetBase
-//                anchors.fill: parent
-                width: appStyle.gridViewSize
-                height: appStyle.relativeYBasedOnFHD(130)
+                anchors.fill: parent
                 anchors.verticalCenter: base.verticalCenter
                 NoImage {
                     anchors.fill: parent
-//                    width: appStyle.gridViewSize
-//                    height: appStyle.relativeYBasedOnFHD(150)
                     src: itemToShow
-                    bgColor: base.ListView.isCurrentItem ? "#404040" : "#909090"
+                    bgColor: base.ListView.isCurrentItem
+                             ? appStyle.appColor.highlightColor
+                             : appStyle.appColor.normalMenuBackground
                 }
             }
             // indent the item if it is the current item
@@ -99,13 +96,19 @@ Item {
     ListView {
         id: horizontalListView
         anchors.fill: parent
+        anchors.topMargin: height * 0.1
+
         orientation: ListView.Horizontal
-        spacing: appStyle.relativeXBasedOnFHD(30)
+        spacing: appStyle.relativeXBasedOnFHD(root.spacing)
 
         delegate: listDelegate
         model: listModel
 
         focus: true
+
+        populate: Transition {
+            NumberAnimation { properties: "x,y"; duration: 1000 }
+        }
 
 //        highlight: highlightBar
 //        highlight: Rectangle {

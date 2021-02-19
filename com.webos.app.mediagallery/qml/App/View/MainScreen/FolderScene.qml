@@ -74,10 +74,31 @@ Item {
         return true;
     }
 
+    Rectangle {
+        anchors.fill:parent
+        color: "black"
+        opacity: 0.3
+    }
+
     HorizentalListComponent {
         id: folderListComponent
-        width: root.width
-        height: appStyle.relativeYBasedOnFHD(150)
+//        width: root.width
+//        height: root.height
+        anchors.fill: parent
+        anchors.leftMargin: appStyle.relativeXBasedOnFHD(30)
+//        anchors.verticalCenter: parent.verticalCenter
+
+        elementWidth: height * 0.8
+        elementHeight: height * 0.8
+
+        spacing: 30
+
+        objectName:  "HorizentalListComponent"
+        DebugBackground {}
+
+//        elementWidth: appStyle.relativeYBasedOnFHD(appStyle.folderItemWidth)
+//        elementHeight: appStyle.relativeYBasedOnFHD(appStyle.folderItemWidth)
+
         clickAcion: function(index){
             appLog.debug("folderIndex:::::::::: index = " + index);
             root.notifyFolderClicked(folderList[index]);

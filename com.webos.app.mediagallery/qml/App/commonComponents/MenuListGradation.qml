@@ -42,33 +42,33 @@ Item {
     Component {
         id: listDelegate
         Item {
+            id: base
+
             width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth);
             height: appStyle.relativeYBasedOnFHD(appStyle.menuItemHeight + 2);
 
             //listView.currentIndex = index;
-
             Rectangle {
-                id: focusedDot
-                width: appStyle.relativeXBasedOnFHD(10)
-                height: appStyle.relativeYBasedOnFHD(10)
-                radius: width / 2
-                color: appStyle.appColor.highlightColor
-                anchors.verticalCenter: parent.verticalCenter
-                x: appStyle.relativeXBasedOnFHD(20)
-                visible: listView.currentIndex == index || opacity > 0.05
-                opacity: listView.currentIndex == index ? 1.0 : 0.0
-
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 150
-                        easing.type: Easing.InOutQuad
-                    }
+                id: gradationBackground
+                visible: base.ListView.isCurrentItem
+                width: parent.height
+                height: parent.width
+                anchors.centerIn: parent
+//                gradient: Gradient.DeepBlue
+                rotation: -90
+                gradient: Gradient {
+                    GradientStop { position:0.0; color: "transparent"}
+                    GradientStop { position:0.2; color: appStyle.appColor.highlightColor}
+                    GradientStop { position:0.4; color: appStyle.appColor.highlightColor}
+                    GradientStop { position:0.75; color: "transparent"}
                 }
+
             }
 
             Text {
                 id: menuText
-                x: listView.currentIndex == index ? focusedDot.x + focusedDot.width + appStyle.relativeXBasedOnFHD(20) : focusedDot.width + appStyle.relativeXBasedOnFHD(20)
+//                x: listView.currentIndex == index ? focusedDot.x + focusedDot.width + appStyle.relativeXBasedOnFHD(20) : focusedDot.width + appStyle.relativeXBasedOnFHD(20)
+                x: base.ListView.isCurrentItem ? appStyle.relativeXBasedOnFHD(25) : appStyle.relativeXBasedOnFHD(20)
                 width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth) - x
                 height: appStyle.relativeYBasedOnFHD(appStyle.menuItemHeight);
                 text: name
@@ -90,8 +90,8 @@ Item {
                 anchors.top: menuText.bottom
                 width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth);
                 height: appStyle.relativeYBasedOnFHD(2);
-                color: listView.currentIndex == index ? appStyle.appColor.highlightColor : appStyle.appColor.borderlineColor
-                opacity: listView.currentIndex == index ? 1.0 : 0.4
+                color: base.ListView.isCurrentItem ? appStyle.appColor.highlightColor : appStyle.appColor.borderlineColor
+                opacity: base.ListView.isCurrentItem ? 1.0 : 0.4
             }
 
             MouseArea {
