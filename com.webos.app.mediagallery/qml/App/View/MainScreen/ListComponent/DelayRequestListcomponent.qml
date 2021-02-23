@@ -57,7 +57,7 @@ Item {
                     if (isScrolling == false) {
                         //TODO : remove repetation
                         var param = {};
-                        appLog.debug( "param keys :: " + Object.keys(componentParam));
+//                        appLog.debug( "param keys :: " + Object.keys(componentParam));
                         Object.keys(componentParam).forEach(function(keyName){
 //                            appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
                             param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
@@ -106,7 +106,7 @@ Item {
 
                             //TODO : remove repetation
                             var param = {};
-                            appLog.debug( "param keys :: " + Object.keys(componentParam));
+//                            appLog.debug( "param keys :: " + Object.keys(componentParam));
                             Object.keys(componentParam).forEach(function(keyName){
 //                                appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
                                 param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]

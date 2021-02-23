@@ -49,8 +49,12 @@ Item {
         gridViewWidth: width / 4
         gridViewHeight: width / 4
         delayLoadingTime: 600
-        componentLayout: "ThumbnailImage.qml"
-        componentParam: {"thumbnailUrl":"thumbnail"}
+        componentLayout: currentMode == stringSheet.category.image
+                         ? "ThumbnailImage.qml"
+                         : "TitleThumbnailImage.qml"
+        componentParam: currentMode == stringSheet.category.image
+                        ? {"thumbnailUrl":"thumbnail"}
+                        : {"thumbnailUrl":"thumbnail","title":"title"}
         componentSize: {"width": gridViewWidth, "height": gridViewHeight}
 
         clickAction: function(index) {

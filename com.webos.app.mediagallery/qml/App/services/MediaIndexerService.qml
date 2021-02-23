@@ -65,19 +65,24 @@ Item {
             appLog.debug("MediaInexer connect");
             updateDeviceList();
 
+            appLog.debug("IsDesktopMode? " + isDesktopMode);
+
             if (isDesktopMode)
                 updateMediaList();
         }
 
         function updateMediaList() {
-            var command = "get" + currentMode + "List"
+            var command = "get" + currentMode + "List";
             updateMediaToken = call("luna://" + serviceName, "/" + command, JSON.stringify({"subscribe":true}));
-            appLog.debug("updateMediaList call " + currentMode + " updateMediaToken = " + updateMediaToken)
+            appLog.debug("updateMediaList call " + currentMode + " updateMediaToken = " + updateMediaToken);
         }
 
         function updateDeviceList() {
             updateDeviceToken = call("luna://" + serviceName, "/getDeviceList", JSON.stringify({"subscribe":true}));
-            appLog.debug("call device list updateMediaToken = " + updateDeviceToken)
+            appLog.debug("call device list updateDeviceToken = " + updateDeviceToken);
+
+            if (isDesktopMode)
+                updateMediaList();
         }
 
         property Timer reservateListUpdate: Timer {
@@ -98,7 +103,7 @@ Item {
                 reservateListUpdate.restart();
                 break;
             case updateMediaToken:
-                appLog.debug("mediaIndexer updateMediaToken = " + currentMode);
+                appLog.debug("mediaIndexer updateMediaToken = " + updateMediaToken + " / mode = " + currentMode);
 
                 var responseMediaList;
                 if(currentMode == "Video") {

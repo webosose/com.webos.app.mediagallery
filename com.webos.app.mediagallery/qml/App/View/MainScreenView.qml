@@ -121,7 +121,7 @@ Item {
         id: loadingScrim
         color: appStyle.appColor.popupBackground
         visible: service.mediaIndexer.isOnUpdating
-        width: parent.width - appStyle.relativeXBasedOnFHD(70);
+        width: parent.width
         height: parent.height
 
         Text {

@@ -2,4 +2,4 @@
 *.user.*
 *.log
 testusbdata
-copy.sh
+com.webos.app.mediagallery/copy.sh

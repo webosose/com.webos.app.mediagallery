@@ -1,8 +1,4 @@
 {
-    "subscribed": true,
-    "returnValue": true
-}
-{
     "errorCode": 0,
     "returnValue": true,
     "errorText": "No Error",
@@ -58,7 +54,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/??? - ???????????????.mp3",
                 "title": "Ｆｏｒｅｓｔ　Ｆｅｓｔｉｖａｌ",
                 "file_size": 12108866,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/770285414011116.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/770285414011116.jpg"
             },
             {
                 "last_modified_date": "Wed Dec 28 05:26:10 2016 GMT",
@@ -84,7 +80,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/10cm-2-pet.mp3",
                 "title": "pet",
                 "file_size": 7668572,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/114548243056404.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/114548243056404.jpg"
             },
             {
                 "last_modified_date": "Thu Nov  2 23:52:56 2017 GMT",
@@ -97,7 +93,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/10cm-4-???.mp3",
                 "title": "별자리",
                 "file_size": 9256503,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/137634590592109.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/137634590592109.jpg"
             },
             {
                 "last_modified_date": "Thu Nov  2 23:52:56 2017 GMT",
@@ -110,7 +106,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/10cm-6-Hotel room.mp3",
                 "title": "Hotel room",
                 "file_size": 6875406,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/806380361543601.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/806380361543601.jpg"
             },
             {
                 "last_modified_date": "Thu Nov  2 23:52:56 2017 GMT",
@@ -123,7 +119,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/10cm-7-Island.mp3",
                 "title": "Island",
                 "file_size": 8115545,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/261660129226229.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/261660129226229.jpg"
             },
             {
                 "last_modified_date": "Wed Dec 28 05:25:50 2016 GMT",
@@ -136,7 +132,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/??? - ??????????????????.mp3",
                 "title": "Ａ　Ｐｒｏｍｉｓｅ　Ｎｏｔ　Ｋｅｐｔ",
                 "file_size": 12644444,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/119694082376039.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/119694082376039.jpg"
             },
             {
                 "last_modified_date": "Wed Dec 28 05:25:54 2016 GMT",
@@ -149,7 +145,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/??? - ??????????????????????.mp3",
                 "title": "Ａｍｏｒｅ　Ｍｉｏ（Ｂｏｎｕｓ　Ｔｒａｃｋ）",
                 "file_size": 8579116,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/110919803684355.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/110919803684355.jpg"
             },
             {
                 "last_modified_date": "Thu Nov  2 23:52:56 2017 GMT",
@@ -162,7 +158,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/10cm-8-????.mp3",
                 "title": "일시정지",
                 "file_size": 12003888,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/107547453139970.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/107547453139970.jpg"
             },
             {
                 "last_modified_date": "Thu Nov  2 23:52:56 2017 GMT",
@@ -175,7 +171,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/10cm-3-???.mp3",
                 "title": "폰서트",
                 "file_size": 7943226,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/122965191025310.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/122965191025310.jpg"
             },
             {
                 "last_modified_date": "Wed Dec 28 05:26:16 2016 GMT",
@@ -188,7 +184,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/??? - ?????????.mp3",
                 "title": "Ｏｕｒ　Ｓｔｏｒｙ",
                 "file_size": 12169406,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/171279702991106.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/171279702991106.jpg"
             },
             {
                 "last_modified_date": "Wed Dec 28 05:26:20 2016 GMT",
@@ -201,7 +197,7 @@
                 "uri": "msc://2C25-16EA/tmp/usb/sdg/sdg1/music_mine/??? - ?????????????????????????????????.mp3",
                 "title": "Ｐａｐｅｒ　Ｐｌａｎｅ’ｓ　Ａｄｖｅｎｔｕｒｅ（２０１５　Ｍｉｘ）",
                 "file_size": 8613590,
-                "thumbnail": "D:/mine/testdata/audioThumbnails/982512271004616.jpg"
+                "thumbnail": "file:///D:/mine/testdata/audioThumbnails/982512271004616.jpg"
             }
         ],
         "count": 15

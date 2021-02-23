@@ -50,9 +50,9 @@ Item {
                 name: "Current"
                 when:  base.ListView.isCurrentItem
                 PropertyChanges {
-                    target: contenetBase;
-                    width: contenetBase.width + appStyle.relativeYBasedOnFHD(5)
-                    height: contenetBase.height + appStyle.relativeYBasedOnFHD(5)  }
+                    target: contenetBase
+                    width: Object.valueOf(contenetBase.width) * 1 + appStyle.relativeYBasedOnFHD(5)
+                    height: Object.valueOf(contenetBase.height) * 1 + appStyle.relativeYBasedOnFHD(5)  }
             }
             transitions: Transition {
                 NumberAnimation {

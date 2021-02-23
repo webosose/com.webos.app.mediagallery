@@ -60,6 +60,9 @@ Item {
                     continue;
                 }
 
+                var {folder,file} = getFolderFileFromPath(mediaList[i].file_path);
+                var fileList = [];
+
                 //mediaList: put default data if value is not exist
                 if(mediaList[i].thumbnail == undefined) {
                     if(appRoot.appMode == stringSheet.category.image) {
@@ -69,8 +72,13 @@ Item {
                     }
                 }
 
-                var {folder,file} = getFolderFileFromPath(mediaList[i].file_path);
-                var fileList = [];
+                if(mediaList[i].title == undefined) {
+                    if(appRoot.appMode == stringSheet.category.image) {
+                        mediaList[i].title = file
+                    } else {
+                        mediaList[i].title = "No Title Info";
+                    }
+                }
 
                 if(folder in fileTreeDictionary) {
                     fileList = fileTreeDictionary[folder];
