@@ -37,13 +37,35 @@ Item {
                 id: contenetBase
                 anchors.fill: parent
                 anchors.verticalCenter: base.verticalCenter
-                NoImage {
+                Item {
+                    id: previewBackground
                     anchors.fill: parent
-                    src: itemToShow
-                    bgColor: base.ListView.isCurrentItem
-                             ? appStyle.appColor.highlightColor
-                             : appStyle.appColor.normalMenuBackground
+                    opacity: 0.2
+                    Component.onCompleted: {
+                        service.mediaIndexer.getFolderThumbnail(previewBackground, itemToShow,
+                                                                width, height);
+                    }
                 }
+                Text {
+                    id: title
+                    anchors.fill: parent
+                    property var fontSize: 15
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    text: itemToShow
+                    font: appStyle.engFont.getFont(fontSize)
+                    color: "white"
+                    wrapMode: Text.WordWrap
+                }
+
+
+//                NoImage {
+//                    anchors.fill: parent
+//                    src: itemToShow
+//                    bgColor: base.ListView.isCurrentItem
+//                             ? appStyle.appColor.highlightColor
+//                             : appStyle.appColor.normalMenuBackground
+//                }
             }
             // indent the item if it is the current item
             states: State {
@@ -52,24 +74,37 @@ Item {
                 PropertyChanges {
                     target: contenetBase
                     width: Object.valueOf(contenetBase.width) * 1 + appStyle.relativeYBasedOnFHD(5)
-                    height: Object.valueOf(contenetBase.height) * 1 + appStyle.relativeYBasedOnFHD(5)  }
+                    height: Object.valueOf(contenetBase.height) * 1 + appStyle.relativeYBasedOnFHD(5)
+                }
+                PropertyChanges {
+                    target: previewBackground
+                    opacity: 0.6
+                }
+                PropertyChanges {
+                    target: title
+                    fontSize: 17
+                }
             }
             transitions: Transition {
-                NumberAnimation {
-                    target: contenetBase
-                    properties: "width"; duration: 200 }
-                NumberAnimation {
-                    target: contenetBase
-                    properties: "height"; duration: 200 }
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: contenetBase
+                        properties: "width"; duration: 300 }
+                    NumberAnimation {
+                        target: contenetBase
+                        properties: "height"; duration: 300 }
+                    NumberAnimation {
+                        target: previewBackground
+                        properties: "opacity"; duration: 300 }
+                }
             }
 
-            IconButton {
+            MouseArea {
                 anchors.fill:parent
                 onClicked: {
                     appLog.debug("FolderList clicked : " + index);
                     horizontalListView.currentIndex = index;
                     clickAcion(index);
-                    appLog.warn("currentItem = " + horizontalListView.currentItem  + " / index = " + horizontalListView.currentIndex);
                 }
             }
         }
@@ -104,11 +139,9 @@ Item {
         delegate: listDelegate
         model: listModel
 
-        focus: true
-
-        populate: Transition {
-            NumberAnimation { properties: "x,y"; duration: 1000 }
-        }
+//        populate: Transition {
+//            NumberAnimation { properties: "x,y"; duration: 1000 }
+//        }
 
 //        highlight: highlightBar
 //        highlight: Rectangle {

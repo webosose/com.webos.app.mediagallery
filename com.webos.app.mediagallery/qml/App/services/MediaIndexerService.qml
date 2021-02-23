@@ -45,6 +45,12 @@ Item {
         return mediaListController.getFileListOfFolder(folderName);
     }
 
+    property var getFolderThumbnail: function(parentId, folderName,
+                                              thumbnailWidth, thumbnailHeight) {
+       return mediaListController.makeFolderThumbnail(parentId, folderName,
+                                                      thumbnailWidth, thumbnailHeight);
+    }
+
     ServiceStateNotifier {
         appId: stringSheet.appIdForLSService
 

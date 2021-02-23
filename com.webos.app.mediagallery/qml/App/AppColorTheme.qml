@@ -11,4 +11,5 @@ QtObject {
     property color popupBackground: "#90101010"
     property color normalMenuBackground: "#B2B2B2"
     property color selectMenuBackground: "#FFB2B2"
+    property color defaultBackground: "#B2B2B2"
 }
