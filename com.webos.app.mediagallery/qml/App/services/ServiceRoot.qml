@@ -28,6 +28,8 @@ Item {
         id: _mediaIndexer
         currentMode: appRoot.appMode
     }
+
+    //Note: Implemented for structure purpose only. currently, not save any information in SettingsService
     property SettingsServiceWrapper mediaGalleryControllerService: _musicControllerService
     SettingsServiceWrapper {
         id: _musicControllerService
@@ -41,18 +43,5 @@ Item {
 
         onAppDataUpdated: {
         }
-    }
-
-    Connections {
-        target: mediaIndexer
-//        onPlaylistUpdated: {
-
-//        }
-//        onCurrentMusicIndexChanged: {
-//        }
-//        onShuffleModeChanged: {
-//        }
-//        onLoopModeChanged: {
-//        }
     }
 }

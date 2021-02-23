@@ -22,12 +22,13 @@ Item {
     property string currentMode: appRoot.appMode
 
     function setStartPoint(mode, folder, fileIndex, fileUrl){
-        //TODO : check mode is valid
-        const found = stringSheet.modeView.mode.findIndex(element => element == mode);
-        if(found != -1) {
+        const found = stringSheet.modeView.mode.findIndex(element => element === mode);
+        if(found !== -1) {
             appRoot.appMode = mode;
             modeView.setStartPoint(found);
             mainScreenView.startFolder = folder;
+        } else {
+            appRoot.appMode = stringSheet.modeView.mode[0];
         }
     }
 
@@ -36,6 +37,8 @@ Item {
         onNotifyModeClicked : {
             appLog.debug("Mode Changed to " + stringSheet.modeView.mode[index]);
             appRoot.appMode = stringSheet.modeView.mode[index];
+
+            mainScreenView.setFolderListAsEmpty();
 
             //TODO : Search different way to notice mode changing to set currentfolder
             isOnModeChanging = true;
@@ -47,23 +50,23 @@ Item {
         mainScreenView.currentFolder = "";
     }
 
-    property var sceneController: {
-        "goNowPlaying": function() {root.state = "NowPlaying"},
-        "goMusicList": function() {root.state = "MusicList"}
-    }
+//    property var sceneController: {
+//        "goNowPlaying": function() {root.state = "NowPlaying"},
+//        "goMusicList": function() {root.state = "MusicList"}
+//    }
 
     objectName: "viewMain"
 
-    states: [
-        State {
-            // Mean "Ordinary" playing scene
-            name: "NowPlaying"
-        },
-        State {
-            // Mean list & file search, detail radio preset, etc...
-            name: "MusicList"
-        }
-    ]
+//    states: [
+//        State {
+//            // Mean "Ordinary" playing scene
+//            name: "NowPlaying"
+//        },
+//        State {
+//            // Mean list & file search, detail radio preset, etc...
+//            name: "MusicList"
+//        }
+//    ]
 
     /*
       App Scene Structure.
@@ -83,20 +86,17 @@ Item {
 
     ModeView {
         id: modeView
-//        x: appStyle.relativeXBasedOnFHD(180)
-//        y: appStyle.relativeYBasedOnFHD(100)
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: appStyle.relativeXBasedOnFHD(appStyle.menuWitdh)
-//        height: appStyle.relativeYBasedOnFHD(appStyle.menuHeight)
     }
 
     Rectangle {
         id: borderline
 
         anchors.left: modeView.right
-        anchors.leftMargin: appStyle.relativeXBasedOnFHD(39)
+        anchors.leftMargin: appStyle.relativeXBasedOnFHD(appStyle.viewItemSpacing)
         anchors.top: modeView.top
 
         height: appStyle.relativeYBasedOnFHD(appStyle.viewHeight * 0.9)
@@ -108,17 +108,14 @@ Item {
 
     MainScreenView {
         id: mainScreenView
-//        x: appStyle.relativeXBasedOnFHD(640)
         anchors.left: borderline.right
-        anchors.leftMargin: appStyle.relativeXBasedOnFHD(39)
+        anchors.leftMargin: appStyle.relativeXBasedOnFHD(appStyle.viewItemSpacing)
 
         anchors.right: parent.right
-        anchors.rightMargin: appStyle.relativeXBasedOnFHD(10)
+        anchors.rightMargin: appStyle.relativeXBasedOnFHD(appStyle.viewItemSpacing)
 
         anchors.top: modeView.top
         anchors.bottom: parent.bottom
-
-//        y: appStyle.relativeYBasedOnFHD(100)
     }
 
     state: "NowPlaying"

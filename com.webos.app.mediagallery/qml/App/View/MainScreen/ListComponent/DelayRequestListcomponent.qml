@@ -50,49 +50,44 @@ Item {
 //                appLog.debug("onDestruction :: " + index);
             }
 
+            function getParamForLayout(setSizeParams, setOtherParams) {
+                var param = {};
+                // appLog.debug( "param keys :: " + Object.keys(componentParam));
+
+                if(setSizeParams) {
+                    if(componentSize.width == undefined) {
+                        param["width"] = gridViewWidth;
+                    } else {
+                        param["width"] = componentSize.width;
+                    }
+
+                    if(componentSize.height == undefined) {
+                        param["height"] = gridViewHeight;
+                    } else {
+                        param["height"] = componentSize.height;
+                    }
+                }
+
+                if(setOtherParams) {
+                    Object.keys(componentParam).forEach(function(keyName){
+                        // appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
+                        param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
+                    })
+                }
+
+                return param;
+            }
+
             Item {
                 id: contentBase
                 anchors.fill: parent
                 Component.onCompleted: {
                     if (isScrolling == false) {
-                        //TODO : remove repetation
-                        var param = {};
-//                        appLog.debug( "param keys :: " + Object.keys(componentParam));
-                        Object.keys(componentParam).forEach(function(keyName){
-//                            appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
-                            param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
-                        })
-
-                        if(componentSize.width == undefined) {
-                            param["width"] = gridViewWidth;
-                        } else {
-                            param["width"] = componentSize.width;
-                        }
-
-                        if(componentSize.height == undefined) {
-                            param["height"] = gridViewHeight;
-                        } else {
-                            param["height"] = componentSize.height;
-                        }
-
-                        loader.setSource(componentLayout,param);
-//                        loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
-                }
+                        // ex)loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+                        loader.setSource(componentLayout, getParamForLayout(true, true));
+                    }
                     else {
-                        var param = {};
-                        if(componentSize.width == undefined) {
-                            param["width"] = gridViewWidth;
-                        } else {
-                            param["width"] = componentSize.width;
-                        }
-
-                        if(componentSize.height == undefined) {
-                            param["height"] = gridViewHeight;
-                        } else {
-                            param["height"] = componentSize.height;
-                        }
-
-                        loader.setSource(componentLayout,param);
+                        loader.setSource(componentLayout, getParamForLayout(true, false));
                     }
                 }
 
@@ -104,28 +99,7 @@ Item {
                         if(isScrolling == false && contentBase.thumbnailLoaded == false) {
                             appLog.debug("Scrolling stopped / "  + index + " call thumbnail");
 
-                            //TODO : remove repetation
-                            var param = {};
-//                            appLog.debug( "param keys :: " + Object.keys(componentParam));
-                            Object.keys(componentParam).forEach(function(keyName){
-//                                appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
-                                param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
-                            })
-
-                            if(componentSize.width == undefined) {
-                                param["width"] = gridViewWidth;
-                            } else {
-                                param["width"] = componentSize.width;
-                            }
-
-                            if(componentSize.height == undefined) {
-                                param["height"] = gridViewHeight;
-                            } else {
-                                param["height"] = componentSize.height;
-                            }
-
-                            loader.setSource(componentLayout,param);
-//                            loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
+                            loader.setSource(componentLayout, base.getParamForLayout(true, true));
 
                             contentBase.thumbnailLoaded = true
                         }

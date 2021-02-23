@@ -39,7 +39,6 @@ Item {
             //Set default currentFolder value if mode is changed
             if(service.mediaIndexer.isOnUpdating) {
                 appLog.debug("----- Waiting media list update ends");
-//                return;
             }
 
             folderListComponent.updateListModel(folderList);
@@ -49,27 +48,33 @@ Item {
 //                    folderList.length > 0) currentFolder = folderList[0];
 //                    isModeChanged &&
             if(!checkStartPointValid() &&
-                    folderList.length > 0) currentFolder = folderList[0];
+                    folderList.length > 0) {
+                appLog.debug("Set first folder as start point");
+                currentFolder = folderList[0];
+                startFolder = currentFolder;
+            }
         }
+    }
+
+    function setFolderListAsEmpty() {
+        folderList = [];
+        folderListComponent.updateListModel(folderList);
     }
 
     function checkStartPointValid(){
         if(startFolder == "") { return false; }
 
-        const found = folderList.findIndex(element => element == startFolder);
+        const found = folderList.findIndex(element => element === startFolder);
 
         appLog.debug("checkStartPointValid() called :: found = " + found);
 
-        if(found == -1) {
-            appLog.debug("Start folder cannot be found : folder name = " + startFolder
-                         + "\n Set first folder as start point");
-            startFolder = "";
+        if(found === -1) {
+            appLog.debug("Start folder cannot be found : folder name = " + startFolder);
             return false;
         }
 
         currentFolder = startFolder;
         folderListComponent.setStartIndex(found);
-        startFolder = "";
 
         return true;
     }
@@ -82,11 +87,8 @@ Item {
 
     HorizentalListComponent {
         id: folderListComponent
-//        width: root.width
-//        height: root.height
         anchors.fill: parent
         anchors.leftMargin: appStyle.relativeXBasedOnFHD(30)
-//        anchors.verticalCenter: parent.verticalCenter
 
         elementWidth: height * 0.8
         elementHeight: height * 0.8
@@ -96,11 +98,7 @@ Item {
         objectName:  "HorizentalListComponent"
         DebugBackground {}
 
-//        elementWidth: appStyle.relativeYBasedOnFHD(appStyle.folderItemWidth)
-//        elementHeight: appStyle.relativeYBasedOnFHD(appStyle.folderItemWidth)
-
         clickAcion: function(index){
-            appLog.debug("folderIndex:::::::::: index = " + index);
             root.notifyFolderClicked(folderList[index]);
         }
     }

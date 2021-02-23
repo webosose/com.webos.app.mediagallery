@@ -25,26 +25,19 @@ Item {
     DebugBackground {}
     clip: true
 
-// TODO: maybe we need current file location
-//    property int currentPlaylistIndex: 0
-
     property var currentFolder: mainScreenView.currentFolder
     property var fileListForCurrentFolder: []
 
     onCurrentFolderChanged: {
-//        if(currentFolder !== "") {
-            var list = service.mediaIndexer.getFileListOfFolder(currentFolder);
-            fileListForCurrentFolder = list;
-            fileList.updateListModel(fileListForCurrentFolder);
-//        }
+        var list = service.mediaIndexer.getFileListOfFolder(currentFolder);
+        fileListForCurrentFolder = list;
+        fileList.updateListModel(fileListForCurrentFolder);
     }
 
 
     DelayRequestListcomponent {
         id: fileList
         anchors.fill: parent
-//        width: root.width
-//        height: root.height
 
         gridViewWidth: width / 4
         gridViewHeight: width / 4

@@ -65,15 +65,11 @@ Item {
 
     ViewMain {
         id: _viewMain
-//        x: appStyle.relativeXBasedOnFHD(0)
-//        y: appStyle.relativeYBasedOnFHD(0)
+
         anchors.fill: parent
         anchors.topMargin: appStyle.relativeYBasedOnFHD(30)
         anchors.bottomMargin: appStyle.relativeYBasedOnFHD(10)
         anchors.leftMargin: appStyle.relativeXBasedOnFHD(10)
         anchors.rightMargin: appStyle.relativeXBasedOnFHD(10)
-
-//        width: appStyle.relativeXBasedOnFHD(appStyle.viewWidth)
-//        height: appStyle.relativeYBasedOnFHD(appStyle.viewHeight)
     }
 }

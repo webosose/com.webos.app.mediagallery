@@ -26,6 +26,8 @@ AppStyle {
     property int viewWidth: baseWidth
     property int viewHeight: baseHeight
 
+    property int viewItemSpacing: 39
+
     property int menuWitdh: 250
     property int menuHeight: baseHeight
 

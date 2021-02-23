@@ -45,6 +45,12 @@ Item {
                  file: pathArray[1]    };
     }
 
+    function getFileNameExceptExtension(file) {
+        var splitArray = file.split('.');
+        var name = splitArray.slice(0, splitArray.length - 1).join(".");
+        return name;
+    }
+
     Connections {
         target: mediaIndexerService
         onMediaListChanged: {
@@ -73,11 +79,7 @@ Item {
                 }
 
                 if(mediaList[i].title == undefined) {
-                    if(appRoot.appMode == stringSheet.category.image) {
-                        mediaList[i].title = file
-                    } else {
-                        mediaList[i].title = "No Title Info";
-                    }
+                        mediaList[i].title = getFileNameExceptExtension(file)
                 }
 
                 if(folder in fileTreeDictionary) {

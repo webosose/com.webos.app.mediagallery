@@ -20,9 +20,6 @@ import "../commonComponents"
 
 Item {
     id: root
-
-//    width: appStyle.relativeXBasedOnFHD(appStyle.menuWitdh)
-//    height: appStyle.relativeYBasedOnFHD(appStyle.menuHeight)
     clip: true
 
     signal notifyModeClicked(int index)

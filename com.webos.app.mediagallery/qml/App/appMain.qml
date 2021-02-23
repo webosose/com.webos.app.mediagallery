@@ -26,7 +26,6 @@ AppMain {
     // It also has appLog, imageDir
     isDesktopMode: false
     debugMode: false// || isDesktopMode
-//    property var appRoot: root
 
     // window settings
     width: appStyle.width
@@ -53,31 +52,19 @@ AppMain {
         anchors.fill: parent
     }
 
-//    Component.onCompleted: {
-//        params = {"desc":"initial"}
-//    }
-
     onParamRedirectorChanged: {
         if (paramRedirector == undefined)
             return;
-//        if (paramRedirector.desc == undefined)
-//            return;
-//        if (paramRedirector.desc == "initial")
-//            return;
 
         appLog.log("App relaunch Param came", appRoot.appId, "["+JSON.stringify(params)+"]");
 
-//        var parameter = JSON.parse(paramRedirector);
-
         if (paramRedirector.appMode == undefined){
-            appLog.log("11111111111111111111111111");
+            appLog.log("Param doesn't have enough information. Start app without parameters");
             return;
         }
-
         //initialize
-        appLog.log(" ### Set appMode as " + paramRedirector.appMode);
+        appLog.log("From Param: Set appMode as " + paramRedirector.appMode);
 
         uiRoot.viewMain.setStartPoint(paramRedirector.appMode,paramRedirector.folder);
-//        params = {"desc":"initial"};
     }
 }

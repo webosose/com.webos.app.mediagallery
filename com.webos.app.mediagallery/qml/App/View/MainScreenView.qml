@@ -28,9 +28,6 @@ Item {
 
     objectName: "mainScreenView"
 
-//    width: appStyle.relativeXBasedOnFHD(appStyle.mainScreenWidth)
-//    height: appStyle.relativeYBasedOnFHD(appStyle.viewHeight)
-
     clip: true
 
     //TODO : maybe we will show and hide folder view
@@ -67,17 +64,17 @@ Item {
 
     }
 
+    function setFolderListAsEmpty () {
+        folderListScene.setFolderListAsEmpty();
+    }
+
     FolderScene {
         id: folderListScene
         objectName: "folderListScene"
         height: appStyle.relativeYBasedOnFHD(appStyle.folderListHeight)
         anchors.top: parent.top
-//        anchors.bottom: spacingRect.top
         anchors.left: parent.left
         anchors.right: parent.right
-//        width:root.width
-
-
 
         DebugBackground {}
     }

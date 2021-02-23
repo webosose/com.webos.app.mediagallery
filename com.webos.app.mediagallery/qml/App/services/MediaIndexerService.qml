@@ -88,7 +88,7 @@ Item {
         property Timer reservateListUpdate: Timer {
             interval: 4000
             onTriggered: {
-                appLog.debug( "mediaIndexer reservateListUpdate ends");
+                appLog.debug("mediaIndexer reservateListUpdate ends");
                 mediaIndexerService.updateMediaList();
             }
         }
