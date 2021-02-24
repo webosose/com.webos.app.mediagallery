@@ -10,7 +10,7 @@
  *
  * LICENSE@@@ */
 
-import QtQuick 2.4
+import QtQuick 2.6
 import Eos.Window 0.1
 import Eos.Controls 0.1
 import "./services"
