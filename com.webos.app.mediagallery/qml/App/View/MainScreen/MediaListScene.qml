@@ -34,6 +34,17 @@ Item {
         fileList.updateListModel(fileListForCurrentFolder);
     }
 
+    Text {
+        anchors.fill: parent
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        text: "No data"
+        visible: !service.mediaIndexer.isOnUpdating
+                  && fileListForCurrentFolder.length == 0
+        color: appStyle.appColor.mainTextColor
+        font: appStyle.engFont.mainFont35
+    }
+
 
     DelayRequestListcomponent {
         id: fileList
@@ -56,12 +67,15 @@ Item {
             switch(appMode) {
             case stringSheet.category.image:
                 appLog.debug("call image viewer");
+                service.webOSService.singleCallService.callSimpleToast("Need to call image viewer with " + filePath);
                 break;
             case stringSheet.category.video:
                 appLog.debug("call video viewer");
+                service.webOSService.singleCallService.callSimpleToast("Need to call video player with " + filePath);
                 break;
             case stringSheet.category.audio:
                 appLog.debug("call audio player");
+                service.webOSService.singleCallService.callSimpleToast("Need to call audio player with " + filePath);
                 service.webOSService.singleCallService.launchAppWithParam(
                             stringSheet.viewerApps.audio,
                             {"appMode":stringSheet.category.audio,

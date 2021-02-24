@@ -24,8 +24,8 @@ Item {
 
     Image{
         id: image1
-        anchors.top: parent.top
-        anchors.left: parent.left
+        anchors.top: folderThumbnail.top
+        anchors.left: folderThumbnail.left
         width: folderThumbnail.width / 2
         height: folderThumbnail.width / 2
         source: imageList[0]
@@ -40,7 +40,7 @@ Item {
     }
     Image{
         id: image2
-        anchors.top: parent.top
+        anchors.top: folderThumbnail.top
         anchors.left: image1.right
         width: folderThumbnail.width / 2
         height: folderThumbnail.width / 2
@@ -57,7 +57,7 @@ Item {
     Image{
         id: image3
         anchors.top: image1.bottom
-        anchors.left: parent.left
+        anchors.left: folderThumbnail.left
         width: folderThumbnail.width / 2
         height: folderThumbnail.width / 2
         source: imageList[2]

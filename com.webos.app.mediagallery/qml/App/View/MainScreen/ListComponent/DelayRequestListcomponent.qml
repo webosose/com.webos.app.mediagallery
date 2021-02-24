@@ -51,7 +51,7 @@ Item {
             }
 
             function getParamForLayout(setSizeParams, setOtherParams) {
-                var param = {};
+                var param = ({});
                 // appLog.debug( "param keys :: " + Object.keys(componentParam));
 
                 if(setSizeParams) {
@@ -121,7 +121,7 @@ Item {
                     color: "transparent"
                 }
             }
-            IconButton {
+            MouseArea {
                 anchors.fill:parent
                 onClicked: {
                     thumbnailGridView.currentIndex = index;

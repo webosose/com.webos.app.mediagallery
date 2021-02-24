@@ -1,0 +1,14 @@
+{
+    "subscribed": true,
+    "returnValue": true
+}
+{
+    "errorCode": 0,
+    "returnValue": true,
+    "errorText": "No Error",
+    "audioList": {
+        "results": [
+        ],
+        "count": 0
+    }
+}

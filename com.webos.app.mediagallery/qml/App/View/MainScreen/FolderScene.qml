@@ -36,6 +36,11 @@ Item {
             appLog.debug("FolderScene :: connection with media indexer :: onListUpdated");
             folderList = list;
 
+            if(folderList.length == 0) {
+                appLog.debug("FolderList is empty. Clean current folder info and files");
+                currentFolder = "";
+            }
+
             //Set default currentFolder value if mode is changed
             if(service.mediaIndexer.isOnUpdating) {
                 appLog.debug("----- Waiting media list update ends");

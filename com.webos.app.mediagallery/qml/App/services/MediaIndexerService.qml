@@ -99,11 +99,33 @@ Item {
             }
         }
 
+        function checkDeviceAvailable(data) {
+            var pluginList = data.pluginList;
+            var available = false;
+            for(var i = 0; i < pluginList.length; i ++) {
+                if(pluginList[i].uri == "msc") {
+                    var deviceList = pluginList[i].deviceList;
+                    deviceList.forEach(function(device) {
+                        available = device.available;
+                    });
+                }
+            }
+
+            return available;
+        }
+
         onResponse: {
             var response = JSON.parse(payload)
 
             switch(token) {
             case updateDeviceToken:
+                appLog.debug("mediaIndexer updateDeviceToken = " + updateMediaToken + " / mode = " + currentMode);
+                if(!checkDeviceAvailable(response)) {
+                    appLog.debug("Media device is not available");
+                    mediaIndexerService.mediaListChanged(isModeChanged, []);
+                    return;
+                }
+
                 isOnUpdating = true;
                 updatingTimer.restart();
                 reservateListUpdate.restart();

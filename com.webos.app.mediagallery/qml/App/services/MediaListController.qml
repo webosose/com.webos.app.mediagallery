@@ -98,9 +98,15 @@ Item {
         onMediaListChanged: {
             appLog.debug("MeidaListController get mediaList length = " + mediaList.length);
             appLog.debug("MeidaListController isModeChanged = " + isModeChanged);
+            if(mediaList.length === 0) {
+                fileTreeDictionary = {"all":[]};
+                root.fileTreeUpdated([]);
+                return;
+            }
 
             //TODO : ********************  ModeChange TTTTTTT
             if(isModeChanged) fileTreeDictionary= {"all":[]}
+
 
             for (var i = 0 ; i < mediaList.length; i++) {
                 if(mediaList[i].file_path == undefined) {

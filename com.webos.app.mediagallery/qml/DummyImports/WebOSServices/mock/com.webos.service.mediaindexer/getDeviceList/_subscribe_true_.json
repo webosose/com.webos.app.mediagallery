@@ -1,0 +1,37 @@
+{
+    "returnValue": true,
+    "pluginList": [
+        {
+            "uri": "msc",
+            "deviceList": [
+                {
+                    "videoCount": 0,
+                    "available": false,
+                    "audioCount": 0,
+                    "name": "MEDIATEST",
+                    "imageCount": 0,
+                    "icon": "",
+                    "uri": "msc://2C25-16EA",
+                    "description": "Type-C"
+                }
+            ],
+            "active": true
+        },
+        {
+            "uri": "storage",
+            "deviceList": [
+                {
+                    "videoCount": 0,
+                    "available": true,
+                    "audioCount": 0,
+                    "name": "Media",
+                    "imageCount": 0,
+                    "icon": "",
+                    "uri": "storage:///media/multimedia",
+                    "description": "Local Media Storage"
+                }
+            ],
+            "active": true
+        }
+    ]
+}
