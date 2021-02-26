@@ -18,5 +18,5 @@
     "spinnerOnLaunch": false,
     "transparent":false,
     "uiRevision":2,
-    "requiredPermissions": ["settings","system","signals.register","mediaindexer.operation","broadcastradio.operation"]
+    "requiredPermissions": ["settings","system","signals.register","application.launcher","mediaindexer.operation","notification.operation"]
 }
