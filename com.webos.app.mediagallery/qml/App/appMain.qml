@@ -38,7 +38,7 @@ AppMain {
     title: stringSheet.appTitle
     appId: stringSheet.appId
 
-    property var appMode: stringSheet.modeView.mode[0]
+    property var appMode: ""
 
     // Service
     property ServiceRoot service: _service
@@ -53,13 +53,19 @@ AppMain {
     }
 
     onParamRedirectorChanged: {
-        if (paramRedirector == undefined)
+        var defaultMode = stringSheet.modeView.mode[0];
+        if (paramRedirector == undefined) {
+            appLog.log("App param is empty. Start app with default mode : ", defaultMode);
+            appMode = defaultMode
             return;
+        }
 
         appLog.log("App relaunch Param came", appRoot.appId, "["+JSON.stringify(params)+"]");
 
         if (paramRedirector.appMode == undefined){
-            appLog.log("Param doesn't have enough information. Start app without parameters");
+            appLog.log("Param doesn't have enough information. Start app without parameters." +
+                       " default mode : " + defaultMode);
+            appMode = defaultMode;
             return;
         }
         //initialize

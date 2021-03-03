@@ -16,7 +16,7 @@ import "./ListComponent/"
 /*
 -- Scene ----- MediaList --- GridView
 I                          I
-I                          -- DetailView
+I                          -- DetailView (TODO)
 */
 Item {
     id: root

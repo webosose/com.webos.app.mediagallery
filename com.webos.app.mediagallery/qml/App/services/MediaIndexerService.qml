@@ -69,12 +69,12 @@ Item {
 
         onConnected: {
             appLog.debug("MediaInexer connect");
-            updateDeviceList();
+//            updateDeviceList();
 
-            appLog.debug("IsDesktopMode? " + isDesktopMode);
+//            appLog.debug("IsDesktopMode? " + isDesktopMode);
 
-            if (isDesktopMode)
-                updateMediaList();
+//            if (isDesktopMode)
+//                updateMediaList();
         }
 
         function updateMediaList() {

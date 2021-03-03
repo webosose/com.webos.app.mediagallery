@@ -14,11 +14,6 @@ import QtQuick 2.6
 import "../../components/QmlAppComponents"
 import "./ListComponent/"
 
-/*
--- Scene ----- MediaList --- GridView
-I                          I
-I                          -- DetailView
-*/
 Item {
     id: root
 

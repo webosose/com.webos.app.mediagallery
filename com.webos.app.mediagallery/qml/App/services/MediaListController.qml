@@ -20,7 +20,6 @@ Item {
     id: root
     objectName: "mediaListController"
 
-    property string currentMode: appRoot.appMode // 0:image, 1: video, 2: audio
     property var listType: "imageList"
     signal fileTreeUpdated(var list);
 
