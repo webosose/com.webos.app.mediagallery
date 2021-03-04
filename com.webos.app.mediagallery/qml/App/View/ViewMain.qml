@@ -26,7 +26,8 @@ Item {
         if(found !== -1) {
             appRoot.appMode = mode;
             modeView.setStartPoint(found);
-            mainScreenView.startFolder = folder;
+//            mainScreenView.startFolder = folder;
+            mainScreenView.startFolderInfo[mode] = folder;
         } else {
             appRoot.appMode = stringSheet.modeView.mode[0];
         }
@@ -47,6 +48,11 @@ Item {
         appLog.debug("Detect Mode Change. set the current folder as empty");
         mainScreenView.currentFolder = "";
         mainScreenView.setFolderListAsEmpty();
+
+        //TODO: maybe better way to set focuse mode
+        const found = stringSheet.modeView.mode.findIndex(element => element === currentMode);
+        if(found !== 1)
+            modeView.setStartPoint(found);
     }
 
     objectName: "viewMain"

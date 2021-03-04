@@ -33,7 +33,7 @@ Item {
     DebugBackground {}
 
     property var currentFolder: "";
-    property var startFolder: ""
+    property var startFolderInfo: ({})
     property var currentMode: viewMain.currentMode
 
     onCurrentFolderChanged: {
@@ -50,6 +50,9 @@ Item {
         onNotifyFolderClicked: {
             appLog.debug("NotifyFolderClick in MainScreenView :" +folderName);
             currentFolder = folderName;
+
+            startFolderInfo[currentMode] = currentFolder;
+            appLog.debug("StartFolder for mode = " + currentMode + " = " + currentFolder);
         }
     }
 

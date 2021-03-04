@@ -36,7 +36,8 @@ Item {
     }
 
     function setStartIndex(index) {
-        listView.currentIndex = index;
+        if(listView.currentIndex != index)
+            listView.currentIndex = index;
     }
 
     Component {

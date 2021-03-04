@@ -51,7 +51,7 @@ Item {
                     folderList.length > 0) {
                 appLog.debug("Set first folder as start point");
                 currentFolder = folderList[0];
-                startFolder = currentFolder;
+                startFolderInfo[currentMode] = currentFolder;
             }
         }
     }
@@ -62,18 +62,20 @@ Item {
     }
 
     function checkStartPointValid(){
-        if(startFolder == "") { return false; }
-
-        const found = folderList.findIndex(element => element === startFolder);
-
-        appLog.debug("checkStartPointValid() called :: found = " + found);
-
-        if(found === -1) {
-            appLog.debug("Start folder cannot be found : folder name = " + startFolder);
+        if(startFolderInfo[currentMode] == "") {
+            appLog.debug("StartFolder currentMode " + currentMode + " null ");
             return false;
         }
 
-        currentFolder = startFolder;
+        const found = folderList.findIndex(element => element === startFolderInfo[currentMode]);
+
+        appLog.debug("CheckStartPointValid() called :: found = " + found);
+
+        if(found === -1) {
+            appLog.debug("Start folder cannot be found : folder name = " + startFolderInfo[currentMode]);
+            return false;
+        }
+        currentFolder = startFolderInfo[currentMode];
         folderListComponent.setStartIndex(found);
 
         return true;

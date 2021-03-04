@@ -169,10 +169,6 @@ Item {
                     font: appStyle.engFont.mainFont24
 
                     visible: name == "dummy" ? true : false
-
-                    Component.onCompleted: {
-                        console.warn("name?",name);
-                    }
                 }
 
                 // Left top braket
