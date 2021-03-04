@@ -9,7 +9,7 @@
     "iconColor": "#ffffff",
     "largeIcon": "icon.png",
     "handlesRelaunch": true,
-    "visible": false,
+    "visible": true,
     "defaultWindowType": "card",
     "trustLevel": "trusted",
     "resolution": "1920x720",
