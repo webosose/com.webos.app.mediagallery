@@ -6,7 +6,7 @@
             "deviceList": [
                 {
                     "videoCount": 0,
-                    "available": false,
+                    "available": true,
                     "audioCount": 0,
                     "name": "MEDIATEST",
                     "imageCount": 0,

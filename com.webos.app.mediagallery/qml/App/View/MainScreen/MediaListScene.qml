@@ -11,12 +11,12 @@
  * LICENSE@@@ */
 
 import QtQuick 2.6
-import QmlAppComponents 0.1
+import "../../components/QmlAppComponents"
 import "./ListComponent/"
 /*
 -- Scene ----- MediaList --- GridView
 I                          I
-I                          -- DetailView
+I                          -- DetailView (TODO)
 */
 Item {
     id: root

@@ -12,7 +12,7 @@
 
 import QtQuick 2.6
 import WebOSServices 1.0
-import QmlAppComponents 0.1
+import "../components/QmlAppComponents"
 import Eos.Controls 0.1
 
 Item {
@@ -69,12 +69,12 @@ Item {
 
         onConnected: {
             appLog.debug("MediaInexer connect");
-            updateDeviceList();
+//            updateDeviceList();
 
-            appLog.debug("IsDesktopMode? " + isDesktopMode);
+//            appLog.debug("IsDesktopMode? " + isDesktopMode);
 
-            if (isDesktopMode)
-                updateMediaList();
+//            if (isDesktopMode)
+//                updateMediaList();
         }
 
         function updateMediaList() {

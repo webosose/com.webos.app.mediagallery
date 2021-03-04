@@ -12,7 +12,7 @@
 
 import QtQuick 2.6
 import "./View"
-import QmlAppComponents 0.1
+import "components/QmlAppComponents"
 
 Item {
     id: root

@@ -13,7 +13,7 @@
 import QtQuick 2.6
 import Eos.Controls 0.1
 import Eos.Style 0.1
-import QmlAppComponents 0.1
+import "../components/QmlAppComponents"
 
 Item {
     id: root
@@ -38,7 +38,7 @@ Item {
             appLog.debug("Mode Changed to " + stringSheet.modeView.mode[index]);
             appRoot.appMode = stringSheet.modeView.mode[index];
 
-            mainScreenView.setFolderListAsEmpty();
+//            mainScreenView.setFolderListAsEmpty();
 
             //TODO : Search different way to notice mode changing to set currentfolder
             isOnModeChanging = true;
@@ -48,6 +48,7 @@ Item {
     onCurrentModeChanged: {
         appLog.debug("Detect Mode Change. set the current folder as empty");
         mainScreenView.currentFolder = "";
+        mainScreenView.setFolderListAsEmpty();
     }
 
 //    property var sceneController: {
