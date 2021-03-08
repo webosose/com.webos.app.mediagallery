@@ -10,7 +10,7 @@
  *
  * LICENSE@@@ */
 
-import QtQuick 2.6
+import QtQuick 2.12
 import "../../../components/QmlAppComponents"
 import "../../../commonComponents"
 
@@ -81,6 +81,7 @@ Item {
             Item {
                 id: contentBase
                 anchors.fill: parent
+                scale: 0.98
                 Component.onCompleted: {
                     if (isScrolling == false) {
                         // ex)loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
@@ -112,14 +113,6 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     asynchronous: true
                 }
-
-                Rectangle {
-                    id: borderLine
-                    anchors.fill: parent
-                    border.color: "#4C4C4C"
-                    border.width: appStyle.relativeXBasedOnFHD(3)
-                    color: "transparent"
-                }
             }
             MouseArea {
                 anchors.fill:parent
@@ -149,6 +142,142 @@ Item {
         onTriggered: {
             appLog.debug("loadTimer ends");
             isScrolling = false;
+        }
+    }
+
+    GridView {
+        id: bgGridView
+        enabled: false
+        anchors.fill: thumbnailGridView
+        model: gridViewListModel.count < 20 ? dummyModel : thumbnailGridView.model
+
+        Component.onCompleted: {
+            var i;
+            for (i = 0 ; i < 20 ; i++) {
+                dummyModel.append({"name":"dummy"});
+            }
+        }
+
+        ListModel {
+            id: dummyModel
+        }
+
+        cellWidth: thumbnailGridView.cellWidth
+        cellHeight: thumbnailGridView.cellHeight
+        delegate: bgDelegate
+        focus: false
+
+        contentY: thumbnailGridView.contentY
+        contentX: thumbnailGridView.contentX
+
+        Component {
+            id: bgDelegate
+            Item
+            {
+                id: base
+                width: bgGridView.cellWidth
+                height: bgGridView.cellHeight
+
+                property string borderColor: "ffffff"
+                property real borderLengthRatio: 0.15
+
+                Text {
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    text: "No data"
+                    color: appStyle.appColor.mainTextColor
+                    font: appStyle.engFont.mainFont24
+                }
+
+                // Left top braket
+                Rectangle {
+                    anchors.left: parent.left; anchors.top: parent.top
+                    width: bgGridView.cellWidth * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.left: parent.left; anchors.top: parent.top
+                    height: bgGridView.cellHeight * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+
+                // Right top braket
+                Rectangle {
+                    anchors.right: parent.right; anchors.top: parent.top
+                    width: bgGridView.cellWidth * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.right: parent.right; anchors.top: parent.top
+                    height: bgGridView.cellHeight * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+
+                // Left Bottom braket
+                Rectangle {
+                    anchors.left: parent.left; anchors.bottom: parent.bottom
+                    width: bgGridView.cellWidth * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.left: parent.left; anchors.bottom: parent.bottom
+                    height: bgGridView.cellHeight * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+
+                // Right bottom braket
+                Rectangle {
+                    anchors.right: parent.right; anchors.bottom: parent.bottom
+                    width: bgGridView.cellWidth * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.right: parent.right; anchors.bottom: parent.bottom
+                    height: bgGridView.cellHeight * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+            }
         }
     }
 

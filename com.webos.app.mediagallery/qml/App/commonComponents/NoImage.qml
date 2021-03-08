@@ -28,7 +28,7 @@ Item {
         font: src == ""
                   ? (smallMode ? appStyle.engFont.getFont(parent.width * 0.7 / appStyle.scale)
                                : appStyle.engFont.getFont(parent.width / 4 / appStyle.scale))
-                  : appStyle.engFont.getFont(15)
+                  : appStyle.engFont.getFont(25)
 //        font: smallMode ? appStyle.engFont.getFont(parent.width * 0.7 / appStyle.scale)
 //                        : appStyle.engFont.getFont(parent.width / 4 / appStyle.scale)
 //        text: smallMode ? stringSheet.common.noImageSmall : stringSheet.common.noImage

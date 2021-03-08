@@ -47,27 +47,8 @@ Item {
             width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth);
             height: appStyle.relativeYBasedOnFHD(appStyle.menuItemHeight + 2);
 
-            //listView.currentIndex = index;
-            Rectangle {
-                id: gradationBackground
-                visible: base.ListView.isCurrentItem
-                width: parent.height
-                height: parent.width
-                anchors.centerIn: parent
-//                gradient: Gradient.DeepBlue
-                rotation: -90
-                gradient: Gradient {
-                    GradientStop { position:0.0; color: "transparent"}
-                    GradientStop { position:0.2; color: appStyle.appColor.highlightColor}
-                    GradientStop { position:0.4; color: appStyle.appColor.highlightColor}
-                    GradientStop { position:0.75; color: "transparent"}
-                }
-
-            }
-
             Text {
                 id: menuText
-//                x: listView.currentIndex == index ? focusedDot.x + focusedDot.width + appStyle.relativeXBasedOnFHD(20) : focusedDot.width + appStyle.relativeXBasedOnFHD(20)
                 x: base.ListView.isCurrentItem ? appStyle.relativeXBasedOnFHD(25) : appStyle.relativeXBasedOnFHD(20)
                 width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth) - x
                 height: appStyle.relativeYBasedOnFHD(appStyle.menuItemHeight);
@@ -77,6 +58,7 @@ Item {
                 wrapMode: Text.WordWrap
                 elide: Text.ElideRight
                 verticalAlignment: Text.AlignVCenter
+                opacity: base.ListView.isCurrentItem ? 1.0 : 0.6
 
                 Behavior on x {
                     NumberAnimation {
@@ -88,9 +70,9 @@ Item {
 
             Rectangle {
                 anchors.top: menuText.bottom
-                width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth);
-                height: appStyle.relativeYBasedOnFHD(2);
-                color: base.ListView.isCurrentItem ? appStyle.appColor.highlightColor : appStyle.appColor.borderlineColor
+                width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth)
+                height: base.ListView.isCurrentItem ? appStyle.relativeYBasedOnFHD(3) : appStyle.relativeYBasedOnFHD(2)
+                color: appStyle.appColor.borderlineColor
                 opacity: base.ListView.isCurrentItem ? 1.0 : 0.4
             }
 

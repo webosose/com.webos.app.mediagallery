@@ -22,30 +22,39 @@ Item {
 
     Image {
         id: fileImage
-        anchors.centerIn: parent.center
-        width: parent.width * 0.8
-        height: parent.height * 0.8
+        anchors.top: thumbnailImage.top
+        anchors.left: thumbnailImage.left
+        width: thumbnailImage.width
+        height: thumbnailImage.height
         source: thumbnailUrl
-        sourceSize.width: parent.width * 0.8
+        sourceSize.width: width
         asynchronous: true
         NoImage {
             anchors.centerIn: parent.center
             width: parent.width
             height: parent.height
-            src: title == "" ? "No title" : title
+//                src: title == "" ? "No title" : title
+            src: " "
             visible: fileImage.status != Image.Ready
+            bgColor: appStyle.appColor.defaultBackground
         }
     }
 
-    Text {
-        anchors.top: fileImage.bottom
-        anchors.bottom: parent.bottom
-        anchors.topMargin: appStyle.relativeYBasedOnFHD(5)
-        anchors.left: parent.left
+    Rectangle {
+        anchors.bottom: fileImage.bottom
+        anchors.left: fileImage.left
         width: fileImage.width
-        text: title
-        color: appStyle.appColor.mainTextColor
-        font: appStyle.engFont.mainFont24
-        elide: Text.ElideRight
+        height: fileImage.height * 0.1
+        color: "black"
+        opacity: 0.8
+
+        Text {
+            anchors.fill: parent
+            text: title
+            horizontalAlignment: Text.AlignHCenter
+            color: appStyle.appColor.mainTextColor
+            font: appStyle.engFont.mainFont24
+            elide: Text.ElideRight
+        }
     }
 }

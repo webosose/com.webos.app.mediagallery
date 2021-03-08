@@ -34,18 +34,6 @@ Item {
         fileList.updateListModel(fileListForCurrentFolder);
     }
 
-    Text {
-        anchors.fill: parent
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        text: "No data"
-        visible: !service.mediaIndexer.isOnUpdating
-                  && fileListForCurrentFolder.length == 0
-        color: appStyle.appColor.mainTextColor
-        font: appStyle.engFont.mainFont35
-    }
-
-
     DelayRequestListcomponent {
         id: fileList
         anchors.fill: parent
