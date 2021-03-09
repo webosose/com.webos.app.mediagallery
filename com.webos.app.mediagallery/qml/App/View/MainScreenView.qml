@@ -12,7 +12,7 @@
 
 import QtQuick 2.6
 import "./MainScreen"
-import "../components/QmlAppComponents"
+import QmlAppComponents 0.1
 
 
 /*
@@ -119,7 +119,8 @@ Item {
         color: appStyle.appColor.popupBackground
         visible: service.mediaIndexer.isOnUpdating
         width: parent.width
-        height: parent.height
+        height: parent.height * 0.12
+        anchors.verticalCenter: parent.verticalCenter
 
         Text {
             anchors.fill: parent

@@ -31,5 +31,6 @@ Item {
         anchors.fill: parent
         src: title == "" ? "No title" : title
         visible: fileImage.status != Image.Ready
+        bgColor: appStyle.appColor.defaultBackground
     }
 }

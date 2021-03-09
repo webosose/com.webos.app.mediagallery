@@ -10,8 +10,8 @@
  *
  * LICENSE@@@ */
 
-import QtQuick 2.6
-import "../../../components/QmlAppComponents"
+import QtQuick 2.12
+import QmlAppComponents 0.1
 import "../../../commonComponents"
 
 Item {
@@ -69,15 +69,6 @@ Item {
                     color: "white"
                     wrapMode: Text.WordWrap
                 }
-
-
-//                NoImage {
-//                    anchors.fill: parent
-//                    src: itemToShow
-//                    bgColor: base.ListView.isCurrentItem
-//                             ? appStyle.appColor.highlightColor
-//                             : appStyle.appColor.normalMenuBackground
-//                }
             }
             // indent the item if it is the current item
             states: State {
@@ -122,22 +113,157 @@ Item {
         }
     }
 
-//    Component {
-//        id: highlightBar
-//        Rectangle {
-//            width: 220; height: 200
-//            color: "#FFFF88"
-//            x: horizontalListView.currentItem.x;
-//            z: 2
-//            Behavior on x {
-//                NumberAnimation {
-//                    duration: 500  }
-//            }
-//        }
-//    }
-
     ListModel {
         id: listModel
+    }
+
+
+    ListView {
+        id: bgListView
+        enabled: false
+        //anchors.fill: horizontalListView
+        width: horizontalListView.width
+        height: horizontalListView.height
+        x: horizontalListView.x - horizontalListView.spacing * 0.5
+        y: horizontalListView.y - horizontalListView.spacing * 0.5
+        model: listModel.count < 1 ? dummyModel : horizontalListView.model
+
+        Component.onCompleted: {
+            var i;
+            for (i = 0 ; i < 1 ; i++) {
+                dummyModel.append({"name":"dummy"});
+            }
+        }
+
+        ListModel {
+            id: dummyModel
+        }
+
+        orientation: horizontalListView.orientation
+        //spacing: horizontalListView.spa
+
+
+        delegate: bgDelegate
+        focus: false
+
+        contentY: horizontalListView.contentY
+        contentX: horizontalListView.contentX
+
+        Component {
+            id: bgDelegate
+            Item
+            {
+                id: base
+                width: root.elementWidth + horizontalListView.spacing
+                height: root.elementHeight + horizontalListView.spacing
+
+                property string borderColor: "ffffff"
+                property real borderLengthRatio: 0.15
+
+                Text {
+                    anchors.fill: parent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    text: "No data"
+                    color: appStyle.appColor.mainTextColor
+                    font: appStyle.engFont.mainFont24
+
+                    visible: name == "dummy" ? true : false
+
+                    Component.onCompleted: {
+                        console.warn("name?",name);
+                    }
+                }
+
+                // Left top braket
+                Rectangle {
+                    anchors.left: parent.left; anchors.top: parent.top
+                    width: base.width * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.left: parent.left; anchors.top: parent.top
+                    height: base.height * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+
+                // Right top braket
+                Rectangle {
+                    anchors.right: parent.right; anchors.top: parent.top
+                    width: base.width * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.right: parent.right; anchors.top: parent.top
+                    height: base.height * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+
+                // Left Bottom braket
+                Rectangle {
+                    anchors.left: parent.left; anchors.bottom: parent.bottom
+                    width: base.width * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.left: parent.left; anchors.bottom: parent.bottom
+                    height: base.height * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+
+                // Right top braket
+                Rectangle {
+                    anchors.right: parent.right; anchors.bottom: parent.bottom
+                    width: base.width * base.borderLengthRatio
+                    height: appStyle.relativeYBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Horizontal
+                    }
+                }
+                Rectangle {
+                    anchors.right: parent.right; anchors.bottom: parent.bottom
+                    height: base.height * base.borderLengthRatio
+                    width: appStyle.relativeXBasedOnFHD(1)
+                    gradient: Gradient {
+                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
+                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
+                        orientation: Gradient.Vertical
+                    }
+                }
+            }
+        }
     }
 
     ListView {
@@ -150,22 +276,5 @@ Item {
 
         delegate: listDelegate
         model: listModel
-
-//        populate: Transition {
-//            NumberAnimation { properties: "x,y"; duration: 1000 }
-//        }
-
-//        highlight: highlightBar
-//        highlight: Rectangle {
-//            width: appStyle.gridViewSize
-////            anchors.centerIn: base
-//            color: "transparent"
-//            border.color: "red"
-//            border.width: 2
-//            z:2
-//        }
-
-//        highlightFollowsCurrentItem: false
     }
-
 }

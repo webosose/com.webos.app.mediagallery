@@ -11,7 +11,7 @@
  * LICENSE@@@ */
 
 import QtQuick 2.6
-import "../../components/QmlAppComponents"
+import QmlAppComponents 0.1
 import "./ListComponent/"
 /*
 -- Scene ----- MediaList --- GridView
@@ -33,18 +33,6 @@ Item {
         fileListForCurrentFolder = list;
         fileList.updateListModel(fileListForCurrentFolder);
     }
-
-    Text {
-        anchors.fill: parent
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        text: "No data"
-        visible: !service.mediaIndexer.isOnUpdating
-                  && fileListForCurrentFolder.length == 0
-        color: appStyle.appColor.mainTextColor
-        font: appStyle.engFont.mainFont35
-    }
-
 
     DelayRequestListcomponent {
         id: fileList
