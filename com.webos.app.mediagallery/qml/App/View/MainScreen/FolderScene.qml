@@ -11,7 +11,7 @@
  * LICENSE@@@ */
 
 import QtQuick 2.6
-import "../../components/QmlAppComponents"
+import QmlAppComponents 0.1
 import "./ListComponent/"
 
 Item {

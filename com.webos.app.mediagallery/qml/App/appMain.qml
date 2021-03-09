@@ -14,7 +14,7 @@ import QtQuick 2.6
 import Eos.Window 0.1
 import Eos.Controls 0.1
 import "./services"
-import "components/QmlAppComponents"
+import QmlAppComponents 0.1
 
 AppMain {
     id: appRoot

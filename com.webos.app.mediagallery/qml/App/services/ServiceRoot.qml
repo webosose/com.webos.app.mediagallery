@@ -12,7 +12,7 @@
 
 import QtQuick 2.6
 import WebOSServices 1.0
-import "../components/QmlAppComponents"
+import QmlAppComponents 0.1
 
 Item {
     id: root

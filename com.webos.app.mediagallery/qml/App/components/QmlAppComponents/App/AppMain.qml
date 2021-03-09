@@ -12,8 +12,7 @@
 
 import QtQuick 2.4
 import Eos.Window 0.1
-//import QmlAppComponents 0.1
-import "../../QmlAppComponents"
+import QmlAppComponents 0.1
 
 WebOSWindow {
     id: root
