@@ -38,8 +38,6 @@ Item {
             appLog.debug("Mode Changed to " + stringSheet.modeView.mode[index]);
             appRoot.appMode = stringSheet.modeView.mode[index];
 
-//            mainScreenView.setFolderListAsEmpty();
-
             //TODO : Search different way to notice mode changing to set currentfolder
             isOnModeChanging = true;
         }
@@ -51,23 +49,8 @@ Item {
         mainScreenView.setFolderListAsEmpty();
     }
 
-//    property var sceneController: {
-//        "goNowPlaying": function() {root.state = "NowPlaying"},
-//        "goMusicList": function() {root.state = "MusicList"}
-//    }
-
     objectName: "viewMain"
 
-//    states: [
-//        State {
-//            // Mean "Ordinary" playing scene
-//            name: "NowPlaying"
-//        },
-//        State {
-//            // Mean list & file search, detail radio preset, etc...
-//            name: "MusicList"
-//        }
-//    ]
 
     /*
       App Scene Structure.
@@ -91,6 +74,16 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: appStyle.relativeXBasedOnFHD(appStyle.menuWitdh)
+
+
+        MouseArea {
+            id: modeViewArea
+            anchors.fill: parent
+            propagateComposedEvents: true
+            onClicked: {
+                mouse.accepted = false;
+            }
+        }
     }
 
     Rectangle {
@@ -118,6 +111,4 @@ Item {
         anchors.top: modeView.top
         anchors.bottom: parent.bottom
     }
-
-    state: "NowPlaying"
 }

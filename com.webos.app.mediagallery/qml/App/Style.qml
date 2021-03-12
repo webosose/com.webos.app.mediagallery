@@ -46,7 +46,6 @@ AppStyle {
 
     property int gridViewSize: 200
 
-
     //Color and background
     property var imgDir: "./Images/"
 

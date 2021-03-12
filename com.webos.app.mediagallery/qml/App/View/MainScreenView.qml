@@ -30,28 +30,18 @@ Item {
 
     clip: true
 
-    //TODO : maybe we will show and hide folder view
-//    states: [
-//        State {
-//            name: "Folders"
-//        },
-//        State {
-//            name: "Files"
-//        }
-//    ]
-
-//    state: "Folders"
-
-//    onStateChanged: {
-//    }
-
     DebugBackground {}
 
     property var currentFolder: "";
     property var startFolder: ""
+    property var currentMode: viewMain.currentMode
 
     onCurrentFolderChanged: {
         appLog.debug("MainScreenView currentFolder " + currentFolder);
+    }
+
+    onCurrentModeChanged: {
+        root.state = "showList"
     }
 
     Connections {
@@ -61,7 +51,13 @@ Item {
             appLog.debug("NotifyFolderClick in MainScreenView :" +folderName);
             currentFolder = folderName;
         }
+    }
 
+    Connections {
+        target: modeViewArea
+        onClicked: {
+            root.state = "disappearAnimation"
+        }
     }
 
     function setFolderListAsEmpty () {
@@ -114,6 +110,136 @@ Item {
 
         DebugBackground {}
     }
+
+    function showPreview(filePath, x, y) {
+        //set transformOrigin
+        if(x < (root.width / 3) && y < (root.height /3)) {
+            photo.transformOrigin = Item.TopLeft;
+        } else if (x < (root.width / 3) * 2 && y < (root.height /3)) {
+            photo.transformOrigin = Item.Top;
+        } else if (x >= (root.width / 3) * 2 && y < (root.height /3)) {
+            photo.transformOrigin = Item.TopRight;
+        } else if(x < (root.width / 3) && y < (root.height /3) * 2) {
+            photo.transformOrigin = Item.Left;
+        } else if (x < (root.width / 3) * 2 && y < (root.height /3) * 2) {
+            photo.transformOrigin = Item.Center;
+        } else if (x >= (root.width / 3) * 2 && y < (root.height /3) * 2) {
+            photo.transformOrigin = Item.Right;
+        } else if(x < (root.width / 3) && y >= (root.height /3) * 2) {
+            photo.transformOrigin = Item.BottomLeft;
+        } else if (x < (root.width / 3) * 2 && y >= (root.height /3) * 2) {
+            photo.transformOrigin = Item.Bottom;
+        } else {
+            photo.transformOrigin = Item.BottomRight;
+        }
+
+        previewImage.setPreviewSource(filePath);
+        root.state = "preview";
+    }
+
+    state: "showList"
+
+    states: [
+        State {
+            name: "preview"
+            PropertyChanges { target: previewImage; visible: true}
+        },
+        State {
+            name: "disappearAnimation"
+            PropertyChanges { target: previewImage; visible: true}
+        },
+        State {
+            name: "showList"
+            PropertyChanges {target: previewImage; visible: false}
+        }
+    ]
+
+    transitions: [
+        Transition {
+            from: "showList"
+            to: "preview"
+            ScaleAnimator {
+                target: photo
+                from: 0.3
+                to : 1
+                duration: 300
+                easing.type: Easing.InOutQuad
+           }
+        },
+        Transition {
+            from: "preview"
+            to: "disappearAnimation"
+            SequentialAnimation {
+                ScaleAnimator {
+                    target: photo
+                    from: 1
+                    to : 0.3
+                    duration: 300
+                    easing.type: Easing.InOutQuad
+               }
+                ScriptAction {
+                    script: { root.state = "showList" }
+                }
+            }
+        }
+   ]
+
+    onStateChanged: {
+        appLog.debug("MainScreenView state = " + root.state);
+    }
+
+    Item {
+        id: previewImage
+        anchors.fill: parent
+        visible: false
+
+        Rectangle {
+           anchors.fill: parent
+           color: "#80000000"
+        }
+
+        function setPreviewSource(filePath) {
+            photo.source = filePath;
+        }
+
+
+        Image {
+            id:photo
+            x: parent.width * 0.1
+            y: parent.height * 0.15
+            width: previewImage.width * 0.8
+            height: previewImage.height * 0.8
+            source: ""
+            sourceSize.width: width
+            transformOrigin: Item.BottomLeft
+        }
+
+        function isPreviewArea(x,y) {
+            if(previewImage.visible == false) return false;
+
+            if((x>= photo.x && x <= photo.x + photo.width)
+               && (y>= photo.y && y <= photo.y + photo.height)) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        enabled: root.state == "preview" ? true : false
+
+        onClicked: {
+            //check the clicked area is inside preview
+            var isInsidePreview = previewImage.isPreviewArea(mouseX, mouseY);
+            if(isInsidePreview === false) root.state = "disappearAnimation"
+        }
+
+        onWheel : {
+            //consuming wheel event
+        }
+    }
+
     Rectangle {
         id: loadingScrim
         color: appStyle.appColor.popupBackground

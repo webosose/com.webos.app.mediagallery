@@ -49,30 +49,29 @@ Item {
                         : {"thumbnailUrl":"thumbnail","title":"title"}
         componentSize: {"width": gridViewWidth, "height": gridViewHeight}
 
-        clickAction: function(index) {
+        clickAction: function(index, x, y) {
             appLog.debug("file index clicked : " + fileListForCurrentFolder[index].file_path);
             var filePath = fileListForCurrentFolder[index].file_path;
             switch(appMode) {
             case stringSheet.category.image:
                 appLog.debug("call image viewer");
-                service.webOSService.singleCallService.callSimpleToast("Need to call image viewer with " + filePath);
+                //Note: Currently show preview. Later, it will call image viewer app
+                //      in that case, preview can be used for long click action
+                mainScreenView.showPreview(filePath, x, y);
                 break;
             case stringSheet.category.video:
                 appLog.debug("call video viewer");
-                service.webOSService.singleCallService.callSimpleToast("Need to call video player with " + filePath);
+                service.webOSService.singleCallService.launchApp(stringSheet.viewerApps.video);
                 break;
             case stringSheet.category.audio:
                 appLog.debug("call audio player");
-                service.webOSService.singleCallService.callSimpleToast("Need to call audio player with " + filePath);
-                service.webOSService.singleCallService.launchAppWithParam(
-                            stringSheet.viewerApps.audio,
-                            {"appMode":stringSheet.category.audio,
-                             "folder": currentFolder,
-                             "fileIndex": index,
-                             "fileUrl":filePath})
+                service.webOSService.singleCallService.callSimpleToast("Music player is not supported for current device");
+
                 break;
             }
         }
     }
+
+
 
 }
