@@ -37,6 +37,61 @@ Item {
         appLog.debug("HorizentalListComponent :: set start index = " + index);
     }
 
+    readonly property string forward: "foward";
+    readonly property string backward: "backward";
+
+    property var moveIndexDirection: forward;
+
+    Timer {
+        id: fastfowardTimer
+        interval: 100; repeat: true; triggeredOnStart: true
+        onTriggered: {
+            var prevIndex = horizontalListView.currentIndex;
+            if(moveIndexDirection == forward) moveIndexFoward();
+            else moveIndexBackward();
+            if(prevIndex === horizontalListView.currentIndex) {
+                running = false;
+            }
+        }
+        onRunningChanged: {
+            if(running == false) {
+                clickAcion(horizontalListView.currentIndex);
+            }
+        }
+    }
+
+    function moveFast(direction) {
+        moveIndexDirection = direction;
+        fastfowardTimer.start();
+    }
+
+    function moveStop() {
+        if(fastfowardTimer.running == true)
+            fastfowardTimer.stop();
+    }
+
+    function moveIndex(direction) {
+        if(direction === forward) {
+            moveIndexFoward();
+        } else {
+            moveIndexBackward();
+        }
+
+        clickAcion(horizontalListView.currentIndex);
+    }
+
+    function moveIndexFoward() {
+        if(horizontalListView.currentIndex < listModel.count -1) {
+            horizontalListView.currentIndex += 1;
+        }
+    }
+
+    function moveIndexBackward() {
+        if(horizontalListView.currentIndex > 0){
+            horizontalListView.currentIndex -= 1;
+        }
+    }
+
     Component {
         id: listDelegate
 
@@ -265,7 +320,7 @@ Item {
     ListView {
         id: horizontalListView
         anchors.fill: parent
-        anchors.topMargin: height * 0.1
+        anchors.topMargin: parent.height * 0.1
 
         orientation: ListView.Horizontal
         spacing: appStyle.relativeXBasedOnFHD(root.spacing)
