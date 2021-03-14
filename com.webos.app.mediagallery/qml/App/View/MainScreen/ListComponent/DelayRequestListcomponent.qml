@@ -118,8 +118,18 @@ Item {
                 anchors.fill:parent
                 onClicked: {
                     thumbnailGridView.currentIndex = index;
-                    clickAction(index);
+                    var absXY = absolutePosition(index, mouseX, mouseY);
+                    clickAction(index,absXY.X,absXY.Y);
                 }
+
+                function absolutePosition(index, x, y) {
+                    var rowIndex = parseInt(index / thumbnailGridView.itemNumInRow);
+                    var colIndex = parseInt(index % thumbnailGridView.itemNumInRow)
+
+                    return {X: thumbnailGridView.cellWidth * colIndex + x,
+                            Y:  thumbnailGridView.cellHeight * rowIndex + y}
+                }
+
             }
         }
     }
@@ -291,6 +301,9 @@ Item {
         cellHeight: root.gridViewHeight
         delegate: listDelegate
         focus: true
+
+        property int itemNumInRow: thumbnailGridView.width / thumbnailGridView.cellWidth
+        property int itemNumInCol: thumbnailGridView.height / thumbnailGridView.cellHeight
 
         property real prevV: 0.0
         onVerticalVelocityChanged: {

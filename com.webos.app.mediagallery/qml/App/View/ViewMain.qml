@@ -26,7 +26,8 @@ Item {
         if(found !== -1) {
             appRoot.appMode = mode;
             modeView.setStartPoint(found);
-            mainScreenView.startFolder = folder;
+//            mainScreenView.startFolder = folder;
+            mainScreenView.startFolderInfo[mode] = folder;
         } else {
             appRoot.appMode = stringSheet.modeView.mode[0];
         }
@@ -38,8 +39,6 @@ Item {
             appLog.debug("Mode Changed to " + stringSheet.modeView.mode[index]);
             appRoot.appMode = stringSheet.modeView.mode[index];
 
-//            mainScreenView.setFolderListAsEmpty();
-
             //TODO : Search different way to notice mode changing to set currentfolder
             isOnModeChanging = true;
         }
@@ -49,25 +48,15 @@ Item {
         appLog.debug("Detect Mode Change. set the current folder as empty");
         mainScreenView.currentFolder = "";
         mainScreenView.setFolderListAsEmpty();
-    }
 
-//    property var sceneController: {
-//        "goNowPlaying": function() {root.state = "NowPlaying"},
-//        "goMusicList": function() {root.state = "MusicList"}
-//    }
+        //TODO: maybe better way to set focuse mode
+        const found = stringSheet.modeView.mode.findIndex(element => element === currentMode);
+        if(found !== 1)
+            modeView.setStartPoint(found);
+    }
 
     objectName: "viewMain"
 
-//    states: [
-//        State {
-//            // Mean "Ordinary" playing scene
-//            name: "NowPlaying"
-//        },
-//        State {
-//            // Mean list & file search, detail radio preset, etc...
-//            name: "MusicList"
-//        }
-//    ]
 
     /*
       App Scene Structure.
@@ -91,6 +80,16 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         width: appStyle.relativeXBasedOnFHD(appStyle.menuWitdh)
+
+
+        MouseArea {
+            id: modeViewArea
+            anchors.fill: parent
+            propagateComposedEvents: true
+            onClicked: {
+                mouse.accepted = false;
+            }
+        }
     }
 
     Rectangle {
@@ -118,6 +117,4 @@ Item {
         anchors.top: modeView.top
         anchors.bottom: parent.bottom
     }
-
-    state: "NowPlaying"
 }
