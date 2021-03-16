@@ -26,11 +26,14 @@ Item {
         sourceSize.width: width
         asynchronous: true
     }
-
-    NoImage {
-        anchors.fill: parent
-        src: title == "" ? "No title" : title
+    Image{
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width * 0.4
+        height: parent.height * 0.4
+        source: "../../../Images/empty_image.png"
+        sourceSize.width: width
+        fillMode: Image.PreserveAspectFit
         visible: fileImage.status != Image.Ready
-        bgColor: appStyle.appColor.defaultBackground
     }
 }
