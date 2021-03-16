@@ -52,7 +52,6 @@ Item {
 
             function getParamForLayout(setSizeParams, setOtherParams) {
                 var param = ({});
-                // appLog.debug( "param keys :: " + Object.keys(componentParam));
 
                 if(setSizeParams) {
                     if(componentSize.width == undefined) {
@@ -70,7 +69,6 @@ Item {
 
                 if(setOtherParams) {
                     Object.keys(componentParam).forEach(function(keyName){
-                        // appLog.debug("----TEST :: " + keyName + " / " + componentParam[keyName] + " :: " + (gridViewListModel.get(index))[componentParam[keyName]]);
                         param[keyName] = (gridViewListModel.get(index))[componentParam[keyName]]
                     })
                 }

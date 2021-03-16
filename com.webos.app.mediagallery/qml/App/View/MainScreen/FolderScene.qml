@@ -118,19 +118,25 @@ Item {
             id: navBackwardBtnArea
             anchors.fill: parent
             state: "released"
+            enabled: folderListComponent.isHighlightFirst ? false : true
             onPressed: {
                 navBackwardBtnArea.state = "pressed";
             }
             onClicked: {
-                folderListComponent.moveIndex(folderListComponent.backward);
+                folderListComponent.movePage(folderListComponent.backward);
             }
             onPressAndHold: {
                 folderListComponent.moveFast(folderListComponent.backward);
             }
-
             onReleased: {
-                navBackwardBtnArea.state = "released";
-                folderListComponent.moveStop();
+                if(enabled) {
+                    navBackwardBtnArea.state = "released";
+                    folderListComponent.moveStop();
+                }
+            }
+            onEnabledChanged: {
+                if(enabled) navBackwardBtnArea.state = "released"
+                else navBackwardBtnArea.state = "disabled"
             }
 
             states: [
@@ -141,6 +147,10 @@ Item {
                 State {
                     name: "released";
                     PropertyChanges {target: leftArrow; opacity: 0.4}
+                },
+                State {
+                    name: "disabled";
+                    PropertyChanges {target: leftArrow; opacity: 0.1}
                 }
             ]
 
@@ -215,19 +225,25 @@ Item {
             id: navForwardBtnArea
             anchors.fill: parent
             state: "released"
+            enabled: folderListComponent.isHighlightLast ? false : true
             onPressed: {
                 navForwardBtnArea.state = "pressed";
             }
             onClicked: {
-                folderListComponent.moveIndex(folderListComponent.forward);
+                folderListComponent.movePage(folderListComponent.forward);
             }
             onPressAndHold: {
                 folderListComponent.moveFast(folderListComponent.forward);
             }
-
             onReleased: {
-                navForwardBtnArea.state = "released";
-                folderListComponent.moveStop();
+                if(enabled) {
+                    navForwardBtnArea.state = "released";
+                    folderListComponent.moveStop();
+                }
+            }
+            onEnabledChanged: {
+                if(enabled) navForwardBtnArea.state = "released"
+                else navForwardBtnArea.state = "disabled"
             }
 
             states: [
@@ -238,6 +254,10 @@ Item {
                 State {
                     name: "released";
                     PropertyChanges {target: rightArrow; opacity: 0.4}
+                },
+                State {
+                    name: "disabled";
+                    PropertyChanges {target: rightArrow; opacity: 0.1}
                 }
             ]
 

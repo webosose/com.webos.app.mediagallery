@@ -114,27 +114,12 @@ Item {
         DebugBackground {}
     }
 
+    property real clickX: 0
+    property real clickY: 0
+
     function showPreview(filePath, x, y) {
-        //set transformOrigin
-        if(x < (root.width / 3) && y < (root.height /3)) {
-            photo.transformOrigin = Item.TopLeft;
-        } else if (x < (root.width / 3) * 2 && y < (root.height /3)) {
-            photo.transformOrigin = Item.Top;
-        } else if (x >= (root.width / 3) * 2 && y < (root.height /3)) {
-            photo.transformOrigin = Item.TopRight;
-        } else if(x < (root.width / 3) && y < (root.height /3) * 2) {
-            photo.transformOrigin = Item.Left;
-        } else if (x < (root.width / 3) * 2 && y < (root.height /3) * 2) {
-            photo.transformOrigin = Item.Center;
-        } else if (x >= (root.width / 3) * 2 && y < (root.height /3) * 2) {
-            photo.transformOrigin = Item.Right;
-        } else if(x < (root.width / 3) && y >= (root.height /3) * 2) {
-            photo.transformOrigin = Item.BottomLeft;
-        } else if (x < (root.width / 3) * 2 && y >= (root.height /3) * 2) {
-            photo.transformOrigin = Item.Bottom;
-        } else {
-            photo.transformOrigin = Item.BottomRight;
-        }
+        clickX = x + mediaListScene.x;
+        clickY = y + mediaListScene.y;
 
         previewImage.setPreviewSource(filePath);
         root.state = "preview";
@@ -145,41 +130,50 @@ Item {
     states: [
         State {
             name: "preview"
-            PropertyChanges { target: previewImage; visible: true}
+            PropertyChanges { target: previewImage; visible: true }
+            PropertyChanges { target: photo; x: previewImage.width * 0.1;
+                y:previewImage.height * 0.15;
+                width: previewImage.width * 0.8;
+                height: previewImage.height * 0.8}
         },
+
+
         State {
             name: "disappearAnimation"
-            PropertyChanges { target: previewImage; visible: true}
+            PropertyChanges { target: previewImage; visible: true }
+            PropertyChanges { target: photo; x:clickX; y:clickY; width: 0; height: 0}
         },
         State {
             name: "showList"
-            PropertyChanges {target: previewImage; visible: false}
+            PropertyChanges {target: previewImage; visible: false }
+            PropertyChanges { target: photo; x:clickX -50 ; y:clickY - 50;
+                width: 50; height: 50}
         }
     ]
 
     transitions: [
         Transition {
+            id: enlargeAnim
             from: "showList"
             to: "preview"
-            ScaleAnimator {
+            PropertyAnimation {
                 target: photo
-                from: 0.3
-                to : 1
+                properties: "x, y, width, height"
                 duration: 300
                 easing.type: Easing.InOutQuad
-           }
+                running: false
+            }
         },
         Transition {
             from: "preview"
             to: "disappearAnimation"
             SequentialAnimation {
-                ScaleAnimator {
+                PropertyAnimation {
                     target: photo
-                    from: 1
-                    to : 0.3
+                    properties: "x, y, width, height"
                     duration: 300
                     easing.type: Easing.InOutQuad
-               }
+                }
                 ScriptAction {
                     script: { root.state = "showList" }
                 }
@@ -208,13 +202,10 @@ Item {
 
         Image {
             id:photo
-            x: parent.width * 0.1
-            y: parent.height * 0.15
             width: previewImage.width * 0.8
             height: previewImage.height * 0.8
             source: ""
-            sourceSize.width: width
-            transformOrigin: Item.BottomLeft
+            sourceSize.width: previewImage.width
         }
 
         function isPreviewArea(x,y) {
