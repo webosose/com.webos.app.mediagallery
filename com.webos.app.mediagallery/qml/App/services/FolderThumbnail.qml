@@ -22,6 +22,8 @@ Item {
     width: 100
     height: 100
 
+    property real emptyImageScale: 0.9
+
     Image{
         id: image1
         anchors.top: folderThumbnail.top
@@ -32,10 +34,13 @@ Item {
         sourceSize.width: width
         asynchronous: true
 
-        Rectangle {
-            anchors.fill: parent
-            color: appStyle.appColor.defaultBackground
+       Image {
+            width: parent.width * emptyImageScale
+            height: parent.height * emptyImageScale
+            sourceSize.width: width
             visible: image1.status != Image.Ready
+            source: "../Images/empty_image.png"
+            fillMode: Image.PreserveAspectFit
         }
     }
     Image{
@@ -48,10 +53,13 @@ Item {
         sourceSize.width: width
         asynchronous: true
 
-        Rectangle {
-            anchors.fill: parent
-            color: appStyle.appColor.defaultBackground
+        Image {
+            width: parent.width * emptyImageScale
+            height: parent.height * emptyImageScale
+            sourceSize.width: width
             visible: image2.status != Image.Ready
+            source: "../Images/empty_image.png"
+            fillMode: Image.PreserveAspectFit
         }
     }
     Image{
@@ -64,10 +72,13 @@ Item {
         sourceSize.width: width
         asynchronous: true
 
-        Rectangle {
-            anchors.fill: parent
-            color: appStyle.appColor.defaultBackground
+        Image {
+            width: parent.width * emptyImageScale
+            height: parent.height * emptyImageScale
+            sourceSize.width: width
             visible: image3.status != Image.Ready
+            source: "../Images/empty_image.png"
+            fillMode: Image.PreserveAspectFit
         }
     }
     Image{
@@ -80,10 +91,13 @@ Item {
         sourceSize.width: width
         asynchronous: true
 
-        Rectangle {
-            anchors.fill: parent
-            color: appStyle.appColor.defaultBackground
+        Image {
+            width: parent.width * emptyImageScale
+            height: parent.height * emptyImageScale
+            sourceSize.width: width
             visible: image4.status != Image.Ready
+            source: "../Images/empty_image.png"
+            fillMode: Image.PreserveAspectFit
         }
     }
 }

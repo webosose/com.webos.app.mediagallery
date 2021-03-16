@@ -196,6 +196,7 @@ Item {
                     text: "No data"
                     color: appStyle.appColor.mainTextColor
                     font: appStyle.engFont.mainFont24
+                    visible: gridViewListModel.count > 0 ? false : true
                 }
 
                 // Left top braket
