@@ -37,6 +37,11 @@ Item {
         appLog.debug("HorizentalListComponent :: set start index = " + index);
     }
 
+    property bool isHighlightLast:
+        horizontalListView.currentIndex === listModel.count - 1
+    property bool isHighlightFirst:
+        horizontalListView.currentIndex === 0
+
     readonly property string forward: "foward";
     readonly property string backward: "backward";
 
@@ -90,6 +95,19 @@ Item {
         if(horizontalListView.currentIndex > 0){
             horizontalListView.currentIndex -= 1;
         }
+    }
+
+    function movePage(direction){
+        var current = horizontalListView.currentIndex;
+        if(direction === forward) {
+            current += horizontalListView.numItemInRow;
+            if(current >= listModel.count) current = listModel.count - 1;
+        } else {
+            current -= horizontalListView.numItemInRow;
+            if(current < 0) current = 0;
+        }
+        horizontalListView.currentIndex = current;
+        clickAcion(horizontalListView.currentIndex);
     }
 
     Component {
@@ -195,8 +213,6 @@ Item {
         }
 
         orientation: horizontalListView.orientation
-        //spacing: horizontalListView.spa
-
 
         delegate: bgDelegate
         focus: false
@@ -327,5 +343,11 @@ Item {
 
         delegate: listDelegate
         model: listModel
+
+        highlightFollowsCurrentItem: true
+        highlightMoveDuration: 300
+        snapMode: ListView.SnapOneItem
+
+        property var numItemInRow: parseInt((horizontalListView.width - elementWidth) / (elementWidth + spacing)) + 1
     }
 }
