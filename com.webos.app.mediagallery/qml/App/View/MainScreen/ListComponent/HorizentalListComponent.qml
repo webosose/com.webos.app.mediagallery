@@ -37,10 +37,10 @@ Item {
         appLog.debug("HorizentalListComponent :: set start index = " + index);
     }
 
-    property bool isHighlightLast:
-        horizontalListView.currentIndex === listModel.count - 1
-    property bool isHighlightFirst:
-        horizontalListView.currentIndex === 0
+    property bool isHighlightLast: listModel.count > 0 ?
+            horizontalListView.currentIndex === listModel.count - 1 : true
+    property bool isHighlightFirst: listModel.count > 0 ?
+            horizontalListView.currentIndex === 0 : true
 
     readonly property string forward: "foward";
     readonly property string backward: "backward";
