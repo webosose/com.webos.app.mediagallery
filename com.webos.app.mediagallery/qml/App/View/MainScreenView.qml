@@ -59,7 +59,8 @@ Item {
     Connections {
         target: modeViewArea
         onClicked: {
-            root.state = "disappearAnimation"
+            if(root.state == "preview")
+               root.state = "disappearAnimation";
         }
     }
 
