@@ -103,9 +103,7 @@ Item {
                 return;
             }
 
-            //TODO : ********************  ModeChange TTTTTTT
             if(isModeChanged) fileTreeDictionary= {"all":[]}
-
 
             for (var i = 0 ; i < mediaList.length; i++) {
                 if(mediaList[i].file_path == undefined) {

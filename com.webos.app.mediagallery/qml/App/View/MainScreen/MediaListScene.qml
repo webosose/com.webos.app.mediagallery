@@ -45,7 +45,7 @@ Item {
                          ? "ThumbnailImage.qml"
                          : "TitleThumbnailImage.qml"
         componentParam: currentMode == stringSheet.category.image
-                        ? {"thumbnailUrl":"thumbnail"}
+                        ? {"thumbnailUrl":"thumbnail","explain":"title"}
                         : {"thumbnailUrl":"thumbnail","title":"title"}
         componentSize: {"width": gridViewWidth, "height": gridViewHeight}
 
