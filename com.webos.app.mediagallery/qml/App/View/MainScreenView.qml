@@ -207,6 +207,34 @@ Item {
             height: previewImage.height * 0.8
             source: ""
             sourceSize.width: previewImage.width
+            Rectangle {
+                //TODO: check image size and opacity
+                anchors.fill: parent
+                visible: photo.status == Image.Error ||  photo.status == Image.Null
+                color: "black"
+                Image{
+                    id: error_preview
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width * 0.4
+                    height: parent.height * 0.4
+                    source: appRoot.imageDir + "empty_image.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Text {
+                    anchors.top: error_preview.bottom
+                    anchors.left: error_preview.left
+                    anchors.right: error_preview.right
+                    anchors.topMargin: appStyle.relativeYBasedOnFHD(15)
+                    text: "Cannot load image"
+                    color: appStyle.appColor.mainTextColor
+                    font: appStyle.engFont.mainFont28Bold
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    opacity: 0.8
+                }
+            }
         }
 
         function isPreviewArea(x,y) {

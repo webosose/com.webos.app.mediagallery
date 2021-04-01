@@ -97,10 +97,8 @@ Item {
                     onIsScrollingChanged: {
                         if(isScrolling == false && contentBase.thumbnailLoaded == false) {
                             appLog.debug("Scrolling stopped / "  + index + " call thumbnail");
-
                             loader.setSource(componentLayout, base.getParamForLayout(true, true));
-
-                            contentBase.thumbnailLoaded = true
+                            contentBase.thumbnailLoaded = true;
                         }
                     }
                 }
@@ -115,6 +113,7 @@ Item {
             MouseArea {
                 anchors.fill:parent
                 onClicked: {
+                    if(isScrolling) return;
                     thumbnailGridView.currentIndex = index;
                     var absXY = absolutePosition(index, mouseX, mouseY);
                     clickAction(index,absXY.X,absXY.Y);
@@ -138,18 +137,36 @@ Item {
 
     function updateListModel(list){
         appLog.debug("DelayRequestListComponent:: updateListModel :: " + list.length);
+        initGridView();
+
         gridViewListModel.clear();
         for (var i = 0 ; i < list.length; i++) {
             gridViewListModel.append(list[i]);
         }
     }
 
+    function initGridView() {
+        loadImageTimer.stop();
+        isScrolling = false;
+        thumbnailGridView.contentY = 0;
+    }
+
     Timer {
         id: loadImageTimer
         interval: root.delayLoadingTime
+        repeat: true
         onTriggered: {
-            appLog.debug("loadTimer ends");
-            isScrolling = false;
+            appLog.debug("loadTimer triggered");
+            if(Math.abs(thumbnailGridView.verticalVelocity) < 20) {
+                repeat = false;
+            } else {
+                repeat = true;
+            }
+        }
+
+        onRunningChanged: {
+            if(running) isScrolling = true
+            else isScrolling = false;
         }
     }
 
@@ -304,20 +321,11 @@ Item {
         property int itemNumInRow: thumbnailGridView.width / thumbnailGridView.cellWidth
         property int itemNumInCol: thumbnailGridView.height / thumbnailGridView.cellHeight
 
-        property real prevV: 0.0
         onVerticalVelocityChanged: {
-            if(!isScrolling) isScrolling = true;
-            prevV = Math.abs(prevV);
-            var currV = Math.abs(verticalVelocity);
-            if(prevV >= currV) {
-                var diff = prevV - currV;
-                if(diff < 20){
-                    loadImageTimer.restart();
-                    appLog.debug("loadTimer starts : waits " + root.delayLoadingTime + "ms");
-                }
+            if(!isScrolling) {
+                loadImageTimer.restart();
+                isScrolling = true;
             }
-            prevV = verticalVelocity;
-
         }
     }
 }

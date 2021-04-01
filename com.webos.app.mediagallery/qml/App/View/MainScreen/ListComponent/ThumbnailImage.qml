@@ -18,6 +18,7 @@ Item {
     property var thumbnailUrl: "thumbnailUrl"
     width: appStyle.relativeXBasedOnFHD(appStyle.gridViewSize)
     height: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
+    property string explain: ""
 
     Image {
         id: fileImage
@@ -35,5 +36,15 @@ Item {
         sourceSize.width: width
         fillMode: Image.PreserveAspectFit
         visible: fileImage.status != Image.Ready
+    }
+    Text {
+        anchors.bottom: parent.bottom
+        width: parent.width
+        horizontalAlignment: Text.AlignHCenter
+        color: appStyle.appColor.mainTextColor
+        font: appStyle.engFont.mainFont24
+        text: explain
+        visible: fileImage.status != Image.Ready
+        elide: Text.ElideRight
     }
 }
