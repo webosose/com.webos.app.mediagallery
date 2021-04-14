@@ -14,7 +14,6 @@ import QtQuick 2.6
 import "./MainScreen"
 import QmlAppComponents 0.1
 
-
 /*
 -- Scene ------ Loading
 I         I
@@ -98,19 +97,14 @@ Item {
 
         objectName: "mediaListScene"
 
-        height: appStyle.relativeYBasedOnFHD(appStyle.mediaListHeight)
-
         anchors.top: spacingRect.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        anchors.leftMargin: appStyle.relativeXBasedOnFHD(100)
-        anchors.rightMargin: appStyle.relativeXBasedOnFHD(100)
-
-        Rectangle {
-            color: "white"
-        }
+        anchors.leftMargin: appStyle.relativeXBasedOnFHD(appStyle.mediaListHPadding)
+        anchors.rightMargin: appStyle.relativeXBasedOnFHD(appStyle.mediaListHPadding)
+        anchors.bottomMargin: appStyle.relativeYBasedOnFHD(appStyle.paddingInMainScreen)
 
         DebugBackground {}
     }
@@ -219,6 +213,7 @@ Item {
                     width: parent.width * 0.4
                     height: parent.height * 0.4
                     source: appRoot.imageDir + "empty_image.png"
+
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -265,18 +260,21 @@ Item {
 
     Rectangle {
         id: loadingScrim
-        color: appStyle.appColor.popupBackground
-        visible: service.mediaIndexer.isOnUpdating
-        width: parent.width
+        width: parent.width * 0.45
         height: parent.height * 0.12
         anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        color:appStyle.appColor.normalMenuBackground
+        visible: service.mediaIndexer.isOnUpdating
+        opacity: 0.86
+        radius: 10
 
         Text {
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             color: appStyle.appColor.mainTextColor
-            font: appStyle.engFont.mainFont42
+            font: appStyle.engFont.getFont(42,700)
             text: stringSheet.mediaList.onLoading + dot
 
             property string dot: "."

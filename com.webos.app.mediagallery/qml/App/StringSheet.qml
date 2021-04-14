@@ -41,11 +41,6 @@ AppStringSheet {
         ]
     }
 
-    property QtObject common: QtObject {
-        property string noImage: qsTr("No Image") + es
-        property string noImageSmall: qsTr("X") + es
-    }
-
     property QtObject mediaList: QtObject {
         property string onLoading: qsTr("Loading") + es
     }

@@ -81,7 +81,6 @@ Item {
         anchors.left: parent.left
         width: appStyle.relativeXBasedOnFHD(appStyle.menuWitdh)
 
-
         MouseArea {
             id: modeViewArea
             anchors.fill: parent
@@ -90,30 +89,18 @@ Item {
                 mouse.accepted = false;
             }
         }
+
+        objectName: "modeView"
+        DebugBackground {}
+
     }
-
-    Rectangle {
-        id: borderline
-
-        anchors.left: modeView.right
-        anchors.leftMargin: appStyle.relativeXBasedOnFHD(appStyle.viewItemSpacing)
-        anchors.top: modeView.top
-
-        height: appStyle.relativeYBasedOnFHD(appStyle.viewHeight * 0.9)
-        width: appStyle.relativeXBasedOnFHD(2)
-        color: appStyle.appColor.borderlineColor
-        opacity: 0.25
-    }
-
 
     MainScreenView {
         id: mainScreenView
-        anchors.left: borderline.right
+        anchors.left: modeView.right
         anchors.leftMargin: appStyle.relativeXBasedOnFHD(appStyle.viewItemSpacing)
-
         anchors.right: parent.right
         anchors.rightMargin: appStyle.relativeXBasedOnFHD(appStyle.viewItemSpacing)
-
         anchors.top: modeView.top
         anchors.bottom: parent.bottom
     }

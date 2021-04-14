@@ -34,6 +34,54 @@ Item {
 
     property var delayLoadingTime: 300
 
+    property var spacingH: appStyle.relativeXBasedOnFHD(5)
+    property var spacingV: appStyle.relativeYBasedOnFHD(5)
+
+    GridView {
+        id: bgGridView
+        enabled: false
+        anchors.fill: thumbnailGridView
+        model: gridViewListModel.count < 20 ? dummyModel : thumbnailGridView.model
+
+        Component.onCompleted: {
+            var i;
+            for (i = 0 ; i < 20 ; i++) {
+                dummyModel.append({"name":"dummy"});
+            }
+        }
+
+        ListModel {
+            id: dummyModel
+        }
+
+        cellWidth: thumbnailGridView.cellWidth
+        cellHeight: thumbnailGridView.cellHeight
+        delegate: bgDelegate
+        focus: false
+
+        contentY: thumbnailGridView.contentY
+        contentX: thumbnailGridView.contentX
+
+        Component {
+            id: bgDelegate
+            Item
+            {
+                id: base
+                width: bgGridView.cellWidth
+                height: bgGridView.cellHeight
+                Rectangle {
+                    anchors.fill: parent
+                    anchors.topMargin: spacingV / 2
+                    anchors.bottomMargin: spacingV /2
+                    anchors.leftMargin: spacingH /2
+                    anchors.rightMargin: spacingH / 2
+                    color: appStyle.appColor.itemBackground
+                }
+
+            }
+        }
+    }
+
     Component {
         id: listDelegate
 
@@ -54,17 +102,13 @@ Item {
                 var param = ({});
 
                 if(setSizeParams) {
-                    if(componentSize.width == undefined) {
-                        param["width"] = gridViewWidth;
-                    } else {
-                        param["width"] = componentSize.width;
-                    }
+                    param["width"] = componentSize.width == undefined
+                            ? (gridViewWidth - spacingH)
+                            : (componentSize.width - spacingH)
 
-                    if(componentSize.height == undefined) {
-                        param["height"] = gridViewHeight;
-                    } else {
-                        param["height"] = componentSize.height;
-                    }
+                    param["height"] = componentSize.height == undefined
+                            ? (gridViewHeight - spacingV)
+                            : (componentSize.height - spacingV)
                 }
 
                 if(setOtherParams) {
@@ -79,7 +123,11 @@ Item {
             Item {
                 id: contentBase
                 anchors.fill: parent
-                scale: 0.98
+
+                anchors.topMargin: spacingV / 2
+                anchors.bottomMargin: spacingV /2
+                anchors.leftMargin: spacingH /2
+                anchors.rightMargin: spacingH / 2
                 Component.onCompleted: {
                     if (isScrolling == false) {
                         // ex)loader.setSource("ThumbnailImage.qml",{"thumbnailUrl":thumbnail});
@@ -171,144 +219,6 @@ Item {
     }
 
     GridView {
-        id: bgGridView
-        enabled: false
-        anchors.fill: thumbnailGridView
-        model: gridViewListModel.count < 20 ? dummyModel : thumbnailGridView.model
-
-        Component.onCompleted: {
-            var i;
-            for (i = 0 ; i < 20 ; i++) {
-                dummyModel.append({"name":"dummy"});
-            }
-        }
-
-        ListModel {
-            id: dummyModel
-        }
-
-        cellWidth: thumbnailGridView.cellWidth
-        cellHeight: thumbnailGridView.cellHeight
-        delegate: bgDelegate
-        focus: false
-
-        contentY: thumbnailGridView.contentY
-        contentX: thumbnailGridView.contentX
-
-        Component {
-            id: bgDelegate
-            Item
-            {
-                id: base
-                width: bgGridView.cellWidth
-                height: bgGridView.cellHeight
-
-                property string borderColor: "ffffff"
-                property real borderLengthRatio: 0.15
-
-                Text {
-                    anchors.fill: parent
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: "No data"
-                    color: appStyle.appColor.mainTextColor
-                    font: appStyle.engFont.mainFont24
-                    visible: gridViewListModel.count > 0 ? false : true
-                }
-
-                // Left top braket
-                Rectangle {
-                    anchors.left: parent.left; anchors.top: parent.top
-                    width: bgGridView.cellWidth * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
-                    }
-                }
-                Rectangle {
-                    anchors.left: parent.left; anchors.top: parent.top
-                    height: bgGridView.cellHeight * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
-                    }
-                }
-
-                // Right top braket
-                Rectangle {
-                    anchors.right: parent.right; anchors.top: parent.top
-                    width: bgGridView.cellWidth * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
-                    }
-                }
-                Rectangle {
-                    anchors.right: parent.right; anchors.top: parent.top
-                    height: bgGridView.cellHeight * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
-                    }
-                }
-
-                // Left Bottom braket
-                Rectangle {
-                    anchors.left: parent.left; anchors.bottom: parent.bottom
-                    width: bgGridView.cellWidth * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
-                    }
-                }
-                Rectangle {
-                    anchors.left: parent.left; anchors.bottom: parent.bottom
-                    height: bgGridView.cellHeight * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
-                    }
-                }
-
-                // Right bottom braket
-                Rectangle {
-                    anchors.right: parent.right; anchors.bottom: parent.bottom
-                    width: bgGridView.cellWidth * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
-                    }
-                }
-                Rectangle {
-                    anchors.right: parent.right; anchors.bottom: parent.bottom
-                    height: bgGridView.cellHeight * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
-                    }
-                }
-            }
-        }
-    }
-
-
-    GridView {
         id: thumbnailGridView
         anchors.fill: parent
         model: gridViewListModel
@@ -327,5 +237,44 @@ Item {
                 isScrolling = true;
             }
         }
+    }
+
+
+    Rectangle {
+        id: empty_notice_text
+        anchors.fill: parent
+        color: appStyle.appColor.emptyBackground
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: !service.mediaIndexer.isOnUpdating
+                    && gridViewListModel.count == 0
+        opacity: 0.95
+
+        Text {
+            id: notice_1
+            anchors.top: parent.top
+            width: parent.width
+            height: parent.height * 0.5
+            font: appStyle.engFont.getFont(42,700)
+            color: appStyle.appColor.mainTextColor
+            text: "No " + currentMode + " Files"
+            verticalAlignment: Text.AlignBottom
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+        }
+        Text {
+            anchors.top: notice_1.bottom
+            anchors.topMargin: appStyle.relativeYBasedOnFHD(5)
+            width: parent.width
+            height: parent.height * 0.5
+            font: appStyle.engFont.mainFont32
+            color: appStyle.appColor.mainTextColor
+            text: "Please insert " + currentMode + " files on the USB or connected device"
+            verticalAlignment: Text.AlignTop
+            horizontalAlignment: Text.AlignHCenter
+            lineHeight: 1.2
+            wrapMode: Text.WordWrap
+        }
+
     }
 }

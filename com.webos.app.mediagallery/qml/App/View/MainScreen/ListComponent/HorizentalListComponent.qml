@@ -12,7 +12,7 @@
 
 import QtQuick 2.12
 import QmlAppComponents 0.1
-import "../../../commonComponents"
+import QtGraphicalEffects 1.0
 
 Item {
     id: root
@@ -21,6 +21,7 @@ Item {
     property int elementWidth: 200
     property int elementHeight: 200
     property var spacing: 30
+    property var contentSpacing: 7
 
     function updateListModel(list) {
         appLog.debug("HorizentalListComponent :: start update List");
@@ -110,100 +111,18 @@ Item {
         clickAcion(horizontalListView.currentIndex);
     }
 
-    Component {
-        id: listDelegate
-
-        Item {
-            id: base
-            width: root.elementWidth
-            height: root.elementHeight
-
-            Item {
-                id: contenetBase
-                anchors.fill: parent
-                anchors.verticalCenter: base.verticalCenter
-                Item {
-                    id: previewBackground
-                    anchors.fill: parent
-                    opacity: 0.2
-                    Component.onCompleted: {
-                        service.mediaIndexer.getFolderThumbnail(previewBackground, itemToShow,
-                                                                width, height);
-                    }
-                }
-                Text {
-                    id: title
-                    anchors.fill: parent
-                    property var fontSize: 15
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: itemToShow
-                    font: appStyle.engFont.getFont(fontSize)
-                    color: "white"
-                    wrapMode: Text.WordWrap
-                }
-            }
-            // indent the item if it is the current item
-            states: State {
-                name: "Current"
-                when:  base.ListView.isCurrentItem
-                PropertyChanges {
-                    target: contenetBase
-                    width: Object.valueOf(contenetBase.width) * 1 + appStyle.relativeYBasedOnFHD(5)
-                    height: Object.valueOf(contenetBase.height) * 1 + appStyle.relativeYBasedOnFHD(5)
-                }
-                PropertyChanges {
-                    target: previewBackground
-                    opacity: 0.6
-                }
-                PropertyChanges {
-                    target: title
-                    fontSize: 17
-                }
-            }
-            transitions: Transition {
-                ParallelAnimation {
-                    NumberAnimation {
-                        target: contenetBase
-                        properties: "width"; duration: 300 }
-                    NumberAnimation {
-                        target: contenetBase
-                        properties: "height"; duration: 300 }
-                    NumberAnimation {
-                        target: previewBackground
-                        properties: "opacity"; duration: 300 }
-                }
-            }
-
-            MouseArea {
-                anchors.fill:parent
-                onClicked: {
-                    appLog.debug("FolderList clicked : " + index);
-                    horizontalListView.currentIndex = index;
-                    clickAcion(index);
-                }
-            }
-        }
-    }
-
-    ListModel {
-        id: listModel
-    }
-
-
     ListView {
         id: bgListView
         enabled: false
-        //anchors.fill: horizontalListView
-        width: horizontalListView.width
-        height: horizontalListView.height
-        x: horizontalListView.x - horizontalListView.spacing * 0.5
-        y: horizontalListView.y - horizontalListView.spacing * 0.5
-        model: listModel.count < 1 ? dummyModel : horizontalListView.model
+        anchors.fill: horizontalListView
+        anchors.topMargin: horizontalListView.topMargin
+        spacing: appStyle.relativeXBasedOnFHD(root.spacing)
+        model: dummyModel
+        clip: true
 
         Component.onCompleted: {
             var i;
-            for (i = 0 ; i < 1 ; i++) {
+            for (i = 0 ; i < 7 ; i++) {
                 dummyModel.append({"name":"dummy"});
             }
         }
@@ -222,121 +141,191 @@ Item {
 
         Component {
             id: bgDelegate
-            Item
-            {
-                id: base
-                width: root.elementWidth + horizontalListView.spacing
-                height: root.elementHeight + horizontalListView.spacing
+            Item {
+                id: emptyBase
+                width: root.elementWidth
+                height: root.elementHeight
 
-                property string borderColor: "ffffff"
-                property real borderLengthRatio: 0.15
-
-                Text {
-                    anchors.fill: parent
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: "No data"
-                    color: appStyle.appColor.mainTextColor
-                    font: appStyle.engFont.mainFont24
-
-                    visible: name == "dummy" ? true : false
-                }
-
-                // Left top braket
-                Rectangle {
-                    anchors.left: parent.left; anchors.top: parent.top
-                    width: base.width * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
+                Item {
+                    id: emptyContentBase
+                    width: emptyBase.width
+                    height: circleBG.height + placeholderText.height
+                    anchors.horizontalCenter: emptyBase.horizontalCenter
+                    anchors.verticalCenter: emptyBase.verticalCenter
+                    property var spacing: appStyle.relativeYBasedOnFHD(root.contentSpacing)
+                    Rectangle{
+                        id: circleBG
+                        anchors.top: emptyContentBase.top
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: height
+                        height: emptyBase.height * 0.7
+                        radius: height * 0.5
+                        color: appStyle.appColor.placeholderBackground
                     }
-                }
-                Rectangle {
-                    anchors.left: parent.left; anchors.top: parent.top
-                    height: base.height * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
-                    }
-                }
-
-                // Right top braket
-                Rectangle {
-                    anchors.right: parent.right; anchors.top: parent.top
-                    width: base.width * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
-                    }
-                }
-                Rectangle {
-                    anchors.right: parent.right; anchors.top: parent.top
-                    height: base.height * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
-                    }
-                }
-
-                // Left Bottom braket
-                Rectangle {
-                    anchors.left: parent.left; anchors.bottom: parent.bottom
-                    width: base.width * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 1.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
-                    }
-                }
-                Rectangle {
-                    anchors.left: parent.left; anchors.bottom: parent.bottom
-                    height: base.height * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
-                    }
-                }
-
-                // Right top braket
-                Rectangle {
-                    anchors.right: parent.right; anchors.bottom: parent.bottom
-                    width: base.width * base.borderLengthRatio
-                    height: appStyle.relativeYBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Horizontal
-                    }
-                }
-                Rectangle {
-                    anchors.right: parent.right; anchors.bottom: parent.bottom
-                    height: base.height * base.borderLengthRatio
-                    width: appStyle.relativeXBasedOnFHD(1)
-                    gradient: Gradient {
-                        GradientStop { position: 1.0; color: "#ff" + base.borderColor }
-                        GradientStop { position: 0.0; color: "#00" + base.borderColor }
-                        orientation: Gradient.Vertical
+                    Text {
+                        id: placeholderText
+                        width: parent.width
+                        height: contentHeight
+                        anchors.top: circleBG.bottom
+                        anchors.topMargin: emptyContentBase.spacing
+                        property var fontSize: 20
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        text: "No data"
+                        font: appStyle.engFont.getFont(fontSize,700)
+                        color: "transparent"
                     }
                 }
             }
         }
     }
 
+
+    Component {
+        id: listDelegate
+
+        Item {
+            id: base
+            width: root.elementWidth
+            height: root.elementHeight
+            property var imageList: []
+
+            Item {
+                id: contentBase
+                width: base.width
+                height: previewBackground.height + title.height
+                anchors.horizontalCenter: base.horizontalCenter
+                anchors.verticalCenter: base.verticalCenter
+                property var spacing: appStyle.relativeYBasedOnFHD(root.contentSpacing)
+                Item {
+                    id: previewBackground
+                    anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: height
+                    height: base.height * 0.7
+
+                    Rectangle {
+                        id: folderThumbnailBG
+                        width: previewBackground.width
+                        height: previewBackground.height
+                        radius: width * 0.5
+                        color: base.ListView.isCurrentItem
+                               ? appStyle.appColor.categoryFocusBackground
+                               : appStyle.appColor.categoryNormalBackground
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        id: folderThumbnail
+                        color: "transparent"
+                        width: parent.width * 0.6
+                        height: parent.height * 0.6
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        property real spacingH: 5
+                        property real spacingV: 5
+                        property int itemWidth: folderThumbnail.width / 2 - (folderThumbnail.spacingH / 2)
+                        property int itemHeight: folderThumbnail.width / 2 - (folderThumbnail.spacingV / 2)
+
+                        RoundSquareThumbnail {
+                            id: image1
+                            anchors.top: folderThumbnail.top
+                            anchors.left: folderThumbnail.left
+                            width: parent.itemWidth
+                            height: parent.itemHeight
+                            src: imageList[0]
+
+                        }
+                        RoundSquareThumbnail {
+                            id: image2
+                            anchors.top: folderThumbnail.top
+                            anchors.right: folderThumbnail.right
+                            width: parent.itemWidth
+                            height: parent.itemHeight
+                            src: imageList[1]
+                        }
+                        RoundSquareThumbnail {
+                            id: image3
+                            anchors.bottom: folderThumbnail.bottom
+                            anchors.left: folderThumbnail.left
+                            width: parent.itemWidth
+                            height: parent.itemHeight
+                            src: imageList[2]
+                        }
+                        RoundSquareThumbnail {
+                            id: image4
+                            anchors.bottom: folderThumbnail.bottom
+                            anchors.right: folderThumbnail.right
+                            width: parent.itemWidth
+                            height: parent.itemHeight
+                            src: imageList[3]
+                        }
+
+                        Component.onCompleted: {
+                            imageList = service.mediaIndexer.getFolderThumbnail(itemToShow)
+
+                        }
+                    }
+
+                    Text {
+                        id: title
+                        width: parent.width
+                        height: contentHeight
+                        anchors.top: previewBackground.bottom
+                        anchors.topMargin: contentBase.spacing
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        text: itemToShow
+                        font: appStyle.engFont.getFont(20,700)
+                        color: appStyle.appColor.mainTextColor
+                        wrapMode: Text.WordWrap
+                    }
+                    Rectangle{
+                        id: selected
+                        anchors.horizontalCenter: previewBackground.horizontalCenter
+                        anchors.verticalCenter: previewBackground.verticalCenter
+                        width: previewBackground.width + appStyle.relativeXBasedOnFHD(15)
+                        height: width
+                        radius: width * 0.5
+                        border.color: appStyle.appColor.selectLineColor
+                        border.width: 4
+                        color: "transparent"
+                        visible: base.ListView.isCurrentItem
+                        opacity: base.ListView.isCurrentItem ? 1 : 0
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 200
+                            }
+                        }
+                    }
+                }
+                MouseArea {
+                    anchors.fill:parent
+                    onClicked: {
+                        appLog.debug("FolderList clicked : " + index);
+                        horizontalListView.currentIndex = index;
+                        clickAcion(index);
+                    }
+                }
+            }
+        }
+    }
+
+    ListModel {
+        id: listModel
+    }
+
     ListView {
         id: horizontalListView
         anchors.fill: parent
-        anchors.topMargin: parent.height * 0.1
+        anchors.topMargin: parent.height * 0.05
+        anchors.leftMargin: appStyle.relativeXBasedOnFHD(15)
+        anchors.rightMargin: appStyle.relativeXBasedOnFHD(15)
 
         orientation: ListView.Horizontal
         spacing: appStyle.relativeXBasedOnFHD(root.spacing)
@@ -347,6 +336,8 @@ Item {
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 300
         snapMode: ListView.SnapOneItem
+
+        clip: true
 
         property var numItemInRow: parseInt((horizontalListView.width - elementWidth) / (elementWidth + spacing)) + 1
     }

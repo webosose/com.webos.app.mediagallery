@@ -24,13 +24,16 @@ Item {
 
     signal notifyModeClicked(int index)
 
-    DebugBackground {}
-
     function setStartPoint(modeIndex) {
         menuList.setStartIndex(modeIndex);
     }
 
-    MenuListGradation {
+    Rectangle {
+        anchors.fill: parent
+        color: appStyle.appColor.itemBackground
+    }
+
+    MenuList {
         id: menuList
         anchors.fill: parent
         menuElements: stringSheet.modeView.mode
