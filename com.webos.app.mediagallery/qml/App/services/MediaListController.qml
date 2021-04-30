@@ -50,8 +50,7 @@ Item {
         return name;
     }
 
-    function makeFolderThumbnail(parentId, folder, thumbnailWidth, thumbnailHeight) {
-//        appLog.debug("MediaListController :: makeFolderThumbnail called with :: " + folder);
+    function makeFolderThumbnail(folder) {
         var fileList = fileTreeDictionary[folder];
         var imgCount = fileList.length >= 4 ? 4: fileList.length;
 
@@ -60,37 +59,8 @@ Item {
             thumbnailList.push(fileList[index].thumbnail);
         }
 
-        var thumbnailComponent = Qt.createComponent("FolderThumbnail.qml");
-
-        var thumbnail;
-        if(thumbnailComponent.status == Component.Ready) {
-            thumbnail = thumbnailComponent.createObject(parentId,
-                                                        {"imageList":thumbnailList,
-                                                         "width": thumbnailWidth,
-                                                         "height": thumbnailHeight});
-            if(thumbnail == null) {
-                //Error Handling
-                appLog.debug("Error creating folder thumbnail for :: " +folder);
-            }
-        }
-        return thumbnail;
+        return thumbnailList;
     }
-
-//    function finishCreation(component,sourceList) {
-//        var sprite;
-//        if (component.status == Component.Ready) {
-//            sprite = component.createObject(mediaListController, {"imageList":sourceList});
-//            if (sprite == null) {
-//                // Error Handling
-//                console.log("Error creating object");
-//            }
-//        } else if (component.status == Component.Error) {
-//            // Error Handling
-//            console.log("Error loading component:", component.errorString());
-//        }
-//        return sprite;
-//    }
-
 
     Connections {
         target: mediaIndexerService

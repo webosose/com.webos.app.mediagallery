@@ -36,62 +36,43 @@ Item {
     }
 
     function setStartIndex(index) {
-        listView.currentIndex = index;
+        if(listView.currentIndex != index)
+            listView.currentIndex = index;
     }
 
     Component {
         id: listDelegate
         Item {
+            id: base
+
             width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth);
-            height: appStyle.relativeYBasedOnFHD(appStyle.menuItemHeight + 2);
-
-            //listView.currentIndex = index;
+            height: appStyle.relativeYBasedOnFHD(appStyle.menuItemHeight + 5);
 
             Rectangle {
-                id: focusedDot
-                width: appStyle.relativeXBasedOnFHD(10)
-                height: appStyle.relativeYBasedOnFHD(10)
-                radius: width / 2
-                color: appStyle.appColor.highlightColor
-                anchors.verticalCenter: parent.verticalCenter
-                x: appStyle.relativeXBasedOnFHD(20)
-                visible: listView.currentIndex == index || opacity > 0.05
-                opacity: listView.currentIndex == index ? 1.0 : 0.0
-
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 150
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-            }
-
-            Text {
-                id: menuText
-                x: listView.currentIndex == index ? focusedDot.x + focusedDot.width + appStyle.relativeXBasedOnFHD(20) : focusedDot.width + appStyle.relativeXBasedOnFHD(20)
-                width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth) - x
+                id: text_background
+                width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth)
                 height: appStyle.relativeYBasedOnFHD(appStyle.menuItemHeight);
-                text: name
-                color: appStyle.appColor.mainTextColor
-                font: appStyle.engFont.mainFont32
-                wrapMode: Text.WordWrap
-                elide: Text.ElideRight
-                verticalAlignment: Text.AlignVCenter
+                color: base.ListView.isCurrentItem ? appStyle.appColor.selectMenuBackground :
+                    appStyle.appColor.normalMenuBackground
 
-                Behavior on x {
-                    NumberAnimation {
-                        duration: 150
-                        easing.type: Easing.OutQuint
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
                     }
                 }
-            }
 
-            Rectangle {
-                anchors.top: menuText.bottom
-                width: appStyle.relativeXBasedOnFHD(appStyle.menuItemWidth);
-                height: appStyle.relativeYBasedOnFHD(2);
-                color: listView.currentIndex == index ? appStyle.appColor.highlightColor : appStyle.appColor.borderlineColor
-                opacity: listView.currentIndex == index ? 1.0 : 0.4
+                Text {
+                    id: menuText
+                    anchors.fill:parent
+                    text: name
+                    color: appStyle.appColor.mainTextColor
+                    font: base.ListView.isCurrentItem? appStyle.engFont.mainFont28Bold :
+                        appStyle.engFont.mainFont28
+                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                }
             }
 
             MouseArea {

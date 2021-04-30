@@ -45,10 +45,8 @@ Item {
         return mediaListController.getFileListOfFolder(folderName);
     }
 
-    property var getFolderThumbnail: function(parentId, folderName,
-                                              thumbnailWidth, thumbnailHeight) {
-       return mediaListController.makeFolderThumbnail(parentId, folderName,
-                                                      thumbnailWidth, thumbnailHeight);
+    property var getFolderThumbnail: function(folderName) {
+        return mediaListController.makeFolderThumbnail(folderName);
     }
 
     ServiceStateNotifier {
@@ -106,7 +104,10 @@ Item {
                 if(pluginList[i].uri == "msc") {
                     var deviceList = pluginList[i].deviceList;
                     deviceList.forEach(function(device) {
-                        available = device.available;
+                        if(device.available){
+                            available = device.available;
+                            appLog.debug("device "+ device.name + " " + available)
+                        }
                     });
                 }
             }

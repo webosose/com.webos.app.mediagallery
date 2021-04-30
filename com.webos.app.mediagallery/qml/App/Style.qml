@@ -26,23 +26,24 @@ AppStyle {
     property int viewWidth: baseWidth
     property int viewHeight: baseHeight
 
-    property int viewItemSpacing: 39
+    property int viewItemSpacing: 20
 
     property int menuWitdh: 250
     property int menuHeight: baseHeight
 
     property int menuItemWidth: 250
-    property int menuItemHeight: 100
+    property int menuItemHeight: 80
 
     property int mainScreenWidth: 1250
 //    property int mainScreenHeight: 100
 
-    property int paddingInMainScreen: 30
+    property int paddingInMainScreen: 50
 
     property int folderListHeight: 200
     property int folderItemWidth: 150
 
-    property int mediaListHeight: 440-30
+    property int mediaListHeight: 440-paddingInMainScreen
+    property int mediaListHPadding:50
 
     property int gridViewSize: 200
 

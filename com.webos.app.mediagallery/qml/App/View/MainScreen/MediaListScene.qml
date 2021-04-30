@@ -28,6 +28,8 @@ Item {
     property var currentFolder: mainScreenView.currentFolder
     property var fileListForCurrentFolder: []
 
+    property var itemInRow : 5
+
     onCurrentFolderChanged: {
         var list = service.mediaIndexer.getFileListOfFolder(currentFolder);
         fileListForCurrentFolder = list;
@@ -38,8 +40,8 @@ Item {
         id: fileList
         anchors.fill: parent
 
-        gridViewWidth: width / 4
-        gridViewHeight: width / 4
+        gridViewWidth: parseInt(width / itemInRow)
+        gridViewHeight: parseInt(width / itemInRow)
         delayLoadingTime: 600
         componentLayout: currentMode == stringSheet.category.image
                          ? "ThumbnailImage.qml"

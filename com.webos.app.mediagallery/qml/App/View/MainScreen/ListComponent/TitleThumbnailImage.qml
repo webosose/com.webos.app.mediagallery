@@ -11,7 +11,6 @@
  * LICENSE@@@ */
 
 import QtQuick 2.6
-import "../../../commonComponents"
 
 Item {
     id: thumbnailImage
@@ -47,7 +46,7 @@ Item {
         anchors.left: fileImage.left
         width: fileImage.width
         height: fileImage.height * 0.1
-        color: "black"
+        color: appStyle.appColor.normalMenuBackground
         opacity: 0.8
 
         Text {

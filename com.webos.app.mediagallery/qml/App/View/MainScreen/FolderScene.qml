@@ -83,7 +83,7 @@ Item {
 
     Item {
         id: navBackwardBtn
-        width: parent.width * 0.04
+        width: appStyle.relativeXBasedOnFHD(appStyle.mediaListHPadding)
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -97,9 +97,9 @@ Item {
                 var ctx = getContext("2d");
 
                 ctx.lineWidth = 1;
-                ctx.strokeStyle = appStyle.appColor.borderlineColor
+                ctx.strokeStyle = appStyle.appColor.selectMenuBackground
 
-                ctx.fillStyle = appStyle.appColor.borderlineColor
+                ctx.fillStyle = appStyle.appColor.selectMenuBackground
                 ctx.beginPath();
                 ctx.moveTo(leftArrow.width / 5 * 4, leftArrow.height * 0.35);
                 ctx.lineTo(leftArrow.width / 5, leftArrow.height * 0.5);
@@ -166,17 +166,16 @@ Item {
         }
     }
 
+
     HorizentalListComponent {
         id: folderListComponent
         anchors.left: navBackwardBtn.right
         anchors.right: navForwardBtn.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.leftMargin: parent.width * 0.03
-        anchors.rightMargin: parent.width * 0.03
 
-        elementWidth: height * 0.8
-        elementHeight: height * 0.8
+        elementWidth: height * 0.9
+        elementHeight: height * 0.9
 
         spacing: 30
 
@@ -186,11 +185,12 @@ Item {
         clickAcion: function(index){
             root.notifyFolderClicked(folderList[index]);
         }
+
     }
 
     Item {
         id: navForwardBtn
-        width: parent.width * 0.04
+        width: appStyle.relativeXBasedOnFHD(appStyle.mediaListHPadding)
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.right: parent.right
@@ -204,9 +204,9 @@ Item {
                 var ctx = getContext("2d");
 
                 ctx.lineWidth = 1;
-                ctx.strokeStyle = appStyle.appColor.borderlineColor
+                ctx.strokeStyle = appStyle.appColor.selectMenuBackground
 
-                ctx.fillStyle = appStyle.appColor.borderlineColor
+                ctx.fillStyle = appStyle.appColor.selectMenuBackground
                 ctx.beginPath();
                 ctx.moveTo(rightArrow.width / 5, rightArrow.height * 0.35);
                 ctx.lineTo(rightArrow.width / 5 * 4, rightArrow.height * 0.5);
