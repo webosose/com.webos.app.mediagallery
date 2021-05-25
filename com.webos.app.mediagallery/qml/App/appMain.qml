@@ -22,7 +22,7 @@ AppMain {
     // global variables.
     property Style appStyle: Style {}
     property StringSheet stringSheet: StringSheet {}
-    property url imageDir: "./Images/"
+    property url imageDir: Qt.resolvedUrl("./Images/")
     // It also has appLog, imageDir
     isDesktopMode: false
     debugMode: false// || isDesktopMode

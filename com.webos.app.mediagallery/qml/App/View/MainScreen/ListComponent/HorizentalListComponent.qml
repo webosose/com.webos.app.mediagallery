@@ -284,6 +284,7 @@ Item {
                         font: appStyle.engFont.getFont(20,700)
                         color: appStyle.appColor.mainTextColor
                         wrapMode: Text.WordWrap
+                        elide: Text.ElideRight
                     }
                     Rectangle{
                         id: selected
