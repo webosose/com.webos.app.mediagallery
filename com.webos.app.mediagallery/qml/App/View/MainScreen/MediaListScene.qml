@@ -63,7 +63,9 @@ Item {
                 break;
             case stringSheet.category.video:
                 appLog.debug("call video viewer");
-                service.webOSService.singleCallService.launchApp(stringSheet.viewerApps.video);
+                var selectedFileInfo = {"file_path":filePath,"uri":fileListForCurrentFolder[index].uri};
+                var videoList = {"videoList":{"results":[selectedFileInfo],"count":1}}
+                service.webOSService.singleCallService.launchAppWithParam(stringSheet.viewerApps.video,videoList);
                 break;
             case stringSheet.category.audio:
                 appLog.debug("call audio player");
