@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) <2013-2015> LG Electronics, Inc.
+ * Copyright (c) 2013-2021 LG Electronics, Inc.
  *
  * Confidential computer software. Valid license from LG required for
  * possession, use or copying. Consistent with FAR 12.211 and 12.212,
@@ -35,16 +35,6 @@ Item {
             hideSource: true
         }
 
-        fragmentShader: "
-            uniform lowp sampler2D image;
-            uniform lowp sampler2D masked;
-            uniform highp float qt_Opacity;
-            varying highp vec2 qt_TexCoord0;
-            void main() {
-                highp vec4 texColor = texture2D(image, qt_TexCoord0.xy);
-                highp vec4 maskedColor = texture2D(masked, qt_TexCoord0.xy);
-                gl_FragColor = texColor * maskedColor;
-            }
-        "
+        fragmentShader: Qt.resolvedUrl("SmoothClipItem.frag")
     }
 }
