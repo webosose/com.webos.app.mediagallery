@@ -29,6 +29,7 @@ Item {
     onCurrentModeChanged: {
         appLog.debug("AppModeChanged to :: " + appMode + " :: get new list");
         isModeChanged = true
+        mediaIndexerService.cancel();
         mediaIndexerService.updateDeviceList();
     }
 
