@@ -111,10 +111,12 @@ Item {
 
     property real clickX: 0
     property real clickY: 0
+    property var selectedFileInfo
 
-    function showPreview(filePath, x, y) {
+    function showPreview(filePath, x, y, _selectedFileInfo) {
         clickX = x + mediaListScene.x;
         clickY = y + mediaListScene.y;
+        selectedFileInfo = _selectedFileInfo;
 
         previewImage.setPreviewSource(filePath);
         root.state = "preview";
@@ -250,7 +252,16 @@ Item {
         onClicked: {
             //check the clicked area is inside preview
             var isInsidePreview = previewImage.isPreviewArea(mouseX, mouseY);
-            if(isInsidePreview === false) root.state = "disappearAnimation"
+            if(isInsidePreview === false) {
+                root.state = "disappearAnimation"
+            } else {
+                if (selectedFileInfo === undefined) {
+                    service.webOSService.singleCallService.callSimpleToast("Cannot open viewer for unknown reason.");
+                } else {
+                    appLog.debug("call image viewer from preview");
+                    service.webOSService.singleCallService.launchAppWithParam(stringSheet.viewerApps.image, selectedFileInfo);
+                }
+            }
         }
 
         onWheel : {

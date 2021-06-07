@@ -28,7 +28,7 @@ AppStringSheet {
     }
 
     property QtObject viewerApps: QtObject {
-        property string image: "com.webos.app.avn.photoViewer" //TBD
+        property string image: "com.webos.app.imageviewer"
         property string video: "com.webos.app.videoplayer"
         property string audio: "com.webos.app.avn.music"
     }
