@@ -39,9 +39,9 @@ Item {
     }
 
     property bool isHighlightLast: listModel.count > 0 ?
-            horizontalListView.currentIndex === listModel.count - 1 : true
+            horizontalListView.isRightEnd : true
     property bool isHighlightFirst: listModel.count > 0 ?
-            horizontalListView.currentIndex === 0 : true
+            horizontalListView.isLeftEnd : true
 
     readonly property string forward: "foward";
     readonly property string backward: "backward";
@@ -330,6 +330,9 @@ Item {
 
         orientation: ListView.Horizontal
         spacing: appStyle.relativeXBasedOnFHD(root.spacing)
+
+        property bool isLeftEnd: contentX < 5
+        property bool isRightEnd: contentX > ((contentWidth - horizontalListView.width)  - 5)
 
         delegate: listDelegate
         model: listModel
