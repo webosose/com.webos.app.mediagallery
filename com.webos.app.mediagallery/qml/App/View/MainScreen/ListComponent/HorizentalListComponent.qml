@@ -99,16 +99,14 @@ Item {
     }
 
     function movePage(direction){
-        var current = horizontalListView.currentIndex;
-        if(direction === forward) {
-            current += horizontalListView.numItemInRow;
-            if(current >= listModel.count) current = listModel.count - 1;
-        } else {
-            current -= horizontalListView.numItemInRow;
-            if(current < 0) current = 0;
-        }
-        horizontalListView.currentIndex = current;
-        clickAcion(horizontalListView.currentIndex);
+        var change = horizontalListView.width * (direction === forward ? -1 : 1);
+
+        if (horizontalListView.contentX - change < 0)
+            horizontalListView.contentX = 0;
+        else if (horizontalListView.contentX - change > horizontalListView.contentWidth - horizontalListView.width)
+            horizontalListView.contentX = horizontalListView.contentWidth - horizontalListView.width;
+        else
+            horizontalListView.contentX -= horizontalListView.width * (direction === forward ? -1 : 1);
     }
 
     ListView {
@@ -336,6 +334,13 @@ Item {
 
         delegate: listDelegate
         model: listModel
+
+        Behavior on contentX {
+            NumberAnimation {
+                duration: 400
+                easing.type: Easing.InOutQuad
+            }
+        }
 
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 300

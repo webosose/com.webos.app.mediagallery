@@ -138,13 +138,13 @@ Item {
         State {
             name: "disappearAnimation"
             PropertyChanges { target: previewImage; visible: true }
-            PropertyChanges { target: photo; x:clickX; y:clickY; width: 0; height: 0}
+            PropertyChanges { target: photo; x:clickX; y:clickY; width: 453; height: 453}
         },
         State {
             name: "showList"
             PropertyChanges {target: previewImage; visible: false }
-            PropertyChanges { target: photo; x:clickX -50 ; y:clickY - 50;
-                width: 50; height: 50}
+            PropertyChanges { target: photo; x:clickX; y:clickY;
+                width: 453; height: 453}
         }
     ]
 
@@ -194,7 +194,7 @@ Item {
 
         Rectangle {
             anchors.fill:photo
-            color:"#70000000"
+            color:"#80000000"
         }
 
         Image {

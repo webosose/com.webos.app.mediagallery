@@ -42,6 +42,7 @@ Item {
 
         gridViewWidth: parseInt(width / itemInRow)
         gridViewHeight: parseInt(width / itemInRow)
+
         delayLoadingTime: 600
         componentLayout: currentMode == stringSheet.category.image
                          ? "ThumbnailImage.qml"
