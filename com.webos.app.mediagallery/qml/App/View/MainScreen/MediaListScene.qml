@@ -42,6 +42,7 @@ Item {
 
         gridViewWidth: parseInt(width / itemInRow)
         gridViewHeight: parseInt(width / itemInRow)
+
         delayLoadingTime: 600
         componentLayout: currentMode == stringSheet.category.image
                          ? "ThumbnailImage.qml"
@@ -59,7 +60,32 @@ Item {
                 appLog.debug("call image viewer");
                 //Note: Currently show preview. Later, it will call image viewer app
                 //      in that case, preview can be used for long click action
-                mainScreenView.showPreview(filePath, x, y);
+                var imageUri = fileListForCurrentFolder[index].uri;
+                var deviceUri = "";
+                var pluginList = service.mediaIndexer.devicePluginList;
+                var i,j;
+                var searchResult = false;
+
+                for (i = 0 ; i < pluginList.length; i++) {
+                    var deviceList = pluginList[i].deviceList;
+                    for (j = 0 ; j < deviceList.length ; j++) {
+                        // Check app uris for find device from file uri
+                        if (imageUri.includes(deviceList[j].uri)) {
+                            searchResult = true;
+                            deviceUri = deviceList[i].uri;
+                        }
+                    }
+                }
+
+                if (searchResult) {
+                    var selectedFileInfo = {
+                        "images_uri": fileListForCurrentFolder[index].uri,
+                        "device_uri": deviceUri
+                    };
+                    mainScreenView.showPreview(filePath, x, y, selectedFileInfo);
+                } else {
+                    mainScreenView.showPreview(filePath, x, y);
+                }
                 break;
             case stringSheet.category.video:
                 appLog.debug("call video viewer");

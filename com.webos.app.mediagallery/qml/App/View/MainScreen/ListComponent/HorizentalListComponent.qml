@@ -39,9 +39,9 @@ Item {
     }
 
     property bool isHighlightLast: listModel.count > 0 ?
-            horizontalListView.currentIndex === listModel.count - 1 : true
+            horizontalListView.isRightEnd : true
     property bool isHighlightFirst: listModel.count > 0 ?
-            horizontalListView.currentIndex === 0 : true
+            horizontalListView.isLeftEnd : true
 
     readonly property string forward: "foward";
     readonly property string backward: "backward";
@@ -99,16 +99,14 @@ Item {
     }
 
     function movePage(direction){
-        var current = horizontalListView.currentIndex;
-        if(direction === forward) {
-            current += horizontalListView.numItemInRow;
-            if(current >= listModel.count) current = listModel.count - 1;
-        } else {
-            current -= horizontalListView.numItemInRow;
-            if(current < 0) current = 0;
-        }
-        horizontalListView.currentIndex = current;
-        clickAcion(horizontalListView.currentIndex);
+        var change = horizontalListView.width * (direction === forward ? -1 : 1);
+
+        if (horizontalListView.contentX - change < 0)
+            horizontalListView.contentX = 0;
+        else if (horizontalListView.contentX - change > horizontalListView.contentWidth - horizontalListView.width)
+            horizontalListView.contentX = horizontalListView.contentWidth - horizontalListView.width;
+        else
+            horizontalListView.contentX -= horizontalListView.width * (direction === forward ? -1 : 1);
     }
 
     ListView {
@@ -331,8 +329,18 @@ Item {
         orientation: ListView.Horizontal
         spacing: appStyle.relativeXBasedOnFHD(root.spacing)
 
+        property bool isLeftEnd: contentX < 5
+        property bool isRightEnd: contentX > ((contentWidth - horizontalListView.width)  - 5)
+
         delegate: listDelegate
         model: listModel
+
+        Behavior on contentX {
+            NumberAnimation {
+                duration: 400
+                easing.type: Easing.InOutQuad
+            }
+        }
 
         highlightFollowsCurrentItem: true
         highlightMoveDuration: 300

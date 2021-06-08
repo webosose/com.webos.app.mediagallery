@@ -25,10 +25,12 @@ Item {
 
     property bool isOnUpdating: false
     property bool isModeChanged: false
+    property var devicePluginList: []
 
     onCurrentModeChanged: {
         appLog.debug("AppModeChanged to :: " + appMode + " :: get new list");
         isModeChanged = true
+        mediaIndexerService.cancel();
         mediaIndexerService.updateDeviceList();
     }
 
@@ -127,6 +129,7 @@ Item {
                     return;
                 }
 
+                devicePluginList = response.pluginList;
                 isOnUpdating = true;
                 updatingTimer.restart();
                 reservateListUpdate.restart();

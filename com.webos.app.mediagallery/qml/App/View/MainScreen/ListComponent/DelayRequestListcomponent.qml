@@ -163,7 +163,8 @@ Item {
                 onClicked: {
                     if(isScrolling) return;
                     thumbnailGridView.currentIndex = index;
-                    var absXY = absolutePosition(index, mouseX, mouseY);
+                    var absXY = absolutePosition(index, 0,0);
+
                     clickAction(index,absXY.X,absXY.Y);
                 }
 
@@ -172,7 +173,7 @@ Item {
                     var colIndex = parseInt(index % thumbnailGridView.itemNumInRow)
 
                     return {X: thumbnailGridView.cellWidth * colIndex + x,
-                            Y:  thumbnailGridView.cellHeight * rowIndex + y}
+                            Y:  thumbnailGridView.cellHeight * rowIndex + y - thumbnailGridView.contentY}
                 }
 
             }

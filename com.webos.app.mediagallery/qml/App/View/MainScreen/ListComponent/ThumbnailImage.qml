@@ -20,12 +20,19 @@ Item {
     height: appStyle.relativeYBasedOnFHD(appStyle.gridViewSize)
     property string explain: ""
 
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        visible: fileImage.status === Image.Ready
+    }
+
     Image {
         id: fileImage
         anchors.fill: parent
         source: thumbnailUrl
         sourceSize.width: width
         asynchronous: true
+        fillMode: Image.PreserveAspectFit
     }
     Image{
         anchors.horizontalCenter: parent.horizontalCenter
@@ -35,7 +42,7 @@ Item {
         source: "../../../Images/empty_image.png"
         sourceSize.width: width
         fillMode: Image.PreserveAspectFit
-        visible: fileImage.status != Image.Ready
+        visible: fileImage.status !== Image.Ready
     }
     Text {
         anchors.bottom: parent.bottom

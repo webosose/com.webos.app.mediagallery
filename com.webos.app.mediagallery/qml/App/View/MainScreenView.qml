@@ -111,10 +111,12 @@ Item {
 
     property real clickX: 0
     property real clickY: 0
+    property var selectedFileInfo
 
-    function showPreview(filePath, x, y) {
+    function showPreview(filePath, x, y, _selectedFileInfo) {
         clickX = x + mediaListScene.x;
         clickY = y + mediaListScene.y;
+        selectedFileInfo = _selectedFileInfo;
 
         previewImage.setPreviewSource(filePath);
         root.state = "preview";
@@ -136,13 +138,13 @@ Item {
         State {
             name: "disappearAnimation"
             PropertyChanges { target: previewImage; visible: true }
-            PropertyChanges { target: photo; x:clickX; y:clickY; width: 0; height: 0}
+            PropertyChanges { target: photo; x:clickX; y:clickY; width: 453; height: 453}
         },
         State {
             name: "showList"
             PropertyChanges {target: previewImage; visible: false }
-            PropertyChanges { target: photo; x:clickX -50 ; y:clickY - 50;
-                width: 50; height: 50}
+            PropertyChanges { target: photo; x:clickX; y:clickY;
+                width: 453; height: 453}
         }
     ]
 
@@ -185,15 +187,15 @@ Item {
         anchors.fill: parent
         visible: false
 
-        Rectangle {
-           anchors.fill: parent
-           color: "#80000000"
-        }
-
         function setPreviewSource(filePath) {
             photo.source = filePath;
         }
 
+
+        Rectangle {
+            anchors.fill:photo
+            color:"#80000000"
+        }
 
         Image {
             id:photo
@@ -201,11 +203,21 @@ Item {
             height: previewImage.height * 0.8
             source: ""
             sourceSize.width: previewImage.width
+            fillMode: Image.PreserveAspectFit
+
+            Rectangle {
+                anchors.fill:parent
+                color:"transparent"
+                border.width:3
+                border.color:"black";
+            }
+
+
             Rectangle {
                 //TODO: check image size and opacity
                 anchors.fill: parent
                 visible: photo.status == Image.Error ||  photo.status == Image.Null
-                color: "black"
+                color: "#a0000000"
                 Image{
                     id: error_preview
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -250,7 +262,16 @@ Item {
         onClicked: {
             //check the clicked area is inside preview
             var isInsidePreview = previewImage.isPreviewArea(mouseX, mouseY);
-            if(isInsidePreview === false) root.state = "disappearAnimation"
+            if(isInsidePreview === false) {
+                root.state = "disappearAnimation"
+            } else {
+                if (selectedFileInfo === undefined) {
+                    service.webOSService.singleCallService.callSimpleToast("Cannot open viewer for unknown reason.");
+                } else {
+                    appLog.debug("call image viewer from preview");
+                    service.webOSService.singleCallService.launchAppWithParam(stringSheet.viewerApps.image, selectedFileInfo);
+                }
+            }
         }
 
         onWheel : {
