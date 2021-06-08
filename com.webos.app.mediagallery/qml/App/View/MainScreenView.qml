@@ -187,15 +187,15 @@ Item {
         anchors.fill: parent
         visible: false
 
-        Rectangle {
-           anchors.fill: parent
-           color: "#80000000"
-        }
-
         function setPreviewSource(filePath) {
             photo.source = filePath;
         }
 
+
+        Rectangle {
+            anchors.fill:photo
+            color:"#70000000"
+        }
 
         Image {
             id:photo
@@ -203,11 +203,21 @@ Item {
             height: previewImage.height * 0.8
             source: ""
             sourceSize.width: previewImage.width
+            fillMode: Image.PreserveAspectFit
+
+            Rectangle {
+                anchors.fill:parent
+                color:"transparent"
+                border.width:3
+                border.color:"black";
+            }
+
+
             Rectangle {
                 //TODO: check image size and opacity
                 anchors.fill: parent
                 visible: photo.status == Image.Error ||  photo.status == Image.Null
-                color: "black"
+                color: "#a0000000"
                 Image{
                     id: error_preview
                     anchors.horizontalCenter: parent.horizontalCenter
