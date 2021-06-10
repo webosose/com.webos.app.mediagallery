@@ -269,7 +269,8 @@ Item {
                     service.webOSService.singleCallService.callSimpleToast("Cannot open viewer for unknown reason.");
                 } else {
                     appLog.debug("call image viewer from preview");
-                    service.webOSService.singleCallService.launchAppWithParam(stringSheet.viewerApps.image, selectedFileInfo);
+                    service.webOSService.singleCallService.launchAppWithParam(
+                                stringSheet.viewerApps.image, selectedFileInfo);
                 }
             }
         }

@@ -26,6 +26,7 @@ Item {
     property bool isOnUpdating: false
     property bool isModeChanged: false
     property var devicePluginList: []
+    property var rawFileList: []
 
     onCurrentModeChanged: {
         appLog.debug("AppModeChanged to :: " + appMode + " :: get new list");
@@ -153,6 +154,9 @@ Item {
                     break;
                 }
                 appLog.debug("Get MediaList = " + responseMediaList.results.length);
+
+                rawFileList = responseMediaList.results;
+
                 mediaIndexerService.mediaListChanged(isModeChanged, responseMediaList.results);
 
                 break;
