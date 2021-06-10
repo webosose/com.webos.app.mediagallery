@@ -66,23 +66,42 @@ Item {
                 var i,j;
                 var searchResult = false;
 
+                var params = {
+                    "imageList": {
+                        "result": []
+                    },
+                    "device_uri": "",
+                    "images_uri": "",
+                    "count":0
+                };
+
+                params.images_uri = fileListForCurrentFolder[index].uri;
                 for (i = 0 ; i < pluginList.length; i++) {
                     var deviceList = pluginList[i].deviceList;
                     for (j = 0 ; j < deviceList.length ; j++) {
                         // Check app uris for find device from file uri
                         if (imageUri.includes(deviceList[j].uri)) {
                             searchResult = true;
-                            deviceUri = deviceList[i].uri;
+                            params.device_uri = deviceList[j].uri;
                         }
                     }
                 }
 
-                if (searchResult) {
-                    var selectedFileInfo = {
-                        "images_uri": fileListForCurrentFolder[index].uri,
-                        "device_uri": deviceUri
-                    };
-                    mainScreenView.showPreview(filePath, x, y, selectedFileInfo);
+                var fileListForSelectedDevice = []
+                for (i = 0 ; i < service.mediaIndexer.rawFileList.length; i++) {
+
+                    if (service.mediaIndexer.rawFileList[i].uri.includes(params.images_uri)) {
+                        fileListForSelectedDevice.unshift(service.mediaIndexer.rawFileList[i]);
+                    } else if (service.mediaIndexer.rawFileList[i].uri.includes(params.device_uri)) {
+                        fileListForSelectedDevice.push(service.mediaIndexer.rawFileList[i]);
+                    }
+                }
+
+                params.count = fileListForSelectedDevice.length;
+
+                if (searchResult && params.count > 0) {
+                    params.imageList.results = fileListForSelectedDevice;
+                    mainScreenView.showPreview(filePath, x, y, params);
                 } else {
                     mainScreenView.showPreview(filePath, x, y);
                 }
