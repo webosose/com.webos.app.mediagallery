@@ -1,6 +1,0 @@
-module WebOSServices
-
-SystemService 1.0 DummySystemService.qml
-Service 1.0 DummyService.qml
-LocaleService 1.0 DummyLocaleService.qml
-DB8 1.0 DummyDB8.qml
