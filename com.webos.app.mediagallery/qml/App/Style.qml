@@ -25,9 +25,9 @@ AppStyle {
     // Scale
     // Not sure but I hope this readonly may better than just binding formula.
     baseWidth: 1920
-    baseHeight: 1080 //avn:720
-    width: baseWidth * 1.5
-    height: baseHeight * 1.5
+    baseHeight: 1080
+    width: baseWidth
+    height: baseHeight
 
     property int viewWidth: baseWidth
     property int viewHeight: baseHeight
