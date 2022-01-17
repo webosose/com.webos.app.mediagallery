@@ -1,2 +1,0 @@
-module Window
-WebOSWindow 0.1 DummyWindow.qml

@@ -1,14 +1,20 @@
 /* @@@LICENSE
- *
- * Copyright (c) 2021 LG Electronics, Inc.
- *
- * Confidential computer software. Valid license from LG required for
- * possession, use or copying. Consistent with FAR 12.211 and 12.212,
- * Commercial Computer Software, Computer Software Documentation, and
- * Technical Data for Commercial Items are licensed to the U.S. Government
- * under vendor's standard commercial license.
- *
- * LICENSE@@@ */
+*
+*      Copyright (c) 2021 LG Electronics, Inc.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+* LICENSE@@@ */
 
 import QtQuick 2.6
 import QmlAppComponents 0.1
@@ -19,9 +25,9 @@ AppStyle {
     // Scale
     // Not sure but I hope this readonly may better than just binding formula.
     baseWidth: 1920
-    baseHeight: 1080 //avn:720
-    width: baseWidth * 1.5
-    height: baseHeight * 1.5
+    baseHeight: 1080
+    width: baseWidth
+    height: baseHeight
 
     property int viewWidth: baseWidth
     property int viewHeight: baseHeight
